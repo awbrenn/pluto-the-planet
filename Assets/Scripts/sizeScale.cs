@@ -53,6 +53,7 @@ public class sizeScale : MonoBehaviour
 
 	public void setSize (float randSize) {
 		size = randSize;
+		startingSize = size;
 	}
 
 	public void changeSize() {
