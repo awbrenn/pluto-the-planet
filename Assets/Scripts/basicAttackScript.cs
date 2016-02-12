@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class basicAttackScript : MonoBehaviour {
-	public Camera main_camera;
 	public float max_speed = (float) 10.0;
 	private float speed;
 	private bool pluto_pressed = false;
@@ -11,9 +10,11 @@ public class basicAttackScript : MonoBehaviour {
 	private GameObject projectile_prefab;
 	private SphereCollider pluto_collider;
 	private float time_pluto_was_pressed;
+	private Camera main_camera;
 
 	// Use this for initialization
 	void Start () {
+		main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>() as Camera;
 		projectile_prefab = Resources.Load ("Prefabs/projectile") as GameObject;
 		pluto_collider = transform.GetComponent<SphereCollider> () as SphereCollider;
 	}
@@ -22,11 +23,16 @@ public class basicAttackScript : MonoBehaviour {
 	void Update () {
 		if (Input.GetMouseButtonDown (0)) {
 			Ray ray = main_camera.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
 			//Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
-			if (Physics.Raycast (ray) && !pluto_pressed) {
-				start_position = Input.mousePosition;
-				pluto_pressed = true;
-				time_pluto_was_pressed = Time.time;
+
+			// Check to see of the user pressed pluto
+			if (Physics.Raycast (ray, out hit) && !pluto_pressed) {
+				if (hit.transform.name == "Pluto") {
+					start_position = Input.mousePosition;
+					pluto_pressed = true;
+					time_pluto_was_pressed = Time.time;
+				}
 			}
 		}
 
@@ -40,13 +46,15 @@ public class basicAttackScript : MonoBehaviour {
 			if (end_position == start_position) {
 				return;
 			}
-
+				
 			Vector3 projectile_trajectory = (end_position - start_position).normalized;
+
+			// transform the trajectory from the x-y plane to the x-z plane
 			projectile_trajectory.z = projectile_trajectory.y;
 			projectile_trajectory.y = 0.0f;
 			speed = (float)((end_position - start_position).magnitude/speed_scale) / delta_time;
 
-			// clamp spped to max speed
+			// clamp speed to max speed
 			if (speed >= max_speed) {
 				speed = max_speed;
 			}
