@@ -6,13 +6,21 @@ public class TapToMove2 : MonoBehaviour {
 
 	// public member variables
 	public float acceleration = 1.0f;
+	public float pluto_max_speed = 20.0f;
 
 	// private member variables
 	private Camera main_camera;
+	private basicAttackScript basic_attack_script;
+	private Rigidbody pluto_rigid_body;
 
 	// Use this for initialization
 	void Start () {
+		basic_attack_script = this.GetComponent<basicAttackScript>();
 		main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>() as Camera;
+	
+		// kill rigid body rotations.
+		pluto_rigid_body = GetComponent<Rigidbody> ();
+		pluto_rigid_body.freezeRotation = true;
 	}
 
 
@@ -31,14 +39,15 @@ public class TapToMove2 : MonoBehaviour {
 
 
 	void acceleratePlutoInTrajectoryDirection (Vector3 trajectory) {
-		Rigidbody rb = GetComponent<Rigidbody> ();
-		rb.velocity += trajectory*acceleration;
+		// clamp Pluto's velocity to pluto max speed
+		if ((pluto_rigid_body.velocity + trajectory*acceleration).magnitude <= pluto_max_speed)
+			pluto_rigid_body.velocity += trajectory*acceleration;
 	}
 
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButton (0)) {
+		if (Input.GetMouseButton (0) && !basic_attack_script.plutoPressed()) {
 			Ray ray = main_camera.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit_info;
 			bool hit;
