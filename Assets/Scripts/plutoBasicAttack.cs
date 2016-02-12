@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class basicAttackScript : MonoBehaviour {
+public class plutoBasicAttack : MonoBehaviour {
 	public float projectile_max_speed = (float) 10.0;
 
 	private bool pluto_pressed = false;

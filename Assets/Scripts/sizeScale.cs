@@ -59,9 +59,6 @@ public class sizeScale : MonoBehaviour
 		setScale = size / baseSize;
 		scaleHolder = new Vector3 (setScale, setScale, setScale);
 		transform.localScale = scaleHolder;
-		GameObject mainCamera = GameObject.FindGameObjectWithTag ("Main Camera");
-		mainCamera.transform.Translate (0, 4 + setScale, 0);
-
 	}
 
 	public void addSize (float sizeChange) {

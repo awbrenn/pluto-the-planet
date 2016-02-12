@@ -2,20 +2,20 @@
 using System.Collections;
 
 
-public class TapToMove2 : MonoBehaviour {
+public class tapToMovePluto : MonoBehaviour {
 
 	// public member variables
-	public float acceleration = 1.0f;
+	public float acceleration = 0.3f;
 	public float pluto_max_speed = 20.0f;
 
 	// private member variables
 	private Camera main_camera;
-	private basicAttackScript basic_attack_script;
+	private plutoBasicAttack pluto_basic_attack;
 	private Rigidbody pluto_rigid_body;
 
 	// Use this for initialization
 	void Start () {
-		basic_attack_script = this.GetComponent<basicAttackScript>();
+		pluto_basic_attack = this.GetComponent<plutoBasicAttack>();
 		main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>() as Camera;
 	
 		// kill rigid body rotations.
@@ -47,7 +47,7 @@ public class TapToMove2 : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButton (0) && !basic_attack_script.plutoPressed()) {
+		if (Input.GetMouseButton (0) && !pluto_basic_attack.plutoPressed()) {
 			Ray ray = main_camera.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit_info;
 			bool hit;
