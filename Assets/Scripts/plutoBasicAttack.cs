@@ -9,7 +9,6 @@ public class plutoBasicAttack : MonoBehaviour {
 	private Vector3 start_position;
 	private Vector3 end_position;
 	private GameObject projectile_prefab;
-	private SphereCollider pluto_collider;
 	private float time_pluto_was_pressed;
 	private Camera main_camera;
 
@@ -17,7 +16,30 @@ public class plutoBasicAttack : MonoBehaviour {
 	void Start () {
 		main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>() as Camera;
 		projectile_prefab = Resources.Load ("Prefabs/projectile") as GameObject;
-		pluto_collider = transform.GetComponent<SphereCollider> () as SphereCollider;
+	}
+
+
+	void spawnProjectile (Vector3 projectile_trajectory, float speed) {
+		Vector3 projectile_initial_position;
+		SphereCollider projectile_collider;
+		SphereCollider pluto_collider = transform.GetComponent<SphereCollider> () as SphereCollider;
+
+
+		// clamp speed to max speed
+		if (speed >= projectile_max_speed) {
+			speed = projectile_max_speed;
+		}
+
+		GameObject projectile = Instantiate (projectile_prefab) as GameObject;
+		projectile_collider = projectile.transform.GetComponent<SphereCollider> () as SphereCollider;
+
+		projectile_initial_position = projectile_trajectory * (pluto_collider.radius + projectile_collider.radius) + transform.position;
+		projectile.transform.position = projectile_initial_position;
+
+		Rigidbody projectile_rigid_body = projectile.GetComponent<Rigidbody> ();
+		Vector3 pluto_velocity = (GetComponent<Rigidbody> ()).velocity;
+		projectile_rigid_body.velocity = (projectile_trajectory * speed) + pluto_velocity;
+	
 	}
 
 
@@ -39,38 +61,27 @@ public class plutoBasicAttack : MonoBehaviour {
 		}
 
 		if (Input.GetMouseButtonUp (0) && pluto_pressed) {
-			Vector3 projectile_initial_position;
-			SphereCollider projectile_collider;
 			float delta_time = Time.time - time_pluto_was_pressed;
 			float speed_scale = 100.0f;
 
+			// if the player didn't swipe, we don't spawn a projectile
 			end_position = Input.mousePosition;
 			if (end_position == start_position) {
+				pluto_pressed = false;
 				return;
 			}
-				
+
+			// calculate the normalized projectile trajectory
 			Vector3 projectile_trajectory = (end_position - start_position).normalized;
 
 			// transform the trajectory from the x-y plane to the x-z plane
 			projectile_trajectory.z = projectile_trajectory.y;
 			projectile_trajectory.y = 0.0f;
+
+			// get the speed (*note speed_scale is a fudge factor, may need to refactor)
 			speed = (float)((end_position - start_position).magnitude/speed_scale) / delta_time;
 
-			// clamp speed to max speed
-			if (speed >= projectile_max_speed) {
-				speed = projectile_max_speed;
-			}
-
-			GameObject projectile = Instantiate (projectile_prefab) as GameObject;
-			projectile_collider = projectile.transform.GetComponent<SphereCollider> () as SphereCollider;
-
-			projectile_initial_position = projectile_trajectory * (pluto_collider.radius + projectile_collider.radius) + transform.position;
-			projectile.transform.position = projectile_initial_position;
-
-			Rigidbody projectile_rigid_body = projectile.GetComponent<Rigidbody> ();
-			Vector3 pluto_velocity = (GetComponent<Rigidbody> ()).velocity;
-
-			projectile_rigid_body.velocity = (projectile_trajectory * speed) + pluto_velocity;
+			spawnProjectile (projectile_trajectory, speed);
 
 			pluto_pressed = false;
 		}
