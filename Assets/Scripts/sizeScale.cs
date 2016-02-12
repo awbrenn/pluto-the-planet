@@ -51,6 +51,10 @@ public class sizeScale : MonoBehaviour
 		return size;
 	}
 
+	public void setSize (float randSize) {
+		size = randSize;
+	}
+
 	public void changeSize() {
 		setScale = size / baseSize;
 		scaleHolder = new Vector3 (setScale, setScale, setScale);
