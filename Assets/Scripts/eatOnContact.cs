@@ -42,6 +42,18 @@ public class eatOnContact : MonoBehaviour {
 				contacteeSS.addSize (-hitDamage);
 				Destroy(other.gameObject);
 				int chunks = (int)(hitDamage/10);
+				for (int i=0; i < chunks; i++){
+					float foodSize = hitDamage/chunks;
+					Vector3 direction = other.contacts [0].normal;
+					Vector3 startPoint = other.contacts [0].point;
+
+					GameObject food = foodTypes [Random.Range (0, foodTypes.Length)];
+					food.GetComponent<sizeScale> ().setSize (foodSize);
+
+					Quaternion spawnRotation = Quaternion.identity;
+
+					Instantiate (food, startPoint, spawnRotation);
+				}
 
 			}
 			if (selfSize <= hitDamage) {
