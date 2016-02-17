@@ -15,7 +15,7 @@ public class plutoBasicAttack : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>() as Camera;
-		projectile_prefab = Resources.Load ("Prefabs/projectile") as GameObject;
+		projectile_prefab = Resources.Load ("Prefabs/defaultProjectile") as GameObject;
 	}
 
 
