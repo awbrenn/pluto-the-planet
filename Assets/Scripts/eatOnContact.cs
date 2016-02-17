@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 
 public class eatOnContact : MonoBehaviour {
@@ -11,21 +12,22 @@ public class eatOnContact : MonoBehaviour {
 	void OnTriggerEnter (Collider other)
 	{
 		sizeScale contactee = gameObject.GetComponent<sizeScale>();
-		sizeScale contactor = other.gameObject.GetComponent<sizeScale>();
+		sizeScale contactor = other.gameObject.GetComponent<sizeScale> ();
 
-		float selfSize = contactee.getSize ();
-		float otherSize = contactor.getSize ();
-
-
-		if (other.tag == "Player") 
+		if (contactor != null);
 		{
-			float sizeDifference = otherSize / selfSize;
-			if (sizeDifference >= 3.5)
-			{
-				Destroy (gameObject);
-				contactor.addSize(selfSize);
-			}
+			float selfSize = contactee.getSize ();
+			float otherSize = contactor.getSize ();
 
+
+			if (other.tag == "Player") {
+				float sizeDifference = otherSize / selfSize;
+				if (sizeDifference >= 3.5) {
+					Destroy (gameObject);
+					contactor.addSize (selfSize);
+				}
+
+			}
 		}
 
 	}
