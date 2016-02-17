@@ -6,12 +6,16 @@ public class tapToMovePluto : MonoBehaviour {
 
 	// public member variables
 	public float acceleration = 0.3f;
-	public float pluto_max_speed = 20.0f;
+	public float start_max_speed = 20.0f;
+	public float speed_increase_decay_rate = -15.0f;
+
 
 	// private member variables
 	private Camera main_camera;
 	private plutoBasicAttack pluto_basic_attack;
 	private Rigidbody pluto_rigid_body;
+	private float max_speed_scaled;
+	private float acceleration_scaled;
 
 	// Use this for initialization
 	void Start () {
@@ -37,11 +41,20 @@ public class tapToMovePluto : MonoBehaviour {
 		return trajectory;
 	}
 
+	// update pluto's speed by his scale
+	void updateSpeed()
+	{
+		max_speed_scaled = start_max_speed * Mathf.Exp(-gameObject.transform.localScale.x / speed_increase_decay_rate);
+		acceleration_scaled = acceleration * Mathf.Exp(-gameObject.transform.localScale.x / speed_increase_decay_rate);
+	}
 
-	void acceleratePlutoInTrajectoryDirection (Vector3 trajectory) {
+	void acceleratePlutoInTrajectoryDirection (Vector3 trajectory) 
+	{		
+		updateSpeed ();
+
 		// clamp Pluto's velocity to pluto max speed
-		if ((pluto_rigid_body.velocity + trajectory*acceleration).magnitude <= pluto_max_speed)
-			pluto_rigid_body.velocity += trajectory*acceleration;
+		if ((pluto_rigid_body.velocity + trajectory*acceleration_scaled).magnitude <= max_speed_scaled)
+			pluto_rigid_body.velocity += trajectory*acceleration_scaled;
 	}
 
 
@@ -51,7 +64,7 @@ public class tapToMovePluto : MonoBehaviour {
 			Ray ray = main_camera.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit_info;
 			bool hit;
-
+		
 			hit = Physics.Raycast (ray, out hit_info);
 
 			// if you didn't hit anything or you didn't hit pluto
