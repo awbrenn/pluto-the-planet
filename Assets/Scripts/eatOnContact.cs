@@ -14,22 +14,20 @@ public class eatOnContact : MonoBehaviour {
 		sizeScale contactee = gameObject.GetComponent<sizeScale>();
 		sizeScale contactor = other.gameObject.GetComponent<sizeScale> ();
 
-		if (contactor != null);
-		{
-			float selfSize = contactee.getSize ();
-			float otherSize = contactor.getSize ();
-
-
-			if (other.tag == "Player") {
-				float sizeDifference = otherSize / selfSize;
-				if (sizeDifference >= 3.5) {
-					Destroy (gameObject);
-					contactor.addSize (selfSize);
-				}
-
-			}
+		if (contactor == null) {
+			return;
 		}
 
+		float selfSize = contactee.getSize ();
+		float otherSize = contactor.getSize ();
+
+		if (other.tag == "Player") {
+			float sizeDifference = otherSize / selfSize;
+			if (sizeDifference >= 3.5) {
+				Destroy (gameObject);
+				contactor.addSize (selfSize);
+			}
+		}
 	}
 
-}
+}	
