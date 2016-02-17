@@ -21,8 +21,6 @@ public class plutoBasicAttack : MonoBehaviour {
 
 	void spawnProjectile (Vector3 projectile_trajectory, float speed) {
 		Vector3 projectile_initial_position;
-		SphereCollider projectile_collider;
-		SphereCollider pluto_collider = transform.GetComponent<SphereCollider> () as SphereCollider;
 
 
 		// clamp speed to max speed
@@ -31,9 +29,9 @@ public class plutoBasicAttack : MonoBehaviour {
 		}
 
 		GameObject projectile = Instantiate (projectile_prefab) as GameObject;
-		projectile_collider = projectile.transform.GetComponent<SphereCollider> () as SphereCollider;
 
-		projectile_initial_position = projectile_trajectory * (pluto_collider.radius + projectile_collider.radius) + transform.position;
+		// using scale of 
+		projectile_initial_position = projectile_trajectory * (transform.localScale.x) + transform.position;
 		projectile.transform.position = projectile_initial_position;
 
 		Rigidbody projectile_rigid_body = projectile.GetComponent<Rigidbody> ();
@@ -46,12 +44,12 @@ public class plutoBasicAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown (0)) {
-			Ray ray = main_camera.ScreenPointToRay(Input.mousePosition);
+			Ray camera_ray = main_camera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
-			//Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
+			Debug.DrawRay (camera_ray.origin, camera_ray.direction * 10, Color.yellow);
 
 			// Check to see of the user pressed pluto
-			if (Physics.Raycast (ray, out hit) && !pluto_pressed) {
+			if (Physics.Raycast (camera_ray, out hit, Mathf.Infinity, 7) && !pluto_pressed) {
 				if (hit.transform.name == "Pluto") {
 					start_position = Input.mousePosition;
 					pluto_pressed = true;
