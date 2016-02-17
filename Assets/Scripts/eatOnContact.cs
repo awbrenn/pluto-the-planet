@@ -9,25 +9,24 @@ public class eatOnContact : MonoBehaviour {
 	
 	}
 
-	void OnTriggerEnter (Collider other)
+	void OnCollisionEnter (Collision other)
 	{
-		sizeScale contactee = gameObject.GetComponent<sizeScale>();
-		sizeScale contactor = other.gameObject.GetComponent<sizeScale> ();
+		sizeScale contacteeSS = gameObject.GetComponent<sizeScale>();
+		sizeScale contactorSS = other.gameObject.GetComponent<sizeScale> ();
 
-		if (contactor == null) {
+		if (contactorSS == null) {
 			return;
 		}
 
-		float selfSize = contactee.getSize ();
-		float otherSize = contactor.getSize ();
+		float selfSize = contacteeSS.getSize ();
+		float otherSize = contactorSS.getSize ();
 
-		if (other.tag == "Player") {
+		if (other.gameObject.tag == "Player") {
 			float sizeDifference = otherSize / selfSize;
 			if (sizeDifference >= 3.5) {
 				Destroy (gameObject);
-				contactor.addSize (selfSize);
+				contactorSS.addSize (selfSize);
 			}
 		}
 	}
-
 }	
