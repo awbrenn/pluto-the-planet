@@ -13,42 +13,34 @@ public class eatOnContact : MonoBehaviour {
 
 	void OnCollisionEnter (Collision other)
 	{
-		sizeScale contacteeSS = gameObject.GetComponent<sizeScale>();
-/*		sizeScale contactorSS = other.gameObject.GetComponent<sizeScale> ();
-
-		if (contactorSS == null) {
-			return;
-		}
-
-		float selfSize = contacteeSS.getSize ();
-		float otherSize = contactorSS.getSize ();*/
+		objectHealth contacteeHealth = gameObject.GetComponent<objectHealth>();
 
 		if (other.gameObject.tag == "Player") {
-			sizeScale contactorSS = other.gameObject.GetComponent<sizeScale> ();
-			float selfSize = contacteeSS.getSize ();
-			float otherSize = contactorSS.getSize ();
-			float sizeDifference = otherSize / selfSize;
-			if (sizeDifference >= 3.5) {
+			objectHealth contactorHealth = other.gameObject.GetComponent<objectHealth> ();
+			int selfHealth = contacteeHealth.getHealth ();
+			int otherHealth = contactorHealth.getHealth ();
+			float healthDifference = otherHealth / selfHealth;
+			if (healthDifference >= 0.35) {
 				Destroy (gameObject);
-				contactorSS.addSize (selfSize);
+				contactorHealth.adjustHealth (selfHealth);
 			}
 		}
 		if (other.gameObject.tag == "projectile"){
 			projectileDamage hit = other.gameObject.GetComponent<projectileDamage> ();
-			float selfSize = contacteeSS.getSize ();
-			float hitDamage = hit.getDamage ();
+			int selfSize = contacteeHealth.getHealth ();
+			int hitDamage = (int) (hit.getDamage ());
 
 			if (selfSize > hitDamage) {
-				contacteeSS.addSize (-hitDamage);
+				contacteeHealth.adjustHealth (-hitDamage);
 				Destroy(other.gameObject);
 				int chunks = (int)(hitDamage/10);
 				for (int i=0; i < chunks; i++){
-					float foodSize = hitDamage/chunks;
+					int foodHealth = (int) (hitDamage/chunks);
 					Vector3 direction = other.contacts [0].normal;
 					Vector3 startPoint = other.contacts [0].point;
 
 					GameObject food = foodTypes [Random.Range (0, foodTypes.Length)];
-					food.GetComponent<sizeScale> ().setSize (foodSize);
+					food.GetComponent<objectHealth> ().instantiateHealth (foodHealth);
 
 					Quaternion spawnRotation = Quaternion.identity;
 
