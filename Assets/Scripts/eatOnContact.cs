@@ -15,7 +15,7 @@ public class eatOnContact : MonoBehaviour {
 	{
 		objectHealth contacteeHealth = gameObject.GetComponent<objectHealth>();
 
-		if (other.gameObject.tag == "Player") {
+		if (other.gameObject.tag == "Player" || other.gameObject.tag == "Boss") {
 			objectHealth contactorHealth = other.gameObject.GetComponent<objectHealth> ();
 			int selfHealth = contacteeHealth.getHealth ();
 			int otherHealth = contactorHealth.getHealth ();
@@ -23,6 +23,15 @@ public class eatOnContact : MonoBehaviour {
 			if (healthDifference >= 0.35) {
 				Destroy (gameObject);
 				contactorHealth.adjustHealth (selfHealth);
+			}
+			else {
+				float impactDamage = (otherHealth + selfHealth) * .1f;
+				print ("impact damage:  " + impactDamage);
+				contacteeHealth.adjustHealth ((int)- (impactDamage/2));
+				contactorHealth.adjustHealth ((int)- (impactDamage/2));
+
+				print (contactorHealth.getHealth ());
+				print (contacteeHealth.getHealth ());
 			}
 		}
 		if (other.gameObject.tag == "projectile"){
@@ -36,15 +45,35 @@ public class eatOnContact : MonoBehaviour {
 				int chunks = (int)(hitDamage/10);
 				for (int i=0; i < chunks; i++){
 					int foodHealth = (int) (hitDamage/chunks);
-					Vector3 direction = other.contacts [0].normal;
+
 					Vector3 startPoint = other.contacts [0].point;
+					Vector3 testPoint = startPoint;
+					Vector3 spawnPosition = startPoint;
 
 					GameObject food = foodTypes [Random.Range (0, foodTypes.Length)];
 					food.GetComponent<objectHealth> ().instantiateHealth (foodHealth);
 
+					while (startPoint == spawnPosition) {
+						Vector2 randGen = Random.insideUnitCircle * (food.transform.localScale.x);
+						Vector3 randPoint = new Vector3 (randGen.x, 0, randGen.y);
+						testPoint += randPoint;
+						bool test = testNewObjectPosition (food, testPoint, food.transform.localScale.x);  //assuming base size is 100 here
+
+						if (test){
+							spawnPosition = testPoint;
+						}
+					}
+
 					Quaternion spawnRotation = Quaternion.identity;
 
-					Instantiate (food, startPoint, spawnRotation);
+					GameObject newFood = (GameObject) Instantiate (food, spawnPosition, spawnRotation);
+
+					Vector3 direction = other.contacts [0].normal;
+					Vector3 dirRandomizor = Random.insideUnitSphere * 2f;
+					Vector3 velocityRB = direction + dirRandomizor + other.relativeVelocity;
+
+					Rigidbody foodRB = newFood.GetComponent<Rigidbody>();
+					foodRB.AddForce (-velocityRB * 8f);
 				}
 
 			}
@@ -54,5 +83,19 @@ public class eatOnContact : MonoBehaviour {
 			}
 
 		}
+	}
+
+	public bool testNewObjectPosition(GameObject food, Vector3 checkPosition, float foodScale) {
+		bool check = true;
+		Collider[] hitColliders;
+
+		hitColliders = Physics.OverlapSphere(checkPosition, foodScale, 7); // the int 7 masks out layer 8 +, which now only holds the boundary spheres
+
+		if (hitColliders.Length > 0) {
+			check = false;
+		}
+
+		return check;
+
 	}
 }	

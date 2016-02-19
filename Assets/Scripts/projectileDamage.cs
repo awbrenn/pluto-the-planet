@@ -8,6 +8,7 @@ public class projectileDamage : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		baseDamage = baseDamage * 10f;
 		damage = baseDamage * transform.localScale.x;
 	}
 
