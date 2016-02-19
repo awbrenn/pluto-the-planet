@@ -11,10 +11,10 @@ public class projectileDamage : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		damage = baseDamage;
-		setScale = damage / (damageSizeScale/2); //makes larger projectiles for visibility
-		scaleHolder = new Vector3 (setScale, setScale, setScale);
-		transform.localScale = scaleHolder;
+		damage = baseDamage * transform.localScale.x;
+		//setScale = damage / (damageSizeScale/2); //makes larger projectiles for visibility
+		//scaleHolder = new Vector3 (setScale, setScale, setScale);
+		//transform.localScale = scaleHolder;
 	}
 
 	public float getDamage (){
