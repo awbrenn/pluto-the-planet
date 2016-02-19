@@ -3,7 +3,7 @@ using System.Collections;
 
 public class plutoBasicAttack : MonoBehaviour {
 	public float projectile_max_speed = 10.0f;
-	public float percentageOfPlutosScale = 0.1f;
+	public float percentageOfPlutosHealth = 0.03f;
 
 	private bool pluto_pressed = false;
 	private float speed;
@@ -31,13 +31,16 @@ public class plutoBasicAttack : MonoBehaviour {
 
 		GameObject projectile = Instantiate (projectile_prefab) as GameObject;
 
-		// setting the projectiles scale to 10% that of plutos
-		float setScale = transform.localScale.x * percentageOfPlutosScale;
-		projectile.transform.localScale = new Vector3 (setScale, setScale, setScale);
+		// setting the projectiles health to percentageOfPlutosHealth that of plutos
+		float plutosHealth = GetComponent<objectHealth> ().getHealth ();
+		projectile.GetComponent<objectHealth> ().instantiateHealth((int)(plutosHealth * percentageOfPlutosHealth));
 
 		// using scale of Pluto to determine the initial position of projectile 
 		projectile_initial_position = projectile_trajectory * (transform.localScale.x/2.0f + projectile.transform.localScale.x/2.0f) + transform.position;
 		projectile.transform.position = projectile_initial_position;
+
+		//GameObject newProjectile = (GameObject) Instantiate (projectile);
+
 
 		Rigidbody projectile_rigid_body = projectile.GetComponent<Rigidbody> ();
 		Vector3 pluto_velocity = (GetComponent<Rigidbody> ()).velocity;
