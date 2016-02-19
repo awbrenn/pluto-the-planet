@@ -44,29 +44,6 @@ public class sizeScale : MonoBehaviour
 		}
 	}
 
-/*		if (volume < newVolume) {
-
-			volume += Time.deltaTime * sC;
-			if (volume > newVolume) 
-			{
-				volume = newVolume;
-				changeSize ();
-			}
-			changeSize ();
-		}
-		if (volume > newVolume) {
-
-			volume -= Time.deltaTime * sC;
-			if (volume > newVolume) 
-			{
-				volume = newVolume;
-				changeSize ();
-			}
-			changeSize ();
-		}
-
-	}*/
-
 	public float getSize () {
 		return size;
 	}
@@ -82,12 +59,8 @@ public class sizeScale : MonoBehaviour
 	}
 
 	public void addSize (float sizeChange) {
-		print ("incoming sizeChange:  "+sizeChange);
 		newSize += sizeChange;
-		print ("updated size" + newSize);
 		sC = newSize - size;
 		sC = sC * sizeChangeOverTimeScale;
-		print ("sizeChange scaler" + sC);
-
 	}
 }
