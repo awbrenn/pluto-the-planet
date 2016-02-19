@@ -7,10 +7,6 @@ public class sizeScale : MonoBehaviour
 	public float baseSize = 100f;
 	public float sizeChangeOverTimeScale = 1f;
 
-	private float volume;
-	private float baseVolume;
-	private float newVolume;
-
 	private float size;
 	private float setScale;
 	private Vector3 scaleHolder;
@@ -19,42 +15,36 @@ public class sizeScale : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-		volume = (4f / 3f) * (3.14f) * (startingSize) * (startingSize) * (startingSize);
-		baseVolume= (4f / 3f) * (3.14f) * (baseSize) * (baseSize) * (baseSize);
-
-//		size = startingSize;
-		setScale = volume / baseVolume;
+		size = startingSize;
+		setScale = size/baseSize;
 		scaleHolder = new Vector3 (setScale, setScale, setScale);
 		transform.localScale = scaleHolder;
-		newVolume = volume;
-
-//		newSize = startingSize;
+		newSize = size;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-/*		if (size < newSize) {
+		if (size < newSize) {
 
 			size += Time.deltaTime * sC;
-			if (size > newSize) 
-				{
-				size = newSize;
-				changeSize ();
-				}
-			changeSize ();
-		}
-		if (size > newSize) {
-			
-			size -= Time.deltaTime * sC;
-			if (size > newSize) 
-			{
+			if (size > newSize) {
 				size = newSize;
 				changeSize ();
 			}
 			changeSize ();
 		}
-*/
-		if (volume < newVolume) {
+		if (size > newSize) {
+			
+			size -= Time.deltaTime * sC;
+			if (size > newSize) {
+				size = newSize;
+				changeSize ();
+			}
+			changeSize ();
+		}
+	}
+
+/*		if (volume < newVolume) {
 
 			volume += Time.deltaTime * sC;
 			if (volume > newVolume) 
@@ -75,27 +65,29 @@ public class sizeScale : MonoBehaviour
 			changeSize ();
 		}
 
-	}
+	}*/
 
 	public float getSize () {
-		size = volume;
 		return size;
 	}
 
 	public void setSize (float randSize) {
-		volume = randSize;
-		startingSize = volume;
+		startingSize = randSize;
 	}
 
 	public void changeSize() {
-		setScale = volume / baseVolume;
+		setScale = size / baseSize;
 		scaleHolder = new Vector3 (setScale, setScale, setScale);
 		transform.localScale = scaleHolder;
 	}
 
 	public void addSize (float sizeChange) {
-		newVolume += sizeChange;
-		sC = newVolume - volume;
+		print ("incoming sizeChange:  "+sizeChange);
+		newSize += sizeChange;
+		print ("updated size" + newSize);
+		sC = newSize - size;
 		sC = sC * sizeChangeOverTimeScale;
+		print ("sizeChange scaler" + sC);
+
 	}
 }
