@@ -5,24 +5,33 @@ public class moveGrowDie : MonoBehaviour {
 	public GameObject maxRangeBoundary;
 	public float startScale = .1f;
 	public float maxScale = 8f;
-	public float speed = 3f;
+	public float speed = 2f;
 	public float scaleSpeed = 3f;
-	public float lifeLength = 5f;
+	public float lifeLength = 2f;
+
+	public float maxDamage = 10f;
+	public float damageRepeatTime = 1f;
 
 //	private Vector3 originPoint;
 	private Vector3 targetPoint;
 	private Vector3 targetScale;
 
-	private float max;
+//	private float max;
+
+	private bool isDoingDamage = false;
+	private float timeSinceEnter;
 
 	// Use this for initialization
 	void Start () {
-		transform.localScale = new Vector3 (startScale, startScale, startScale);
-		SphereCollider oV = maxRangeBoundary.transform.GetComponent<SphereCollider> () as SphereCollider;
-		max = oV.radius * maxRangeBoundary.transform.localScale.x;
-		Vector2 randGen = Random.insideUnitCircle * max;
+		GameObject pluto = GameObject.FindGameObjectWithTag ("Player");
+		Vector3 plutoLoc = pluto.transform.position;
 
-		targetPoint = new Vector3 (randGen.x, 0, randGen.y);
+		transform.localScale = new Vector3 (startScale, startScale, startScale);
+
+		Vector2 randGen = Random.insideUnitCircle * 2f;
+		Vector3 randomVec = new Vector3 (randGen.x, 0, randGen.y);
+
+		targetPoint = plutoLoc + randomVec;
 		targetScale = new Vector3 (maxScale, maxScale, maxScale);
 	}
 	
@@ -35,11 +44,38 @@ public class moveGrowDie : MonoBehaviour {
 		if (transform.localScale.x == maxScale && transform.position == targetPoint) {
 			StartCoroutine (pauseAndKill());
 		}
+
+		float timeNow = Time.time;
+		if (isDoingDamage == true && (timeNow >= (timeSinceEnter + damageRepeatTime))) {
+			GameObject player = GameObject.FindGameObjectWithTag ("Player");
+			objectHealth playerHealth = player.gameObject.GetComponent<objectHealth> ();
+			playerHealth.adjustHealth ((int)-maxDamage);
+			timeSinceEnter = timeNow;
+		}
 	}
 
 	IEnumerator pauseAndKill (){
-		yield return new WaitForSeconds (5);
+		yield return new WaitForSeconds (lifeLength);
 		Destroy (gameObject);
 	}
 
+/*	void OnTriggerStay(Collider other){
+		if (other.gameObject.tag == "Player") {
+			objectHealth playerHealth = other.gameObject.GetComponent<objectHealth> ();
+			playerHealth.adjustHealth ((int)-maxDamage);
+		}
+	}*/
+
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag == "Player") {
+			timeSinceEnter = Time.time;
+			isDoingDamage = true;
+		}
+	}
+
+	void OnTriggerExit(Collider other){
+		if (other.gameObject.tag == "Player") {
+			isDoingDamage = false;
+		}
+	}
 }
