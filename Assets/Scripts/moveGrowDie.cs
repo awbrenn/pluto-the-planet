@@ -59,13 +59,6 @@ public class moveGrowDie : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
-/*	void OnTriggerStay(Collider other){
-		if (other.gameObject.tag == "Player") {
-			objectHealth playerHealth = other.gameObject.GetComponent<objectHealth> ();
-			playerHealth.adjustHealth ((int)-maxDamage);
-		}
-	}*/
-
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "Player") {
 			timeSinceEnter = Time.time;
