@@ -14,7 +14,6 @@ public class colorFood : MonoBehaviour {
 		plutosHealth = GameObject.Find ("Pluto").GetComponent<objectHealth> () as objectHealth;
 		foodsHealth = GetComponent<objectHealth> () as objectHealth;
 		foodRenderer = GetComponent<Renderer> ();
-		//GetComponent<Renderer> ().material.color = Color.red;
 	}
 	
 	// Update is called once per frame
