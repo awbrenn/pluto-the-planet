@@ -80,7 +80,7 @@ public class cameraController : MonoBehaviour {
 
 				camLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
 				transform.position = Vector3.Lerp(transform.position, camLoc, step);
-				transform.rotation = Quaternion.RotateTowards(transform.rotation, outerLookDir, step);
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, outerLookDir, (step*10f));
 				spd = speed;
 			}
 		}
