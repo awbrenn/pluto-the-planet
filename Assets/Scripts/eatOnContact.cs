@@ -4,6 +4,7 @@ using System.Collections;
 
 public class eatOnContact : MonoBehaviour {
 	public GameObject[] foodTypes;
+	public float healthTransferMultiplier = 1f;
 
 
 	// Use this for initialization
@@ -22,7 +23,7 @@ public class eatOnContact : MonoBehaviour {
 			float healthDifference = otherHealth / selfHealth;
 			if (healthDifference >= 0.35) {
 				Destroy (gameObject);
-				contactorHealth.adjustHealth (selfHealth);
+				contactorHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
 			}
 			else {
 				float impactDamage = (otherHealth + selfHealth) * .1f;
@@ -54,7 +55,11 @@ public class eatOnContact : MonoBehaviour {
 					food.GetComponent<objectHealth> ().instantiateHealth (foodHealth);
 
 					while (startPoint == spawnPosition) {
-						Vector2 randGen = Random.insideUnitCircle * (food.transform.localScale.x);
+						float foodScale = food.transform.localScale.x;
+
+//						print (foodScale);
+
+						Vector2 randGen = Random.insideUnitCircle * .5f;
 						Vector3 randPoint = new Vector3 (randGen.x, 0, randGen.y);
 						testPoint += randPoint;
 						bool test = testNewObjectPosition (food, testPoint, food.transform.localScale.x);  //assuming base size is 100 here
