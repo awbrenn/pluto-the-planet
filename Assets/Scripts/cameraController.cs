@@ -30,16 +30,6 @@ public class cameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-/*		Vector3 camLocTest = transform.position;
-		camLocTest.y = 0f;
-		Vector3 playerLocTest = player.transform.position;
-		float camPlayerDistance = (camLocTest - playerLocTest).magnitude;
-		if (camPlayerDistance > 2) {
-			spd += camPlayerDistance;
-		}
-		else {
-			spd = speed;
-		}*/
 		if (mainGamePlay){
 			float playerHealth = (float)player.GetComponent<objectHealth> ().getHealth();
 			cameraHeight = ((playerHealth/100) + camHeight);
@@ -57,23 +47,14 @@ public class cameraController : MonoBehaviour {
 				Vector3 pLoc = player.transform.position;
 				Vector3 bLoc = boss.transform.position;
 				Vector3 lookPos = ((bLoc - pLoc / 3) + pLoc);
-//				float playerBossDistance = Vector3.Distance(bLoc, pLoc);
 
-//				Ray playerToBoss = new Ray (pLoc, bLoc);
-//				Vector3 newCLoc = playerToBoss.GetPoint (playerBossDistance);
 				camLoc = new Vector3(player.transform.position.x, newCameraHeight, player.transform.position.z);
-//				camLoc.y = newCameraHeight;
 
-
-				print (lookPos);
-//				print ("playerLocation" + pLoc);
-//				print ("camLocation: "+newCLoc);
+//				print (lookPos);
 
 				transform.position = Vector3.Lerp (transform.position, camLoc, step);
 				transform.LookAt (lookPos);
 				spd = speed;
-
-//				Vector3 adjustedCamPoint = Ray playerToBoss ();
 			}
 			else {
 //				Debug.Log ("not in boss volume");

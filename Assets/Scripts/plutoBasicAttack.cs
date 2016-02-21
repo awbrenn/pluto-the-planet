@@ -3,8 +3,9 @@ using System.Collections;
 
 public class plutoBasicAttack : MonoBehaviour {
 	public float projectile_max_speed = 10.0f;
-	public float percentageOfPlutosHealth = 0.03f;
+	public float percentageOfPlutosHealthForHealth = 0.03f;
 	public float percentageOfPlutosHealthForDamage = .1f;
+	public int minDamage = 10;
 
 	private bool pluto_pressed = false;
 	private float speed;
@@ -23,7 +24,7 @@ public class plutoBasicAttack : MonoBehaviour {
 	}
 
 
-	void spawnProjectile (Vector3 projectile_trajectory, float speed) {
+	void spawnProjectile (Vector3 projectile_trajectory, float speed, bool addPlutoVelocity) {
 		Vector3 projectile_initial_position;
 
 
@@ -36,8 +37,13 @@ public class plutoBasicAttack : MonoBehaviour {
 
 		// setting the projectiles health to percentageOfPlutosHealth that of plutos
 		float plutosHealth = GetComponent<objectHealth> ().getHealth ();
-		projectile.GetComponent<objectHealth> ().instantiateHealth((int)(plutosHealth * percentageOfPlutosHealth));
+		projectile.GetComponent<objectHealth> ().instantiateHealth((int)(plutosHealth * percentageOfPlutosHealthForHealth));
 		float projectileDamage = plutosHealth * percentageOfPlutosHealthForDamage;
+
+		if (projectileDamage < minDamage) {
+			projectileDamage = minDamage;
+		}
+			
 
 		projectile.GetComponent<projectileDamage> ().setDamage (projectileDamage);
 
@@ -48,10 +54,17 @@ public class plutoBasicAttack : MonoBehaviour {
 		projectile.transform.position = projectile_initial_position;
 
 
-		Rigidbody projectile_rigid_body = projectile.GetComponent<Rigidbody> ();
+		Rigidbody projectile_rigid_body = projectile.GetComponent<Rigidbody> () as Rigidbody;
 		Vector3 pluto_velocity = (GetComponent<Rigidbody> ()).velocity;
-		projectile_rigid_body.velocity = (projectile_trajectory * speed) + pluto_velocity;
-	
+		if (addPlutoVelocity) {
+			projectile_rigid_body.velocity = (projectile_trajectory * speed + pluto_velocity);
+		} else {
+			projectile_rigid_body.velocity = (projectile_trajectory * speed);
+		}
+			
+		gameObject.GetComponent<objectHealth> ().adjustHealth ((int)((-1.0f) * plutosHealth * percentageOfPlutosHealthForDamage));
+		Debug.Log ("pluto health loss on projectile spawn: " + (int)((-1.0f) * plutosHealth * percentageOfPlutosHealthForDamage));
+
 	}
 
 
@@ -80,8 +93,9 @@ public class plutoBasicAttack : MonoBehaviour {
 			Vector3 plutoVelocity = GetComponent<Rigidbody> ().velocity;
 
 			if ((transform.position - bossPosition).magnitude < bossVolumeRadius) {
-				projectile_trajectory = (bossPosition - transform.position - plutoVelocity/3.0f).normalized;
-				speed = 20.0f;
+				projectile_trajectory = (bossPosition - transform.position).normalized;
+				speed = projectile_max_speed;
+				spawnProjectile (projectile_trajectory, speed, false);
 			}
 			else {
 				// if the player didn't swipe, we don't spawn a projectile
@@ -100,9 +114,8 @@ public class plutoBasicAttack : MonoBehaviour {
 
 				// get the speed (*note speed_scale is a fudge factor, may need to refactor)
 				speed = (float)((end_position - start_position).magnitude/speed_scale) / delta_time;
+				spawnProjectile (projectile_trajectory, speed, true);
 			}
-
-			spawnProjectile (projectile_trajectory, speed);
 
 			pluto_pressed = false;
 		}
