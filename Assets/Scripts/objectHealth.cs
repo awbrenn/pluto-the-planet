@@ -5,6 +5,7 @@ public class objectHealth : MonoBehaviour {
 	public int startingHealth = 100;
 	public int baseHealth = 100;
 	public float timePeriodOfHealthChange = 1.0f;
+	public float scale = 2f;
 
 	private float scaleConstant;
 	private int newHealth;
@@ -27,9 +28,11 @@ public class objectHealth : MonoBehaviour {
 	}
 
 	public void instantiateHealth(int iHealth) {
+		Debug.Log ("Instantiated health: " + iHealth);
 		health = iHealth;
 		newHealth = iHealth;
 		startingHealth = iHealth;
+		updateScale ();
 	}
 
 	public int getHealth () {
@@ -69,7 +72,7 @@ public class objectHealth : MonoBehaviour {
 	void updateScale () {
 		float setScale = calculateDiameter(health) * scaleConstant;
 
-		transform.localScale = new Vector3 (setScale, setScale, setScale);
+		transform.localScale = new Vector3 (setScale, setScale, setScale) * scale;
 	}
 
 	// Update is called once per frame

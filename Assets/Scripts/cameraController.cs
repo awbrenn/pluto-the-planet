@@ -6,6 +6,7 @@ public class cameraController : MonoBehaviour {
 	public GameObject bossVolume;
 	public GameObject boss;
 	public float speed = 1f;
+	public float camHeight = 10f;
 
 	private Vector3 playerLoc;
 	private Vector3 camLoc;
@@ -22,7 +23,7 @@ public class cameraController : MonoBehaviour {
 	void Start () {
 		outerLookDir = Quaternion.Euler(90, 0, 0);
 		spd = speed;
-		cameraHeight = 2f;
+		cameraHeight = camHeight;
 		playerLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
 		transform.position = playerLoc;
 	}
@@ -41,7 +42,7 @@ public class cameraController : MonoBehaviour {
 		}*/
 		if (mainGamePlay){
 			float playerHealth = (float)player.GetComponent<objectHealth> ().getHealth();
-			cameraHeight = ((playerHealth/100) + 5f);
+			cameraHeight = ((playerHealth/100) + camHeight);
 
 			inBossVolume = bossVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
 

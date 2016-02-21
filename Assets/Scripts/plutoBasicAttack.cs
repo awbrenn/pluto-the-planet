@@ -4,6 +4,7 @@ using System.Collections;
 public class plutoBasicAttack : MonoBehaviour {
 	public float projectile_max_speed = 10.0f;
 	public float percentageOfPlutosHealth = 0.03f;
+	public float percentageOfPlutosHealthForDamage = .1f;
 
 	private bool pluto_pressed = false;
 	private float speed;
@@ -34,6 +35,11 @@ public class plutoBasicAttack : MonoBehaviour {
 		// setting the projectiles health to percentageOfPlutosHealth that of plutos
 		float plutosHealth = GetComponent<objectHealth> ().getHealth ();
 		projectile.GetComponent<objectHealth> ().instantiateHealth((int)(plutosHealth * percentageOfPlutosHealth));
+		float projectileDamage = plutosHealth * percentageOfPlutosHealthForDamage;
+
+		projectile.GetComponent<projectileDamage> ().setDamage (projectileDamage);
+
+//		Debug.Log ("projectile damage in pba:  " + projectile.GetComponent<projectileDamage> ().getDamage());
 
 		// using scale of Pluto to determine the initial position of projectile 
 		projectile_initial_position = projectile_trajectory * (transform.localScale.x/2.0f + projectile.transform.localScale.x/2.0f) + transform.position;

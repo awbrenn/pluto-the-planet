@@ -38,6 +38,9 @@ public class loveArrowStop : MonoBehaviour {
 		if (other.gameObject.tag != "Boss") {
 			Destroy (gameObject);
 			other.attachedRigidbody.velocity = new Vector3 (0,0,0);
+			if (other.gameObject.tag == "projectile"){
+				Destroy (other.gameObject);
+			}
 		}
 	}
 }

@@ -40,29 +40,34 @@ public class eatOnContact : MonoBehaviour {
 			int selfSize = contacteeHealth.getHealth ();
 			int hitDamage = (int) (hit.getDamage ());
 
+//			Debug.Log ("projectile damage eoc:  " + hitDamage);
+
 			if (selfSize > hitDamage) {
-				contacteeHealth.adjustHealth (-hitDamage);
+				int foodHealth;
+//				Debug.Log ("hit object health1:  " + contacteeHealth.getHealth() + " hit damage: " + hitDamage);
+				int newHealth = contacteeHealth.getHealth () - hitDamage;
+
+				contacteeHealth.instantiateHealth (newHealth);
+//				Debug.Log ("hit object health2:  " + contacteeHealth.getHealth() + "new Health var:  " + newHealth);
+
 				Destroy(other.gameObject);
 				int chunks = (int)(hitDamage/10);
 				for (int i=0; i < chunks; i++){
-					int foodHealth = (int) (hitDamage/chunks);
+					foodHealth = (int) (hitDamage/chunks);
 
 					Vector3 startPoint = other.contacts [0].point;
 					Vector3 testPoint = startPoint;
 					Vector3 spawnPosition = startPoint;
 
 					GameObject food = foodTypes [Random.Range (0, foodTypes.Length)];
-					food.GetComponent<objectHealth> ().instantiateHealth (foodHealth);
 
 					while (startPoint == spawnPosition) {
 						float foodScale = food.transform.localScale.x;
 
-//						print (foodScale);
-
 						Vector2 randGen = Random.insideUnitCircle * .5f;
 						Vector3 randPoint = new Vector3 (randGen.x, 0, randGen.y);
 						testPoint += randPoint;
-						bool test = testNewObjectPosition (food, testPoint, food.transform.localScale.x);  //assuming base size is 100 here
+						bool test = testNewObjectPosition (food, testPoint, (food.transform.localScale.x/2f));  //assuming base size is 100 here
 
 						if (test){
 							spawnPosition = testPoint;
@@ -72,6 +77,7 @@ public class eatOnContact : MonoBehaviour {
 					Quaternion spawnRotation = Quaternion.identity;
 
 					GameObject newFood = (GameObject) Instantiate (food, spawnPosition, spawnRotation);
+					newFood.GetComponent<objectHealth> ().instantiateHealth (foodHealth);
 
 					Vector3 direction = other.contacts [0].normal;
 					Vector3 dirRandomizor = Random.insideUnitSphere * 2f;

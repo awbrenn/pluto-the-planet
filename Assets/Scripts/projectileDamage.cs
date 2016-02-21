@@ -3,13 +3,15 @@ using System.Collections;
 
 public class projectileDamage : MonoBehaviour {
 	public float baseDamage = 10f;
+	public float lifeLength = 4f;
 
 	private float damage;
 
 	// Use this for initialization
 	void Start () {
-		baseDamage = baseDamage * 10f;
-		damage = baseDamage * transform.localScale.x;
+		damage = baseDamage;
+
+		StartCoroutine (lifeTimer());
 	}
 
 	public float getDamage (){
@@ -18,5 +20,11 @@ public class projectileDamage : MonoBehaviour {
 
 	public void setDamage (float newDamage){
 		damage = newDamage;
+		baseDamage = newDamage;
+	}
+
+	IEnumerator lifeTimer (){
+		yield return new WaitForSeconds (lifeLength);
+		Destroy (gameObject);
 	}
 }
