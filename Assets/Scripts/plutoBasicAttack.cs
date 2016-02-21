@@ -54,7 +54,7 @@ public class plutoBasicAttack : MonoBehaviour {
 		if (Input.GetMouseButtonDown (0)) {
 			Ray camera_ray = main_camera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
-			Debug.DrawRay (camera_ray.origin, camera_ray.direction * 10, Color.yellow);
+			//Debug.DrawRay (camera_ray.origin, camera_ray.direction * 10, Color.yellow);
 
 			// Check to see of the user pressed pluto
 			if (Physics.Raycast (camera_ray, out hit, Mathf.Infinity, 7) && !pluto_pressed) {

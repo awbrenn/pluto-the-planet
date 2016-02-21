@@ -1,45 +1,20 @@
 fileFormatVersion: 2
-guid: 70c00a2e0e3eb460a9967c85e5f61231
-timeCreated: 1455920349
+guid: 6d05a676a47084b7dae5f2faa79172ad
+timeCreated: 1456071358
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: body
-    100002: cigarrette
-    100004: Leye
-    100006: Leyelash
-    100008: Reye
-    100010: Reyelash
-    100012: //RootNode
-    400000: body
-    400002: cigarrette
-    400004: Leye
-    400006: Leyelash
-    400008: Reye
-    400010: Reyelash
-    400012: //RootNode
-    2300000: body
-    2300002: cigarrette
-    2300004: Leye
-    2300006: Leyelash
-    2300008: Reye
-    2300010: Reyelash
-    3300000: body
-    3300002: cigarrette
-    3300004: Leye
-    3300006: Leyelash
-    3300008: Reye
-    3300010: Reyelash
-    4300000: body
-    4300002: cigarrette
-    4300004: Leye
-    4300006: Leyelash
-    4300008: Reye
-    4300010: Reyelash
+    100000: //RootNode
+    100002: pCylinder1
+    400000: //RootNode
+    400002: pCylinder1
+    2300000: pCylinder1
+    3300000: pCylinder1
+    4300000: pCylinder1
   materials:
     importMaterials: 1
-    materialName: 2
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4

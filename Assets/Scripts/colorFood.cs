@@ -18,8 +18,13 @@ public class colorFood : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		float plutoHealthValue = plutosHealth.getHealth ();
 
-		if (foodsHealth.getHealth () / plutosHealth.getHealth () <= percentageOfPlutosHealthForEating) {
+//		// make sure theres no dividing by zero
+//		if (plutoHealthValue <= 0.0)
+//			plutoHealthValue = 0.001f; // make it some small value
+
+		if (foodsHealth.getHealth () / plutoHealthValue <= percentageOfPlutosHealthForEating) {
 			foodRenderer.material.color = Color.blue;
 		} else {
 			foodRenderer.material.color = Color.red;

@@ -43,7 +43,7 @@ public class TapToMove : MonoBehaviour {
 				endPoint = hit.point;
 				//as we do not want to change the y axis value based on touch position, reset it to original y axis value
 				endPoint.y = yAxis;
-				Debug.Log(endPoint);
+				//Debug.Log(endPoint);
 			}
 
 		}
@@ -55,7 +55,7 @@ public class TapToMove : MonoBehaviour {
 		//set the movement indicator flag to false if the endPoint and current gameobject position are equal
 		else if(flag && Mathf.Approximately(gameObject.transform.position.magnitude, endPoint.magnitude)) {
 			flag = false;
-			Debug.Log("I am here");
+			//Debug.Log("I am here");
 		}
 
 	}
