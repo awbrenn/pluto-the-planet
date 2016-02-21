@@ -29,7 +29,8 @@ public class tapToMovePluto : MonoBehaviour {
 
 
 	Vector3 getNormalizedTrajectory() {
-		Vector3 tap_location_screen_coord = new Vector3(Input.mousePosition.x, Input.mousePosition.y, main_camera.nearClipPlane);
+		float distanceFromCamera = Mathf.Abs((transform.position - main_camera.transform.position).magnitude);
+		Vector3 tap_location_screen_coord = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distanceFromCamera);
 
 		Vector3 tap_location_world_coord = main_camera.ScreenToWorldPoint(tap_location_screen_coord);
 		tap_location_world_coord.y = 0.0f;
