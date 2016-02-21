@@ -76,11 +76,12 @@ public class cameraController : MonoBehaviour {
 			}
 			else {
 //				Debug.Log ("not in boss volume");
-				float step = spd * Time.deltaTime;
+				float step = (spd * 4) * Time.deltaTime;
+				float rotStep = (spd * 100) * Time.deltaTime;
 
 				camLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
 				transform.position = Vector3.Lerp(transform.position, camLoc, step);
-				transform.rotation = Quaternion.RotateTowards(transform.rotation, outerLookDir, (step*10f));
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, outerLookDir, rotStep);
 				spd = speed;
 			}
 		}
