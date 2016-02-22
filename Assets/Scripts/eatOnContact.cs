@@ -5,16 +5,18 @@ using System.Collections;
 public class eatOnContact : MonoBehaviour {
 	public GameObject[] foodTypes;
 	public float healthTransferMultiplier = 1f;
+	public AudioClip hitSound;
+	public AudioClip eatSound;
 
-
+	private AudioSource audioSource;
 	// Use this for initialization
 	void Start () {
-	
 	}
 
 	void OnCollisionEnter (Collision other)
 	{
 		objectHealth contacteeHealth = gameObject.GetComponent<objectHealth>();
+		audioSource = other.gameObject.GetComponent<AudioSource> ();
 
 		if (other.gameObject.tag == "Player" || other.gameObject.tag == "Boss") {
 			objectHealth contactorHealth = other.gameObject.GetComponent<objectHealth> ();
@@ -22,10 +24,12 @@ public class eatOnContact : MonoBehaviour {
 			int otherHealth = contactorHealth.getHealth ();
 			float healthDifference = (float)(selfHealth) / (float)(otherHealth);
 			if (healthDifference <= 0.35f) {
+				audioSource.PlayOneShot (eatSound, 1f);
 				Destroy (gameObject);
 				contactorHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
 			}
 			else {
+				audioSource.PlayOneShot (hitSound, 1f);
 				float impactDamage = (otherHealth + selfHealth) * .1f;
 				print ("impact damage:  " + impactDamage);
 				contacteeHealth.adjustHealth ((int)- (impactDamage/2));
@@ -95,7 +99,6 @@ public class eatOnContact : MonoBehaviour {
 				Destroy (gameObject);
 				Destroy(other.gameObject);
 			}
-
 		}
 	}
 

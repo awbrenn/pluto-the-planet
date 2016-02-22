@@ -6,7 +6,11 @@ public class plutoBasicAttack : MonoBehaviour {
 	public float percentageOfPlutosHealthForHealth = 0.03f;
 	public float percentageOfPlutosHealthForDamage = .1f;
 	public int minDamage = 10;
+	public AudioClip shootSound;
 
+	private AudioSource source;
+	private float volLowRange = 0.5f;
+	private float volHighRange = 1.0f;
 	private bool pluto_pressed = false;
 	private float speed;
 	private Vector3 start_position;
@@ -21,6 +25,8 @@ public class plutoBasicAttack : MonoBehaviour {
 		main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>() as Camera;
 		projectile_prefab = Resources.Load ("Prefabs/defaultProjectile") as GameObject;
 		bossVolumeRadius = GameObject.Find ("BossVolume").transform.localScale.x/2.0f;
+
+		source = GetComponent<AudioSource> ();
 	}
 
 
@@ -65,6 +71,7 @@ public class plutoBasicAttack : MonoBehaviour {
 		gameObject.GetComponent<objectHealth> ().adjustHealth ((int)((-1.0f) * plutosHealth * percentageOfPlutosHealthForDamage));
 		Debug.Log ("pluto health loss on projectile spawn: " + (int)((-1.0f) * plutosHealth * percentageOfPlutosHealthForDamage));
 
+		source.PlayOneShot (shootSound, 1f);
 	}
 
 
