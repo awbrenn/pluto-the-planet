@@ -2,14 +2,13 @@
 using System.Collections;
 
 public class loveArrowStop : MonoBehaviour {
-	public float stopTime = 4f;
+	public float stopTime = 1f;
 	public float lifeLength = 8f;
-	public float speed = 2f;
+	public float speed = 15f;
 
 	private GameObject target;
 	private Vector3 targetLoc;
 	private Vector3 initialLoc;
-
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +24,7 @@ public class loveArrowStop : MonoBehaviour {
 	void Update () {
 		targetLoc = target.transform.position;
 		float step = speed * Time.deltaTime;
-		transform.position = Vector3.Lerp(transform.position, targetLoc, step);
+		transform.position = Vector3.MoveTowards(transform.position, targetLoc, step);
 		StartCoroutine (lifeLengthTimer());
 	}
 
@@ -41,6 +40,9 @@ public class loveArrowStop : MonoBehaviour {
 			if (other.gameObject.tag == "projectile"){
 				Destroy (other.gameObject);
 			}
+			badEffects stop = other.gameObject.GetComponent<badEffects> () as badEffects;
+			stop.loveArrowActivate (stopTime, Time.time);
+
 		}
 	}
 }
