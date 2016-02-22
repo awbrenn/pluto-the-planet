@@ -20,8 +20,8 @@ public class eatOnContact : MonoBehaviour {
 			objectHealth contactorHealth = other.gameObject.GetComponent<objectHealth> ();
 			int selfHealth = contacteeHealth.getHealth ();
 			int otherHealth = contactorHealth.getHealth ();
-			float healthDifference = otherHealth / selfHealth;
-			if (healthDifference >= 0.35) {
+			float healthDifference = (float)(selfHealth) / (float)(otherHealth);
+			if (healthDifference <= 0.35f) {
 				Destroy (gameObject);
 				contactorHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
 			}
@@ -51,9 +51,12 @@ public class eatOnContact : MonoBehaviour {
 //				Debug.Log ("hit object health2:  " + contacteeHealth.getHealth() + "new Health var:  " + newHealth);
 
 				Destroy(other.gameObject);
-				int chunks = (int)(hitDamage/10);
+				int chunks = (int)(hitDamage/5);
+				// temporary making boss not emit any food
+				if (name == "Boss")
+					chunks = 0;
 				for (int i=0; i < chunks; i++){
-					foodHealth = (int) (hitDamage/chunks);
+					foodHealth = (int) (hitDamage/chunks) + 5; // adding fudge 5 points to spawn foods health
 
 					Vector3 startPoint = other.contacts [0].point;
 					Vector3 testPoint = startPoint;

@@ -24,7 +24,7 @@ public class colorFood : MonoBehaviour {
 //		if (plutoHealthValue <= 0.0)
 //			plutoHealthValue = 0.001f; // make it some small value
 
-		if (foodsHealth.getHealth () / plutoHealthValue <= percentageOfPlutosHealthForEating) {
+		if (((float) (foodsHealth.getHealth ()) / (float) (plutoHealthValue)) <= percentageOfPlutosHealthForEating) {
 			foodRenderer.material.color = Color.blue;
 //			Debug.Log ("Pluto's health:  " + plutoHealthValue + "  Food's Health:  " + foodsHealth.getHealth());
 		} else {
