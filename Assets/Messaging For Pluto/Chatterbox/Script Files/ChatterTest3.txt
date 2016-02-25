@@ -1,0 +1,35 @@
+Pos0
+Thumb0
+Clip0
+What are you still doing here?
+Wait is true
+Pos0
+Thumb0
+Clip0
+Sorry to say this, but this story doesn't actually conclude. It was merely an example.
+Wait is true
+Pos0
+Thumb0
+Clip0
+If you're THAT interested in how it ends, why not write the ending yourself after buying this asset, known as Chatterbox?
+Wait is true
+Pos0
+Thumb0
+Clip0
+If that proves insufficient, you might also consider buying Storytelling Framework, made by this same person.
+Wait is true
+Pos0
+Thumb0
+Clip0
+While Chatterbox is useful for exposition and the like during a level, Storytelling Framework is the superior option for cutscenes.
+Wait is true
+Pos0
+Thumb0
+Clip0
+Not that it showed just now, but that's because the creator of Chatterbox didn't want to go through the trouble of coding example gameplay when it's this that's supposed to be front and center.
+Wait is true
+Pos0
+Thumb0
+Clip0
+So yeah. Go buy Chatterbox and Storytelling Framework. You know you want to.
+Wait is true
