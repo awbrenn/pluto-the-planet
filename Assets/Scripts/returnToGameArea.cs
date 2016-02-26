@@ -3,13 +3,15 @@ using System.Collections;
 
 public class returnToGameArea : MonoBehaviour {
 	public float accelerationTowardsCenter = 1.0f;
-	public GameObject boarderVolume;
+	public GameObject boarderVolumePrefab;
 
-	float boarderVolumeRadius;
-	Rigidbody rigidBody;
+	private float boarderVolumeRadius;
+	private Rigidbody rigidBody;
+	private GameObject boarderVolume;
 	// Use this for initialization
 	void Start () {
 		// get the radius of the growth volume
+		boarderVolume = GameObject.FindGameObjectWithTag(boarderVolumePrefab.tag);
 		boarderVolumeRadius = boarderVolume.transform.localScale.x / 2.0f;
 		rigidBody = GetComponent<Rigidbody> () as Rigidbody;
 	}
