@@ -37,7 +37,8 @@ public class cameraController : MonoBehaviour {
 		outerLookDir = Quaternion.Euler(90, 0, 0);
 		spd = speed;
 		cameraHeight = camHeight;
-		camLoc = new Vector3 (boss.transform.position.x, 5f, boss.transform.position.z);
+		float bossCamHeight = (boss.transform.localScale.y / 2f) + 5f;
+		camLoc = new Vector3 (boss.transform.position.x, bossCamHeight, boss.transform.position.z);
 		transform.position = camLoc;
 
 		GameObject safeVolume = GameObject.FindGameObjectWithTag ("Safe Volume");
@@ -65,7 +66,7 @@ public class cameraController : MonoBehaviour {
 			}
 		}
 
-		if(plutoZoomLook){
+/*		if(plutoZoomLook){
 			playerLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
 
 //			Debug.Log ("begin zoom in to pluto");
@@ -76,7 +77,7 @@ public class cameraController : MonoBehaviour {
 				StartCoroutine (plutoLookTimer (plutoHoldTime));
 				plutoZoomLook = false;
 			}
-		}
+		}*/
 
 		if (mainGamePlay){
 			float playerHealth = (float)player.GetComponent<objectHealth> ().getHealth();
@@ -144,14 +145,14 @@ public class cameraController : MonoBehaviour {
 
 //		Debug.Log ("lookTimer ended at" + Time.time);
 
-		plutoZoomLook = true;
+		mainGamePlay = true;
 
 	}
 
-	IEnumerator plutoLookTimer(float lookTime){
+/*	IEnumerator plutoLookTimer(float lookTime){
 		yield return new WaitForSeconds (lookTime);
 		mainGamePlay = true;
-	}
+	}*/
 
 /*	Vector3 lookCenter(){
 		Vector3 center = (((boss.transform.position - attachedTo.transform.position).normalized) * ((attachedTo.transform.localScale.x/2f) + 1f));
