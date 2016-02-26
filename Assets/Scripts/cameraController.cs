@@ -9,9 +9,9 @@ public class cameraController : MonoBehaviour {
 	public float camHeight = 10f;
 	public float bossHoldTime = 5f;
 	public float sceneHoldTime = 10f;
-	public float plutoHoldTime = 1f;
+	public float plutoHoldTime = .5f;
 	public float extraIntroHeight = 2f;
-	public float sizeChangeStep= .1f;
+	public float sizeChangeStep= 30f;
 
 	private Vector3 playerLoc;
 	private Vector3 camLoc;
@@ -105,12 +105,14 @@ public class cameraController : MonoBehaviour {
 			}
 			else {
 				float currentPSize = transform.localScale.x / 2;
+				float stepPSize = currentPSize;
+
 //				Debug.Log ("not in boss volume");
 
 				if (currentPSize >= basePlayerSize) {
-//					float stepPSize = basePlayerSize;
-					if (currentPSize >= basePlayerSize + sizeChangeStep) {
-
+					if (currentPSize >= stepPSize + sizeChangeStep) {
+						cameraHeight += sizeChangeStep * 1f;
+						stepPSize = currentPSize;
 					}
 				float step = (spd * 4) * Time.deltaTime;
 				float rotStep = (spd * 100) * Time.deltaTime;
