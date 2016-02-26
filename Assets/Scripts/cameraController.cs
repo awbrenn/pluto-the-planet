@@ -9,7 +9,9 @@ public class cameraController : MonoBehaviour {
 	public float camHeight = 10f;
 	public float bossHoldTime = 5f;
 	public float sceneHoldTime = 10f;
+	public float plutoHoldTime = 1f;
 	public float extraIntroHeight = 2f;
+	public float sizeChangeStep= .1f;
 
 	private Vector3 playerLoc;
 	private Vector3 camLoc;
@@ -17,11 +19,12 @@ public class cameraController : MonoBehaviour {
 
 	private float introSceneHeight;
 	private float cameraHeight;
-	private float playerSize;
+	private float basePlayerSize;
 	private float spd;
 
 	private bool introBossLook = true;
 	private bool introSceneLook = false;
+	private bool plutoZoomLook = false;
 	private bool mainGamePlay = false;
 	private bool inTransitionVolume = false;
 
@@ -29,11 +32,12 @@ public class cameraController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		basePlayerSize = transform.localScale.x /2;
+
 		outerLookDir = Quaternion.Euler(90, 0, 0);
 		spd = speed;
 		cameraHeight = camHeight;
 		camLoc = new Vector3 (boss.transform.position.x, 5f, boss.transform.position.z);
-		playerLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
 		transform.position = camLoc;
 
 		GameObject safeVolume = GameObject.FindGameObjectWithTag ("Safe Volume");
@@ -55,9 +59,22 @@ public class cameraController : MonoBehaviour {
 			float step = (spd * 4) * Time.deltaTime;
 			transform.position = Vector3.Lerp (transform.position, sceneCamLoc, step);
 			if (transform.position.y >= (sceneCamLoc.y - 1f)){
-//				Debug.Log ("begin countdown to main game play");
+//				Debug.Log ("begin countdown to pluto zoom");
 				StartCoroutine (sceneLookTimer (sceneHoldTime));
 				introSceneLook = false;
+			}
+		}
+
+		if(plutoZoomLook){
+			playerLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
+
+//			Debug.Log ("begin zoom in to pluto");
+			float step = (spd * 4) * Time.deltaTime;
+			transform.position = Vector3.Lerp (transform.position, playerLoc, step);
+			if (transform.position.y <= (playerLoc.y + 1)){
+//				Debug.Log ("begin countdown to main game play");
+				StartCoroutine (plutoLookTimer (plutoHoldTime));
+				plutoZoomLook = false;
 			}
 		}
 
@@ -87,14 +104,22 @@ public class cameraController : MonoBehaviour {
 				spd = speed;
 			}
 			else {
+				float currentPSize = transform.localScale.x / 2;
 //				Debug.Log ("not in boss volume");
+
+				if (currentPSize >= basePlayerSize) {
+//					float stepPSize = basePlayerSize;
+					if (currentPSize >= basePlayerSize + sizeChangeStep) {
+
+					}
 				float step = (spd * 4) * Time.deltaTime;
 				float rotStep = (spd * 100) * Time.deltaTime;
 
-				camLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
-				transform.position = Vector3.Lerp(transform.position, camLoc, step);
-				transform.rotation = Quaternion.RotateTowards(transform.rotation, outerLookDir, rotStep);
+				camLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
+				transform.position = Vector3.Lerp (transform.position, camLoc, step);
+				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
 				spd = speed;
+				}
 			}
 		}
 	}
@@ -111,14 +136,19 @@ public class cameraController : MonoBehaviour {
 	}
 
 	IEnumerator sceneLookTimer (float lookTime){
-		Debug.Log ("lookTimer started at" + Time.time);
+//		Debug.Log ("lookTimer started at" + Time.time);
 
 		yield return new WaitForSeconds (lookTime);
 
-		Debug.Log ("lookTimer ended at" + Time.time);
+//		Debug.Log ("lookTimer ended at" + Time.time);
 
+		plutoZoomLook = true;
+
+	}
+
+	IEnumerator plutoLookTimer(float lookTime){
+		yield return new WaitForSeconds (lookTime);
 		mainGamePlay = true;
-
 	}
 
 /*	Vector3 lookCenter(){
