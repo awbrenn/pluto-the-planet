@@ -3,7 +3,7 @@ using System.Collections;
 
 public class cameraController : MonoBehaviour {
 	public GameObject player;
-	public GameObject bossVolume;
+	public GameObject transitionVolume;
 	public GameObject boss;
 	public float speed = 1f;
 	public float camHeight = 10f;
@@ -23,7 +23,7 @@ public class cameraController : MonoBehaviour {
 	private bool introBossLook = true;
 	private bool introSceneLook = false;
 	private bool mainGamePlay = false;
-	private bool inBossVolume = false;
+	private bool inTransitionVolume = false;
 
 	private Quaternion outerLookDir;
 
@@ -36,8 +36,8 @@ public class cameraController : MonoBehaviour {
 		playerLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
 		transform.position = camLoc;
 
-		GameObject growthVolume = GameObject.FindGameObjectWithTag ("Growth Volume");
-		introSceneHeight = growthVolume.transform.localScale.y / 2 + extraIntroHeight;
+		GameObject safeVolume = GameObject.FindGameObjectWithTag ("Safe Volume");
+		introSceneHeight = safeVolume.transform.localScale.y / 2 + extraIntroHeight;
 		sceneCamLoc = camLoc;
 		sceneCamLoc.y = introSceneHeight;
 	}
@@ -47,15 +47,15 @@ public class cameraController : MonoBehaviour {
 		if (introBossLook){
 			StartCoroutine (introLookTimer (bossHoldTime));
 			introBossLook = false;
-			Debug.Log ("end intro boss look");
+//			Debug.Log ("end intro boss look");
 
 		}
 		if (introSceneLook){
-			Debug.Log ("in introSceneLook");
+//			Debug.Log ("in introSceneLook");
 			float step = (spd * 4) * Time.deltaTime;
 			transform.position = Vector3.Lerp (transform.position, sceneCamLoc, step);
 			if (transform.position.y >= (sceneCamLoc.y - 1f)){
-				Debug.Log ("begin countdown to main game play");
+//				Debug.Log ("begin countdown to main game play");
 				StartCoroutine (sceneLookTimer (sceneHoldTime));
 				introSceneLook = false;
 			}
@@ -64,9 +64,9 @@ public class cameraController : MonoBehaviour {
 		if (mainGamePlay){
 			float playerHealth = (float)player.GetComponent<objectHealth> ().getHealth();
 			cameraHeight = ((playerHealth/100) + camHeight);
-			inBossVolume = bossVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
+			inTransitionVolume = transitionVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
 
-			if (inBossVolume) {
+			if (inTransitionVolume) {
 //				Debug.Log ("inBossVolume");
 				spd += 0;
 
@@ -100,11 +100,11 @@ public class cameraController : MonoBehaviour {
 	}
 
 	IEnumerator introLookTimer (float lookTime){
-		Debug.Log ("lookTimer started at" + Time.time);
+//		Debug.Log ("lookTimer started at" + Time.time);
 
 		yield return new WaitForSeconds (lookTime);
 
-		Debug.Log ("lookTimer ended at" + Time.time);
+//		Debug.Log ("lookTimer ended at" + Time.time);
 
 		introSceneLook = true;
 
