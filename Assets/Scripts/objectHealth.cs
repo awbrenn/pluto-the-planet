@@ -66,7 +66,7 @@ public class objectHealth : MonoBehaviour {
 
 
 	float calculateDiameter (int inputHealth) {
-		return 0.5f * Mathf.Pow (((3.0f / (4.0f * Mathf.PI)) * ((float)inputHealth)), 1.0f / 3.0f);
+		return 0.5f * Mathf.Pow (((3.0f / (4.0f * Mathf.PI)) * ((float)inputHealth)), 1.0f / 2.0f);
 	}
 
 
