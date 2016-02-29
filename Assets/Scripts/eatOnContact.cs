@@ -5,6 +5,7 @@ using System.Collections;
 public class eatOnContact : MonoBehaviour {
 	public GameObject[] foodTypes;
 	public float healthTransferMultiplier = 1f;
+	public float impactDamageMultiplier = 1f;
 	public AudioClip hitSound;
 	public AudioClip eatSound;
 
@@ -30,7 +31,7 @@ public class eatOnContact : MonoBehaviour {
 			}
 			else {
 				audioSource.PlayOneShot (hitSound, 1f);
-				float impactDamage = (otherHealth + selfHealth) * .1f;
+				float impactDamage = (otherHealth + selfHealth) * impactDamageMultiplier;
 				print ("impact damage:  " + impactDamage);
 				contacteeHealth.adjustHealth ((int)- (impactDamage/2));
 				contactorHealth.adjustHealth ((int)- (impactDamage/2));
