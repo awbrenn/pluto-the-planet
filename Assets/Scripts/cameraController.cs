@@ -51,7 +51,7 @@ public class cameraController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (introBossLook){
 			StartCoroutine (introLookTimer (bossHoldTime));
 			introBossLook = false;
@@ -131,13 +131,16 @@ public class cameraController : MonoBehaviour {
 				}*/
 				
 //				float step = (spd * 4) * Time.deltaTime;
-//				float rotStep = (spd * 100) * Time.deltaTime;
+				float rotStep = (spd * 100) * Time.deltaTime;
 
-//				Vector3 point = gameObject.GetComponent;
+				Vector3 point = GetComponent<Camera> ().WorldToViewportPoint(player.transform.position);
+				Vector3 delta = player.transform.position - GetComponent<Camera> ().ViewportToWorldPoint (new Vector3(.5f, .5f, point.z));
+				Vector3 destination = transform.position + delta;
+				destination.y = cameraHeight;
 
-				camLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
-				transform.position = Vector3.SmoothDamp (transform.position, camLoc, ref velocity, smoothTime);
-//				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
+//				camLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
+				transform.position = Vector3.SmoothDamp (transform.position, destination, ref velocity, smoothTime);
+				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
 //				spd = speed;
 			}
 		}
