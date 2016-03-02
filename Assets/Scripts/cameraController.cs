@@ -13,6 +13,9 @@ public class cameraController : MonoBehaviour {
 	public float extraIntroHeight = 2f;
 	public float sizeChangeStep= 30f;
 
+	public float smoothTime = .15f;
+	private Vector3 velocity = Vector3.zero;
+
 	private Vector3 playerLoc;
 	private Vector3 camLoc;
 	private Vector3 sceneCamLoc;
@@ -32,7 +35,7 @@ public class cameraController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		basePlayerSize = transform.localScale.x /2;
+		basePlayerSize = player.transform.localScale.x /2;
 
 		outerLookDir = Quaternion.Euler(90, 0, 0);
 		spd = speed;
@@ -66,18 +69,19 @@ public class cameraController : MonoBehaviour {
 			}
 		}
 
-/*		if(plutoZoomLook){
-			playerLoc = new Vector3(player.transform.position.x, cameraHeight, player.transform.position.z);
+		if (plutoZoomLook) {
+			playerLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
 
 //			Debug.Log ("begin zoom in to pluto");
 			float step = (spd * 4) * Time.deltaTime;
 			transform.position = Vector3.Lerp (transform.position, playerLoc, step);
-			if (transform.position.y <= (playerLoc.y + 1)){
+			if (transform.position.y <= (playerLoc.y + 1)) {
 //				Debug.Log ("begin countdown to main game play");
 				StartCoroutine (plutoLookTimer (plutoHoldTime));
 				plutoZoomLook = false;
 			}
-		}*/
+		}
+
 
 		if (mainGamePlay){
 			float playerHealth = (float)player.GetComponent<objectHealth> ().getHealth();
@@ -88,7 +92,7 @@ public class cameraController : MonoBehaviour {
 //				Debug.Log ("inBossVolume");
 				spd += 0;
 
-				float newCameraHeight = cameraHeight + 5f;
+				float newCameraHeight = cameraHeight + 20f;
 
 				float step = spd * Time.deltaTime;
 
@@ -100,7 +104,7 @@ public class cameraController : MonoBehaviour {
 
 //				print (lookPos);
 
-				transform.position = Vector3.Lerp (transform.position, camLoc, step);
+				transform.position = Vector3.MoveTowards (transform.position, camLoc, step);
 				transform.LookAt (lookPos);
 				spd = speed;
 			}
@@ -115,14 +119,26 @@ public class cameraController : MonoBehaviour {
 						cameraHeight += sizeChangeStep * 1f;
 						stepPSize = currentPSize;
 					}
-				float step = (spd * 4) * Time.deltaTime;
-				float rotStep = (spd * 100) * Time.deltaTime;
+				}
+				
+
+/*				if (spd < player.GetComponent<Rigidbody> ().velocity.magnitude) {
+					spd = Mathf.Lerp (spd, player.GetComponent<Rigidbody> ().velocity.magnitude, (Time.deltaTime * .5f));
+				}
+				
+				if (spd > player.GetComponent<Rigidbody> ().velocity.magnitude) {
+					spd = Mathf.Lerp (player.GetComponent<Rigidbody> ().velocity.magnitude, spd, (Time.deltaTime * .5f));
+				}*/
+				
+//				float step = (spd * 4) * Time.deltaTime;
+//				float rotStep = (spd * 100) * Time.deltaTime;
+
+//				Vector3 point = gameObject.GetComponent;
 
 				camLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
-				transform.position = Vector3.Lerp (transform.position, camLoc, step);
-				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
-				spd = speed;
-				}
+				transform.position = Vector3.SmoothDamp (transform.position, camLoc, ref velocity, smoothTime);
+//				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
+//				spd = speed;
 			}
 		}
 	}
@@ -145,14 +161,14 @@ public class cameraController : MonoBehaviour {
 
 //		Debug.Log ("lookTimer ended at" + Time.time);
 
-		mainGamePlay = true;
+		plutoZoomLook = true;
 
 	}
 
-/*	IEnumerator plutoLookTimer(float lookTime){
+	IEnumerator plutoLookTimer(float lookTime){
 		yield return new WaitForSeconds (lookTime);
 		mainGamePlay = true;
-	}*/
+	}
 
 /*	Vector3 lookCenter(){
 		Vector3 center = (((boss.transform.position - attachedTo.transform.position).normalized) * ((attachedTo.transform.localScale.x/2f) + 1f));
