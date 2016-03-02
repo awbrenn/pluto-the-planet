@@ -6,6 +6,7 @@ public class eatOnContact : MonoBehaviour {
 	public GameObject[] foodTypes;
 	public float healthTransferMultiplier = 1f;
 	public float impactDamageMultiplier = 1f;
+
 	public AudioClip hitSound;
 	public AudioClip eatSound;
 
