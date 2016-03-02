@@ -6,14 +6,13 @@ public class cameraController : MonoBehaviour {
 	public GameObject transitionVolume;
 	public GameObject boss;
 	public float speed = 1f;
+	public float smoothTime = .15f;
 	public float camHeight = 10f;
 	public float bossHoldTime = 5f;
 	public float sceneHoldTime = 10f;
-	public float plutoHoldTime = .5f;
 	public float extraIntroHeight = 2f;
 	public float sizeChangeStep= 30f;
 
-	public float smoothTime = .15f;
 	private Vector3 velocity = Vector3.zero;
 
 	private Vector3 playerLoc;
@@ -69,20 +68,6 @@ public class cameraController : MonoBehaviour {
 			}
 		}
 
-		if (plutoZoomLook) {
-			playerLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
-
-//			Debug.Log ("begin zoom in to pluto");
-			float step = (spd * 4) * Time.deltaTime;
-			transform.position = Vector3.Lerp (transform.position, playerLoc, step);
-			if (transform.position.y <= (playerLoc.y + 1)) {
-//				Debug.Log ("begin countdown to main game play");
-				StartCoroutine (plutoLookTimer (plutoHoldTime));
-				plutoZoomLook = false;
-			}
-		}
-
-
 		if (mainGamePlay){
 			float playerHealth = (float)player.GetComponent<objectHealth> ().getHealth();
 			cameraHeight = ((playerHealth/100) + camHeight);
@@ -120,17 +105,7 @@ public class cameraController : MonoBehaviour {
 						stepPSize = currentPSize;
 					}
 				}
-				
 
-/*				if (spd < player.GetComponent<Rigidbody> ().velocity.magnitude) {
-					spd = Mathf.Lerp (spd, player.GetComponent<Rigidbody> ().velocity.magnitude, (Time.deltaTime * .5f));
-				}
-				
-				if (spd > player.GetComponent<Rigidbody> ().velocity.magnitude) {
-					spd = Mathf.Lerp (player.GetComponent<Rigidbody> ().velocity.magnitude, spd, (Time.deltaTime * .5f));
-				}*/
-				
-//				float step = (spd * 4) * Time.deltaTime;
 				float rotStep = (spd * 100) * Time.deltaTime;
 
 				Vector3 point = GetComponent<Camera> ().WorldToViewportPoint(player.transform.position);
@@ -141,7 +116,6 @@ public class cameraController : MonoBehaviour {
 //				camLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
 				transform.position = Vector3.SmoothDamp (transform.position, destination, ref velocity, smoothTime);
 				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
-//				spd = speed;
 			}
 		}
 	}
@@ -164,18 +138,7 @@ public class cameraController : MonoBehaviour {
 
 //		Debug.Log ("lookTimer ended at" + Time.time);
 
-		plutoZoomLook = true;
-
-	}
-
-	IEnumerator plutoLookTimer(float lookTime){
-		yield return new WaitForSeconds (lookTime);
+//		plutoZoomLook = true;
 		mainGamePlay = true;
 	}
-
-/*	Vector3 lookCenter(){
-		Vector3 center = (((boss.transform.position - attachedTo.transform.position).normalized) * ((attachedTo.transform.localScale.x/2f) + 1f));
-
-		return center;
-	}*/
 }
