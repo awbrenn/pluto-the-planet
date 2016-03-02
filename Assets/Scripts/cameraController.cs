@@ -26,7 +26,6 @@ public class cameraController : MonoBehaviour {
 
 	private bool introBossLook = true;
 	private bool introSceneLook = false;
-	private bool plutoZoomLook = false;
 	private bool mainGamePlay = false;
 	private bool inTransitionVolume = false;
 
@@ -52,6 +51,7 @@ public class cameraController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (introBossLook){
+			player.GetComponent<tapToMovePluto> ().setCanMove (false);
 			StartCoroutine (introLookTimer (bossHoldTime));
 			introBossLook = false;
 //			Debug.Log ("end intro boss look");
@@ -139,6 +139,7 @@ public class cameraController : MonoBehaviour {
 //		Debug.Log ("lookTimer ended at" + Time.time);
 
 //		plutoZoomLook = true;
+		player.GetComponent<tapToMovePluto> ().setCanMove (true);
 		mainGamePlay = true;
 	}
 }

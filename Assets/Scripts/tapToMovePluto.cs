@@ -17,6 +17,8 @@ public class tapToMovePluto : MonoBehaviour {
 	private float max_speed_scaled;
 	private float acceleration_scaled;
 
+	private bool canMove = true;
+
 	// Use this for initialization
 	void Start () {
 		pluto_basic_attack = this.GetComponent<plutoBasicAttack>();
@@ -58,21 +60,31 @@ public class tapToMovePluto : MonoBehaviour {
 			pluto_rigid_body.velocity += trajectory*acceleration_scaled;
 	}
 
+	public void setCanMove (bool newState){
+		canMove = newState;
+	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButton (0) && !pluto_basic_attack.plutoPressed()) {
-			Ray ray = main_camera.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit_info;
-			bool hit;
+		if (canMove) {
+			if (Input.GetMouseButton (0) && !pluto_basic_attack.plutoPressed ()) {
+				Ray ray = main_camera.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit_info;
+				bool hit;
 		
-			hit = Physics.Raycast (ray, out hit_info);
+				hit = Physics.Raycast (ray, out hit_info);
 
-			// if you didn't hit anything or you didn't hit pluto
-			if (!hit || hit_info.transform.name != "Pluto") {
-				Vector3 trajectory = getNormalizedTrajectory ();
+				// if you didn't hit anything or you didn't hit pluto
+				if (!hit || hit_info.transform.name != "Pluto") {
+					Vector3 trajectory = getNormalizedTrajectory ();
 
-				acceleratePlutoInTrajectoryDirection (trajectory);
+					acceleratePlutoInTrajectoryDirection (trajectory);
+				}
+			}
+		} 
+		else {
+			if (pluto_rigid_body.velocity.magnitude > 0) {
+				pluto_rigid_body.velocity = Vector3.zero;
 			}
 		}
 	}
