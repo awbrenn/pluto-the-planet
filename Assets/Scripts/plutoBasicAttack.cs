@@ -3,6 +3,7 @@ using System.Collections;
 
 public class plutoBasicAttack : MonoBehaviour {
 	public float projectile_max_speed = 10.0f;
+	public float projectileMinSpeed = 2f;
 	public float percentageOfPlutosHealthForHealth = 0.03f;
 	public float percentageOfPlutosHealthForDamage = .1f;
 	public int minDamage = 10;
@@ -39,6 +40,10 @@ public class plutoBasicAttack : MonoBehaviour {
 			speed = projectile_max_speed;
 		}
 
+		else if (speed < projectileMinSpeed){
+			speed = projectileMinSpeed;
+		}
+
 		GameObject projectile = Instantiate (projectile_prefab) as GameObject;
 
 		// setting the projectiles health to percentageOfPlutosHealth that of plutos
@@ -56,7 +61,7 @@ public class plutoBasicAttack : MonoBehaviour {
 //		Debug.Log ("projectile damage in pba:  " + projectile.GetComponent<projectileDamage> ().getDamage());
 
 		// using scale of Pluto to determine the initial position of projectile 
-		projectile_initial_position = projectile_trajectory * (transform.localScale.x/2.0f + projectile.transform.localScale.x/2.0f) + transform.position;
+		projectile_initial_position = projectile_trajectory * ((transform.localScale.x/2.0f + projectile.transform.localScale.x/2.0f) * 1.1f) + transform.position;
 		projectile.transform.position = projectile_initial_position;
 
 

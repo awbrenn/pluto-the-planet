@@ -38,7 +38,7 @@ public class cameraController : MonoBehaviour {
 		outerLookDir = Quaternion.Euler(90, 0, 0);
 		spd = speed;
 		cameraHeight = camHeight;
-		float bossCamHeight = (boss.transform.localScale.y / 2f) + 5f;
+		float bossCamHeight = (boss.transform.localScale.y / 2f) + 8f;
 		camLoc = new Vector3 (boss.transform.position.x, bossCamHeight, boss.transform.position.z);
 		transform.position = camLoc;
 
