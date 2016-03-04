@@ -77,8 +77,6 @@ public class eatOnContact : MonoBehaviour {
 				GameObject food = foodTypes [Random.Range (0, foodTypes.Length)];
 
 				while (impactPoint == spawnPosition) {
-					float foodScale = food.transform.localScale.x;
-
 					Vector2 randGen = Random.insideUnitCircle * .5f;
 					Vector3 randPoint = new Vector3 (randGen.x, 0, randGen.y);
 					testPoint += randPoint;
@@ -89,7 +87,7 @@ public class eatOnContact : MonoBehaviour {
 					}
 				}
 
-				Quaternion spawnRotation = Quaternion.identity;
+				Quaternion spawnRotation = Random.rotation;
 
 				GameObject newFood = (GameObject)Instantiate (food, spawnPosition, spawnRotation);
 				newFood.GetComponent<objectHealth> ().instantiateHealth (foodHealth);
