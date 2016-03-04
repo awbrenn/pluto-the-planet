@@ -27,17 +27,28 @@ public class returnToGameArea : MonoBehaviour {
 		rigidBody = GetComponent<Rigidbody> () as Rigidbody;
 	}
 
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		float distanceFromCenter = transform.position.magnitude;
 		if (distanceFromCenter > outerBoarderVolumeRadius && outerBoarderVolumePrefab != null) {
 			Vector3 directionToCenter = (-1.0f) * transform.position.normalized;
-			rigidBody.velocity += directionToCenter * acceleration;
+			Vector3 velocity = rigidBody.velocity.normalized;
+			float accellerationInfluence = 1.0f - Vector3.Dot(directionToCenter, velocity);
+			if (accellerationInfluence <= 1.0f) {
+				accellerationInfluence = 0.0f;
+			}
+
+			rigidBody.velocity += directionToCenter * acceleration * accellerationInfluence;
 		}
 
 		if (distanceFromCenter < innerBoarderVolumeRadius && innerBoarderVolumePrefab != null) {
 			Vector3 directionToCenter = transform.position.normalized;
-			rigidBody.velocity += directionToCenter * acceleration;
+			Vector3 velocity = rigidBody.velocity.normalized;
+			float accellerationInfluence = 1.0f - Vector3.Dot(directionToCenter, velocity);
+			if (accellerationInfluence <= 1.0f) {
+				accellerationInfluence = 0.0f;
+			}
+
+			rigidBody.velocity += directionToCenter * acceleration * accellerationInfluence;
 		}
 	}
 }
