@@ -61,7 +61,7 @@ public class plutoBasicAttack : MonoBehaviour {
 //		Debug.Log ("projectile damage in pba:  " + projectile.GetComponent<projectileDamage> ().getDamage());
 
 		// using scale of Pluto to determine the initial position of projectile 
-		projectile_initial_position = projectile_trajectory * ((transform.localScale.x/2.0f + projectile.transform.localScale.x/2.0f) * 1.1f) + transform.position;
+		projectile_initial_position = projectile_trajectory * ((transform.localScale.x/2.0f + projectile.transform.localScale.x/2.0f) * 1.25f) + transform.position;
 		projectile.transform.position = projectile_initial_position;
 
 
