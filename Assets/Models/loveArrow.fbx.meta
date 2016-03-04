@@ -1,17 +1,16 @@
 fileFormatVersion: 2
-guid: 5ed2477f524594411a2e90bfaf4ce684
-timeCreated: 1456072649
+guid: 2e6ea516f143c6a45b2cbe9c1d5477f6
+timeCreated: 1457121150
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: polySurface1
     400000: //RootNode
-    400002: polySurface1
-    2300000: polySurface1
-    3300000: polySurface1
-    4300000: polySurface1
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: loveArrow
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -70,7 +69,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

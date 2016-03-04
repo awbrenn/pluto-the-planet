@@ -21,10 +21,11 @@ public class loveArrowStop : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		targetLoc = target.transform.position;
 		float step = speed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards(transform.position, targetLoc, step);
+		transform.LookAt (targetLoc);
 		StartCoroutine (lifeLengthTimer());
 	}
 
