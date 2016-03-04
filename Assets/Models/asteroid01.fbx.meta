@@ -1,17 +1,16 @@
 fileFormatVersion: 2
-guid: ab78a5442312641b2869e78783e0fb7a
-timeCreated: 1456071305
+guid: 1b362814eb0d7c24cbe3392a3b2408b5
+timeCreated: 1457121150
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: pCylinder1
     400000: //RootNode
-    400002: pCylinder1
-    2300000: pCylinder1
-    3300000: pCylinder1
-    4300000: pCylinder1
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Asteroid01
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -70,7 +69,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

@@ -1,42 +1,16 @@
 fileFormatVersion: 2
-guid: 882d3905a88d94b40ba90924465225c5
-timeCreated: 1455922467
+guid: 8cf58253e39c8764fb039554258a199d
+timeCreated: 1457120326
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: body_group2_group1
-    100002: group2_group1_cigarrette
-    100004: group2_group1_Leye
-    100006: group2_group1_Leyelash
-    100008: group2_group1_Reye
-    100010: group2_group1_Reyelash
-    100012: //RootNode
-    400000: body_group2_group1
-    400002: group2_group1_cigarrette
-    400004: group2_group1_Leye
-    400006: group2_group1_Leyelash
-    400008: group2_group1_Reye
-    400010: group2_group1_Reyelash
-    400012: //RootNode
-    2300000: body_group2_group1
-    2300002: group2_group1_cigarrette
-    2300004: group2_group1_Leye
-    2300006: group2_group1_Leyelash
-    2300008: group2_group1_Reye
-    2300010: group2_group1_Reyelash
-    3300000: body_group2_group1
-    3300002: group2_group1_cigarrette
-    3300004: group2_group1_Leye
-    3300006: group2_group1_Leyelash
-    3300008: group2_group1_Reye
-    3300010: group2_group1_Reyelash
-    4300000: body_group2_group1
-    4300002: group2_group1_cigarrette
-    4300004: group2_group1_Leye
-    4300006: group2_group1_Leyelash
-    4300008: group2_group1_Reye
-    4300010: group2_group1_Reyelash
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: venus
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -95,7 +69,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
