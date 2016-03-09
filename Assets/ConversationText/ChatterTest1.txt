@@ -1,150 +1,120 @@
 Pos0
 Thumb0
-Clip0
 A message from another planet or asteroid will appear here! 
 Wait is true
 Pos1
 Thumb1
-Clip0
 I will retaliate with another message! 
 Wait is true
 Pos0
 Thumb2
-Clip0
 There is so much I want to say! 
 Wait is true
 Pos1
 Thumb3
-Clip0
 Hey! Here is another snarky message from a planet! 
 Wait is true
 Pos0
 Thumb4
-Clip0
 This game is awesome! 
 Wait is true
 Pos1
 Thumb5
-Clip0
 Now another message appears in this box. 
 Wait is true
 Pos0
 Thumb6
-Clip0
 Another message will play here. 
 Wait is true
 Pos1
 Thumb7
-Clip0
 More messages are coming through the system! 
 Wait is true
 Pos0
 Thumb8
-Clip0
 There is so much I want to say! 
 Wait is true
 Pos1
 Thumb9
-Clip0
 Hey! Here is another snarky message from a planet! 
 Wait is true
 Pos0
 Thumb10
-Clip0
 This game is awesome! 
 Wait is true
 Pos1
 Thumb11
-Clip0
 Now another message appears in this box. 
 Wait is true
 Pos0
 Thumb12
-Clip0
 Another message will play here. 
 Wait is true
 Pos1
 Thumb13
-Clip0
 More messages are coming through the system! 
 Wait is true
 Pos0
 Thumb14
-Clip0
 A message from another planet or asteroid will appear here! 
 Wait is true
 Pos1
 Thumb0
-Clip0
 I will retaliate with another message! 
 Wait is true
 Pos0
 Thumb1
-Clip0
 There is so much I want to say! 
 Wait is true
 Pos1
 Thumb2
-Clip0
 Hey! Here is another snarky message from a planet! 
 Wait is true
 Pos0
 Thumb3
-Clip0
 This game is awesome! 
 Wait is true
 Pos1
 Thumb4
-Clip0
 Now another message appears in this box. 
 Wait is true
 Pos0
 Thumb5
-Clip0
 Another message will play here. 
 Wait is true
 Pos1
 Thumb6
-Clip0
 More messages are coming through the system! 
 Wait is true
 Pos0
 Thumb7
-Clip0
 There is so much I want to say! 
 Wait is true
 Pos1
 Thumb8
-Clip0
 Hey! Here is another snarky message from a planet! 
 Wait is true
 Pos0
 Thumb9
-Clip0
 This game is awesome! 
 Wait is true
 Pos1
 Thumb10
-Clip0
 Now another message appears in this box. 
 Wait is true
 Pos0
 Thumb11
-Clip0
 Another message will play here. 
 Wait is true
 Pos1
 Thumb12
-Clip0
 More messages are coming through the system! 
 Wait is true
 Pos0
 Thumb13
-Clip0
 Another message will play here. 
 Wait is true
 Pos1
 Thumb14
-Clip0
 More messages are coming through the system! 
 Wait is true
