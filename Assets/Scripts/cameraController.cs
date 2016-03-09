@@ -10,6 +10,7 @@ public class cameraController : MonoBehaviour {
 	public float smoothTime = .15f;
 	public float camHeight = 10f;
 	public float bossHoldTime = 5f;
+	public float bossLookHeightPadding = 12f;
 	public float sceneHoldTime = 10f;
 	public float extraIntroHeight = 2f;
 	public float sizeChangeStep= 30f;
@@ -43,7 +44,7 @@ public class cameraController : MonoBehaviour {
 		outerLookDir = Quaternion.Euler(90, 0, 0);
 		spd = speed;
 		cameraHeight = camHeight;
-		float bossCamHeight = (boss.transform.localScale.y / 2f) + 8f;
+		float bossCamHeight = (boss.transform.localScale.y / 2f) + bossLookHeightPadding;
 		camLoc = new Vector3 (boss.transform.position.x, bossCamHeight, boss.transform.position.z);
 		transform.position = camLoc;
 
