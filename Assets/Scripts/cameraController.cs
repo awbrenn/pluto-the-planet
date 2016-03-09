@@ -6,12 +6,18 @@ public class cameraController : MonoBehaviour {
 	public GameObject transitionVolume;
 	public GameObject boss;
 	public float speed = 1f;
+	public float bossSpeed = 20f;
 	public float smoothTime = .15f;
 	public float camHeight = 10f;
 	public float bossHoldTime = 5f;
+	public float bossLookHeightPadding = 12f;
 	public float sceneHoldTime = 10f;
 	public float extraIntroHeight = 2f;
 	public float sizeChangeStep= 30f;
+	public float bossCamHeight = 10f;
+	public float eatingRotationMultiplyier = 100f;
+	public float bossCamBasePosDivisor = 6f;
+	public float bossCamLookPosDivisor = 1f;
 
 	private Vector3 velocity = Vector3.zero;
 
@@ -38,7 +44,7 @@ public class cameraController : MonoBehaviour {
 		outerLookDir = Quaternion.Euler(90, 0, 0);
 		spd = speed;
 		cameraHeight = camHeight;
-		float bossCamHeight = (boss.transform.localScale.y / 2f) + 8f;
+		float bossCamHeight = (boss.transform.localScale.y / 2f) + bossLookHeightPadding;
 		camLoc = new Vector3 (boss.transform.position.x, bossCamHeight, boss.transform.position.z);
 		transform.position = camLoc;
 
@@ -71,22 +77,27 @@ public class cameraController : MonoBehaviour {
 		if (mainGamePlay){
 			float playerHealth = (float)player.GetComponent<objectHealth> ().getHealth();
 			cameraHeight = ((playerHealth/100) + camHeight);
-			inTransitionVolume = transitionVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
+//			inTransitionVolume = transitionVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
 
 			if (inTransitionVolume) {
 //				Debug.Log ("inBossVolume");
-				spd += 0;
-
-				float newCameraHeight = cameraHeight + 20f;
-
-				float step = spd * Time.deltaTime;
+//				float newCameraHeight = cameraHeight + bossCamHeight;
+				float step = bossSpeed * Time.deltaTime;
 
 				Vector3 pLoc = player.transform.position;
+
+				Vector3 current = Vector3.zero - pLoc;
+				float max = transitionVolume.transform.localScale.x / 2f;
+				float distance = max - current.magnitude;
+				float distancePercent = distance / max;
+				float newCameraHeight = bossCamHeight * (1f - distancePercent);
+				float newCameraPos = bossCamBasePosDivisor * (1f - distancePercent);
+
 				Vector3 bLoc = boss.transform.position;
-				Vector3 lookPos = ((bLoc - pLoc / 3) + pLoc);
+				Vector3 lookPos = ((bLoc - pLoc / bossCamLookPosDivisor) + pLoc);
+				Vector3 camBasePos = (-(bLoc - pLoc / bossCamBasePosDivisor) + pLoc);
 
-				camLoc = new Vector3(player.transform.position.x, newCameraHeight, player.transform.position.z);
-
+				camLoc = new Vector3((camBasePos.x + 1), newCameraHeight, (camBasePos.z + 1));
 //				print (lookPos);
 
 				transform.position = Vector3.MoveTowards (transform.position, camLoc, step);
@@ -96,7 +107,6 @@ public class cameraController : MonoBehaviour {
 			else {
 				float currentPSize = transform.localScale.x / 2;
 				float stepPSize = currentPSize;
-
 //				Debug.Log ("not in boss volume");
 
 				if (currentPSize >= basePlayerSize) {
@@ -106,7 +116,7 @@ public class cameraController : MonoBehaviour {
 					}
 				}
 
-				float rotStep = (spd * 100) * Time.deltaTime;
+				float rotStep = spd * eatingRotationMultiplyier * Time.deltaTime;
 
 				Vector3 point = GetComponent<Camera> ().WorldToViewportPoint(player.transform.position);
 				Vector3 delta = player.transform.position - GetComponent<Camera> ().ViewportToWorldPoint (new Vector3(.5f, .5f, point.z));
@@ -120,11 +130,14 @@ public class cameraController : MonoBehaviour {
 		}
 	}
 
+	public void setTransitionCamera (bool inOrOut){
+		inTransitionVolume = inOrOut;
+	}
+
 	IEnumerator introLookTimer (float lookTime){
 //		Debug.Log ("lookTimer started at" + Time.time);
 
 		yield return new WaitForSeconds (lookTime);
-
 //		Debug.Log ("lookTimer ended at" + Time.time);
 
 		introSceneLook = true;
@@ -135,9 +148,7 @@ public class cameraController : MonoBehaviour {
 //		Debug.Log ("lookTimer started at" + Time.time);
 
 		yield return new WaitForSeconds (lookTime);
-
 //		Debug.Log ("lookTimer ended at" + Time.time);
-
 //		plutoZoomLook = true;
 		player.GetComponent<tapToMovePluto> ().setCanMove (true);
 		mainGamePlay = true;

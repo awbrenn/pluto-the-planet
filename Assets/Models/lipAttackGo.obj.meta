@@ -1,21 +1,21 @@
 fileFormatVersion: 2
-guid: e4eb2a75abe4346a59b93b12da5138dc
-timeCreated: 1457317760
+guid: 138d68bcd0ed6403e86b7b6e318a2952
+timeCreated: 1457494442
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: pCylinder1
-    400000: //RootNode
-    400002: pCylinder1
-    2300000: pCylinder1
-    3300000: pCylinder1
-    4300000: pCylinder1
+    100000: kissy_kissy
+    100002: //RootNode
+    400000: kissy_kissy
+    400002: //RootNode
+    2300000: kissy_kissy
+    3300000: kissy_kissy
+    4300000: kissy_kissy
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 0
+    materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -44,7 +44,7 @@ ModelImporter:
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
-    keepQuads: 1
+    keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
