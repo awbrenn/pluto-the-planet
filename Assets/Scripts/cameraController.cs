@@ -76,7 +76,7 @@ public class cameraController : MonoBehaviour {
 		if (mainGamePlay){
 			float playerHealth = (float)player.GetComponent<objectHealth> ().getHealth();
 			cameraHeight = ((playerHealth/100) + camHeight);
-			inTransitionVolume = transitionVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
+//			inTransitionVolume = transitionVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
 
 			if (inTransitionVolume) {
 //				Debug.Log ("inBossVolume");
@@ -96,7 +96,7 @@ public class cameraController : MonoBehaviour {
 				Vector3 lookPos = ((bLoc - pLoc / bossCamLookPosDivisor) + pLoc);
 				Vector3 camBasePos = (-(bLoc - pLoc / bossCamBasePosDivisor) + pLoc);
 
-				camLoc = new Vector3(camBasePos.x, newCameraHeight, camBasePos.z);
+				camLoc = new Vector3((camBasePos.x + 1), newCameraHeight, (camBasePos.z + 1));
 //				print (lookPos);
 
 				transform.position = Vector3.MoveTowards (transform.position, camLoc, step);
@@ -127,6 +127,10 @@ public class cameraController : MonoBehaviour {
 				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
 			}
 		}
+	}
+
+	public void setTransitionCamera (bool inOrOut){
+		inTransitionVolume = inOrOut;
 	}
 
 	IEnumerator introLookTimer (float lookTime){
