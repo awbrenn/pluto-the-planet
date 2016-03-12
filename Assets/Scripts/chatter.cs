@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class chatter : MonoBehaviour {
 	public GUISkin chatterSkin;
@@ -7,29 +8,39 @@ public class chatter : MonoBehaviour {
 	public Vector2 textureOffset = new Vector2(8, 8);
 	public int Spacing = 4;
 	public Vector2 boxSize;
-	public GameObject[] textMessages;
+	private int maxTextMessagesOnScreen = 3;
+	public GameObject[] startTextMessages;
 
+	private Queue<GameObject> queuedTextMessages;
+	private Queue<GameObject> currentTextMessages;
 	private Vector2 GroupPos;
-	private Rect Group;
 	private Matrix4x4 GUIScaleMatrix;
 	private int GUIScreenWidth;
 	private int GUIScreenHeight;
-	private message textMessage;
 
 	// Use this for initialization
 	void Start () {
 		GUIScreenWidth = Screen.width;
 		GUIScreenHeight = Screen.height;
 
+		queuedTextMessages = new Queue<GameObject>();
+		currentTextMessages = new Queue<GameObject>();
+
 		GroupPos.x = Screen.width - (boxSize.x);
 		GroupPos.y = Screen.height - (boxSize.y);
-		Group = new Rect(GroupPos.x, GroupPos.y, boxSize.x, boxSize.y);
-		textMessage = textMessages [0].GetComponent<message> () as message;
+	}
+
+	void queueTextMessage(GameObject textMessage) {
+		currentTextMessages.Enqueue (textMessage);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	void FixedUpdate () {
+		// don't add a text message if the max is reached
+		if (currentTextMessages.Count > maxTextMessagesOnScreen) {
+			return;
+		}
+
+		queueTextMessage (startTextMessages [Random.Range (0, startTextMessages.Length)]);
 	}
 
 	void OnGUI() {
@@ -44,11 +55,16 @@ public class chatter : MonoBehaviour {
 		TextureBox.width -= textureOffset.x;
 		TextureBox.height -= textureOffset.y;
 
-
-		GUI.BeginGroup(Group);
-		GUI.Box(new Rect(0, 0, boxSize.x, boxSize.y), textMessage.text);
-		GUI.Box(new Rect(0, 0, thumbSize.x, thumbSize.y), "");
-		GUI.DrawTexture(TextureBox, textMessage.characterThumb);
-		GUI.EndGroup();
+		int i = 0;
+		foreach (GameObject textMessage in currentTextMessages) {
+			int y = Screen.height - ((int)(boxSize.y + (i*boxSize.y)));
+			Rect Group = new Rect(GroupPos.x, GroupPos.y, boxSize.x, boxSize.y);
+			GUI.BeginGroup (Group);
+			GUI.Box (new Rect (0, 0, boxSize.x, boxSize.y), textMessage.GetComponent<message> ().text);
+			GUI.Box (new Rect (0, 0, thumbSize.x, thumbSize.y), "");
+			GUI.DrawTexture (TextureBox, textMessage.GetComponent<message> ().characterThumb);
+			GUI.EndGroup ();
+			++i;
+		}
 	}
 }
