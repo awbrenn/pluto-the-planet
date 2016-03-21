@@ -52,6 +52,9 @@ public class cameraController : MonoBehaviour {
 		introSceneHeight = safeVolume.transform.localScale.y / 2 + extraIntroHeight;
 		sceneCamLoc = camLoc;
 		sceneCamLoc.y = introSceneHeight;
+
+		player.transform.LookAt (transform.localPosition);
+		boss.transform.LookAt (transform.localPosition);
 	}
 	
 	// Update is called once per frame
@@ -90,7 +93,7 @@ public class cameraController : MonoBehaviour {
 				float max = transitionVolume.transform.localScale.x / 2f;
 				float distance = max - current.magnitude;
 				float distancePercent = distance / max;
-				float newCameraHeight = bossCamHeight * (1f - distancePercent);
+				float newCameraHeight = bossCamHeight * (1f - distancePercent) + (playerHealth/200);
 				float newCameraPos = bossCamBasePosDivisor * (1f - distancePercent);
 
 				Vector3 bLoc = boss.transform.position;
@@ -103,6 +106,10 @@ public class cameraController : MonoBehaviour {
 				transform.position = Vector3.MoveTowards (transform.position, camLoc, step);
 				transform.LookAt (lookPos);
 				spd = speed;
+				Vector3 upChange = new Vector3 (0,0,0);
+				player.transform.LookAt (boss.transform.localPosition, upChange);
+				boss.transform.LookAt (player.transform.localPosition, upChange);
+
 			}
 			else {
 				float currentPSize = transform.localScale.x / 2;
@@ -126,6 +133,10 @@ public class cameraController : MonoBehaviour {
 //				camLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
 				transform.position = Vector3.SmoothDamp (transform.position, destination, ref velocity, smoothTime);
 				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
+
+				player.transform.LookAt (transform.localPosition);
+				boss.transform.LookAt (transform.localPosition);
+
 			}
 		}
 	}
