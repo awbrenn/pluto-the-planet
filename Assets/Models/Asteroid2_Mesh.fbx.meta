@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 78763cba1059545a3940c7456267c92b
+guid: 0d5c6387344d9477fa15b87b08343423
 timeCreated: 1458922697
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Asteroid1_Mesh
+    100000: Asteroid2_Mesh
     100002: //RootNode
     100004: polySurface11
     100006: polySurface12
@@ -16,7 +16,7 @@ ModelImporter:
     100016: transform3
     100018: transform4
     400000: //RootNode
-    400002: Asteroid1_Mesh
+    400002: Asteroid2_Mesh
     400004: polySurface11
     400006: polySurface12
     400008: polySurface13
