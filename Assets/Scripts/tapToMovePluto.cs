@@ -6,6 +6,7 @@ public class tapToMovePluto : MonoBehaviour {
 
 	// public member variables
 	public float acceleration = 0.3f;
+	public float reverse_acceleration = 4.0f;
 	public float start_max_speed = 20.0f;
 	public float speed_increase_decay_rate = -15.0f;
 
@@ -52,12 +53,22 @@ public class tapToMovePluto : MonoBehaviour {
 	}
 
 	void acceleratePlutoInTrajectoryDirection (Vector3 trajectory) 
-	{		
+	{
 		updateSpeed ();
+		
+		Vector3 pluto_direction = pluto_rigid_body.velocity.normalized;
 
-		// clamp Pluto's velocity to pluto max speed
-		if ((pluto_rigid_body.velocity + trajectory*acceleration_scaled).magnitude <= max_speed_scaled)
-			pluto_rigid_body.velocity += trajectory*acceleration_scaled;
+		if (Vector3.Angle (pluto_direction, trajectory) > 100.0f) {
+			// clamp Pluto's velocity to pluto max speed
+			if ((pluto_rigid_body.velocity + trajectory*acceleration_scaled).magnitude <= max_speed_scaled)
+				pluto_rigid_body.velocity += trajectory*acceleration_scaled*reverse_acceleration;
+		}
+		else {
+			// clamp Pluto's velocity to pluto max speed
+			if ((pluto_rigid_body.velocity + trajectory*acceleration_scaled).magnitude <= max_speed_scaled)
+				pluto_rigid_body.velocity += trajectory*acceleration_scaled;
+	
+		}
 	}
 
 	public void setCanMove (bool newState){
@@ -65,7 +76,7 @@ public class tapToMovePluto : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (canMove) {
 			if (Input.GetMouseButton (0) && !pluto_basic_attack.plutoPressed ()) {
 				Ray ray = main_camera.ScreenPointToRay (Input.mousePosition);

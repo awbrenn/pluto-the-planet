@@ -53,8 +53,8 @@ public class cameraController : MonoBehaviour {
 		sceneCamLoc = camLoc;
 		sceneCamLoc.y = introSceneHeight;
 
-		player.transform.LookAt (transform.localPosition);
-		boss.transform.LookAt (transform.localPosition);
+		player.transform.Rotate (90,0,0);
+		boss.transform.LookAt (transform.localPosition, new Vector3 (0,0,1));
 	}
 	
 	// Update is called once per frame
@@ -106,7 +106,7 @@ public class cameraController : MonoBehaviour {
 				transform.position = Vector3.MoveTowards (transform.position, camLoc, step);
 				transform.LookAt (lookPos);
 				spd = speed;
-				Vector3 upChange = new Vector3 (0,0,0);
+				Vector3 upChange = new Vector3 (0.0f,1.0f,0.0f);
 				player.transform.LookAt (boss.transform.localPosition, upChange);
 				boss.transform.LookAt (player.transform.localPosition, upChange);
 
@@ -134,9 +134,11 @@ public class cameraController : MonoBehaviour {
 				transform.position = Vector3.SmoothDamp (transform.position, destination, ref velocity, smoothTime);
 				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
 
-				player.transform.LookAt (transform.localPosition);
-				boss.transform.LookAt (transform.localPosition);
+				Vector3 lookDirection = new Vector3 (player.transform.position.x, player.transform.position.y + 1000.0f, player.transform.position.z);
+				Vector3 upDirection = new Vector3 (0.0f, 0.0f, 1.0f);
 
+				player.transform.LookAt (lookDirection, upDirection);
+				boss.transform.LookAt (transform.localPosition);
 			}
 		}
 	}
