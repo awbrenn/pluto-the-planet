@@ -10,6 +10,9 @@ public class chatter : MonoBehaviour {
 	public float textBoxHeightPercentage = 0.33f;
 	public int maxTextMessagesOnScreen = 3;
 	public GameObject[] startTextMessages;
+	public float timeBetweenRandomConversation = 5.0f;
+	public float timeBetweenTextMessages = 1.0f;
+	public float timeUntilClearTextMessages = 4.0f;
 
 	private int spacing;
 	private Queue<GameObject> queuedTextMessages;
@@ -20,6 +23,8 @@ public class chatter : MonoBehaviour {
 	private int GUIScreenWidth;
 	private int GUIScreenHeight;
 	private Vector2 textBoxSize;
+	private float startTimeOfRandomConversation;
+	private float timeOfLastTextMessage = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -41,17 +46,44 @@ public class chatter : MonoBehaviour {
 		currentTextMessages = new Queue<GameObject>();
 	}
 
-	void queueTextMessage(GameObject textMessage) {
-		currentTextMessages.Enqueue (textMessage);
-	}
-	
-	void FixedUpdate () {
-		// don't add a text message if the max is reached
-		if (currentTextMessages.Count >= maxTextMessagesOnScreen) {
+	public void queueTextMessage(GameObject textMessage) {
+		if (textMessage == null) {
 			return;
+		} else {
+			queuedTextMessages.Enqueue (textMessage);
+			GameObject[] responses = textMessage.GetComponent<message> ().responses;
+			GameObject response = responses[Random.Range (0, responses.Length)];
+			queueTextMessage (response);
+		}
+	}
+
+	void updateCurrentTextMessages() {
+		if (Time.time - timeOfLastTextMessage > timeBetweenTextMessages && queuedTextMessages.Count > 0) {
+			currentTextMessages.Enqueue(queuedTextMessages.Dequeue());
+			timeOfLastTextMessage = Time.time;
+		} 
+		else if (timeOfLastTextMessage == 0.0f && queuedTextMessages.Count > 0) {
+			currentTextMessages.Enqueue(queuedTextMessages.Dequeue());
+			timeOfLastTextMessage = Time.time;
 		}
 
-		queueTextMessage (startTextMessages [Random.Range (0, startTextMessages.Length)]);
+		if (currentTextMessages.Count > maxTextMessagesOnScreen) {
+			currentTextMessages.Dequeue ();
+		}
+
+		// clear text messages after a certain amount of time
+		if (Time.time - timeOfLastTextMessage > timeUntilClearTextMessages) {
+			
+		}
+	}
+
+	void FixedUpdate () {
+//		if (Time.time - startTimeOfRandomConversation > timeBetweenRandomConversation) {
+//			queueTextMessage (startTextMessages [Random.Range (0, startTextMessages.Length)]);
+//			startTimeOfRandomConversation = Time.time;
+//		}
+
+		updateCurrentTextMessages ();
 	}
 
 	void OnGUI() {
@@ -66,16 +98,15 @@ public class chatter : MonoBehaviour {
 		TextureBox.width -= textureOffset.x;
 		TextureBox.height -= textureOffset.y;
 
-		int i = 0;
-		foreach (GameObject textMessage in currentTextMessages) {
-			int y = (int)(i*textBoxSize.y);
+		for (int i = currentTextMessages.Count-1; i >= 0; --i) {
+			GameObject textMessage = currentTextMessages.ToArray()[i];
+			int y = (int)(((currentTextMessages.Count-1) - i)*textBoxSize.y);
 			Rect Group = new Rect(GroupPos.x, GroupPos.y - y, textBoxSize.x, textBoxSize.y);
 			GUI.BeginGroup (Group);
-			GUI.Box (new Rect (0, 0, textBoxSize.x, textBoxSize.y), textMessage.GetComponent<message> ().text + " " + i);
+			GUI.Box (new Rect (0, 0, textBoxSize.x, textBoxSize.y), textMessage.GetComponent<message> ().text + " ");
 			GUI.Box (new Rect (0, 0, thumbSize.x, thumbSize.y), "");
 			GUI.DrawTexture (TextureBox, textMessage.GetComponent<message> ().characterThumb);
 			GUI.EndGroup ();
-			++i;
 		}
 	}
 }
