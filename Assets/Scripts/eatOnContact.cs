@@ -27,6 +27,7 @@ public class eatOnContact : MonoBehaviour {
 		objectHealth toBeEatenHealth = toBeEaten.GetComponent<objectHealth> ();
 		int selfHealth = eaterHealth.getHealth ();
 		int otherHealth = toBeEatenHealth.getHealth ();
+
 		float healthDifference = (float)(selfHealth) / (float)(otherHealth);
 		if (healthDifference <= 0.35f) {
 			audioSource.PlayOneShot (eatSound, 1f);
@@ -36,7 +37,11 @@ public class eatOnContact : MonoBehaviour {
 		else {
 			audioSource.PlayOneShot (hitSound, 1f);
 			float impactDamage = (otherHealth + selfHealth) * impactDamageMultiplier;
-//			print ("impact damage:  " + impactDamage);
+
+			if (toBeEaten.name == "Pluto" && otherHealth - impactDamage <= 0) { 
+				UnityEngine.SceneManagement.SceneManager.LoadScene ("youLost");
+			}
+
 			eaterHealth.adjustHealth ((int)- (impactDamage/2));
 			toBeEatenHealth.adjustHealth ((int)- (impactDamage/2));
 

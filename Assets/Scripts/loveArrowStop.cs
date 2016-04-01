@@ -35,7 +35,7 @@ public class loveArrowStop : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if (other.gameObject.tag != "Boss") {
+		if (other.gameObject.tag != "Boss" && other.gameObject.tag != "BossScarf") {
 			Destroy (gameObject);
 			other.attachedRigidbody.velocity = new Vector3 (0,0,0);
 			if (other.gameObject.tag == "projectile"){
@@ -43,7 +43,6 @@ public class loveArrowStop : MonoBehaviour {
 			}
 			badEffects stop = other.gameObject.GetComponent<badEffects> () as badEffects;
 			stop.loveArrowActivate (stopTime, Time.time);
-
 		}
 	}
 }
