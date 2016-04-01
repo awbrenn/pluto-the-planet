@@ -18,6 +18,7 @@ public class cameraController : MonoBehaviour {
 	public float eatingRotationMultiplyier = 100f;
 	public float bossCamBasePosDivisor = 6f;
 	public float bossCamLookPosDivisor = 1f;
+	public float bossRotSpeed = 1f;
 
 	private Vector3 velocity = Vector3.zero;
 
@@ -94,7 +95,7 @@ public class cameraController : MonoBehaviour {
 				float distance = max - current.magnitude;
 				float distancePercent = distance / max;
 				float newCameraHeight = bossCamHeight * (1f - distancePercent) + (playerHealth/200);
-				float newCameraPos = bossCamBasePosDivisor * (1f - distancePercent);
+//				float newCameraPos = bossCamBasePosDivisor * (1f - distancePercent);
 
 				Vector3 bLoc = boss.transform.position;
 				Vector3 lookPos = ((bLoc - pLoc / bossCamLookPosDivisor) + pLoc);
@@ -108,7 +109,10 @@ public class cameraController : MonoBehaviour {
 				spd = speed;
 				Vector3 upChange = new Vector3 (0.0f,1.0f,0.0f);
 				player.transform.LookAt (boss.transform.localPosition, upChange);
-				boss.transform.LookAt (player.transform.localPosition, upChange);
+//				boss.transform.LookAt (player.transform.localPosition, upChange);
+				Quaternion newBossRot = Quaternion.LookRotation(player.transform.position);
+				float bossRotStep = bossRotSpeed * Time.deltaTime;
+				boss.transform.rotation = Quaternion.Lerp (boss.transform.rotation, newBossRot, bossRotStep);
 
 			}
 			else {
@@ -138,7 +142,9 @@ public class cameraController : MonoBehaviour {
 				Vector3 upDirection = new Vector3 (0.0f, 0.0f, 1.0f);
 
 				player.transform.LookAt (lookDirection, upDirection);
-				boss.transform.LookAt (transform.localPosition);
+				Quaternion newBossRot = Quaternion.LookRotation(player.transform.position);
+				float bossRotStep = bossRotSpeed * Time.deltaTime;
+				boss.transform.rotation = Quaternion.Lerp (boss.transform.rotation, newBossRot, bossRotStep);
 			}
 		}
 	}
