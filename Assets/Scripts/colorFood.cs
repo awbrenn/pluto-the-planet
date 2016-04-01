@@ -4,6 +4,9 @@ using System.Collections;
 public class colorFood : MonoBehaviour {
 	// ratio of foodHealth/plutoHealth in order to be edible
 	public float percentageOfPlutosHealthForEating = 0.35f;
+	public int eyeColorIndex = 1;
+	public Texture blueTexture;
+	public Texture redTexture;
 
 	private objectHealth plutosHealth;
 	private objectHealth foodsHealth;
@@ -21,10 +24,10 @@ public class colorFood : MonoBehaviour {
 		float plutoHealthValue = plutosHealth.getHealth ();
 
 		if (((float) (foodsHealth.getHealth ()) / (float) (plutoHealthValue)) <= percentageOfPlutosHealthForEating) {
-			foodRenderer.materials[2].color = Color.blue;
+			foodRenderer.materials[eyeColorIndex].SetTexture("_MainTex", blueTexture);
 //			Debug.Log ("Pluto's health:  " + plutoHealthValue + "  Food's Health:  " + foodsHealth.getHealth());
 		} else {
-			foodRenderer.materials[2].color = Color.red;
+			foodRenderer.materials[eyeColorIndex].SetTexture("_MainTex", redTexture);
 		}
 	}
 }

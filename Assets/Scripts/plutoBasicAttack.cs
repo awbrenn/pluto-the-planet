@@ -8,22 +8,21 @@ public class plutoBasicAttack : MonoBehaviour {
 	public float percentageOfPlutosHealthForDamage = .1f;
 	public int minDamage = 10;
 	public AudioClip shootSound;
+	public bool shooting = false;
+	public float sensitivity = 500.0f;
 
 	private AudioSource source;
-	private float volLowRange = 0.5f;
-	private float volHighRange = 1.0f;
-	private bool pluto_pressed = false;
 	private float speed;
 	private Vector3 start_position;
 	private Vector3 end_position;
 	private GameObject projectile_prefab;
-	private float time_pluto_was_pressed;
-	private Camera main_camera;
+	private float time_of_touch;
 	private float bossVolumeRadius;
+	private float start_time;
+	private bool check_for_swipe = true;
 
 	// Use this for initialization
 	void Start () {
-		main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>() as Camera;
 		projectile_prefab = Resources.Load ("Prefabs/defaultProjectile") as GameObject;
 		bossVolumeRadius = GameObject.Find ("BossVolume").transform.localScale.x/2.0f;
 
@@ -74,67 +73,81 @@ public class plutoBasicAttack : MonoBehaviour {
 		}
 			
 		gameObject.GetComponent<objectHealth> ().adjustHealth ((int)((-1.0f) * plutosHealth * percentageOfPlutosHealthForDamage));
-		Debug.Log ("pluto health loss on projectile spawn: " + (int)((-1.0f) * plutosHealth * percentageOfPlutosHealthForDamage));
 
 		source.PlayOneShot (shootSound, 1f);
 	}
 
+	void shootProjectile() {
+		Vector3 bossPosition = GameObject.FindWithTag ("Boss").transform.position;
+		Vector3 projectile_trajectory;
+		Vector3 plutoVelocity = GetComponent<Rigidbody> ().velocity;
+
+		if ((transform.position - bossPosition).magnitude < bossVolumeRadius) {
+			projectile_trajectory = (bossPosition - transform.position).normalized;
+			speed = projectile_max_speed;
+			spawnProjectile (projectile_trajectory, speed, false);
+		}
+		else {
+			// if the player didn't swipe, we don't spawn a projectile
+			if (end_position == start_position) {
+				shooting = false;
+				return;
+			}
+
+			// calculate the normalized projectile trajectory
+			projectile_trajectory = (end_position - start_position).normalized;
+
+			// transform the trajectory from the x-y plane to the x-z plane
+			projectile_trajectory.z = projectile_trajectory.y;
+			projectile_trajectory.y = 0.0f;
+
+			speed = projectile_max_speed;
+			spawnProjectile (projectile_trajectory, speed, true);
+		}
+	}
+
+
+	bool checkForSwipe (float delta_time) {
+		bool check = false;
+
+		check = (Input.mousePosition - start_position).magnitude / delta_time > sensitivity;
+
+		return check;
+	}
+
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (Input.GetMouseButtonDown (0)) {
-			Ray camera_ray = main_camera.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			//Debug.DrawRay (camera_ray.origin, camera_ray.direction * 10, Color.yellow);
-
-			// Check to see of the user pressed pluto
-			if (Physics.Raycast (camera_ray, out hit, Mathf.Infinity, 7) && !pluto_pressed) {
-				if (hit.transform.name == "Pluto") {
-					start_position = Input.mousePosition;
-					pluto_pressed = true;
-					time_pluto_was_pressed = Time.time;
-				}
+			// is shooting
+			if (!shooting) {
+				start_position = Input.mousePosition;
+				shooting = true;
+				time_of_touch = Time.time;
+				check_for_swipe = true;
 			}
 		}
 
-		if (Input.GetMouseButtonUp (0) && pluto_pressed) {
-			float delta_time = Time.time - time_pluto_was_pressed;
-			float speed_scale = 100.0f;
-			Vector3 bossPosition = GameObject.FindWithTag ("Boss").transform.position;
-			Vector3 projectile_trajectory;
-			Vector3 plutoVelocity = GetComponent<Rigidbody> ().velocity;
-
-			if ((transform.position - bossPosition).magnitude < bossVolumeRadius) {
-				projectile_trajectory = (bossPosition - transform.position).normalized;
-				speed = projectile_max_speed;
-				spawnProjectile (projectile_trajectory, speed, false);
+		if (shooting == true && check_for_swipe) {
+			if (Time.time - time_of_touch > 0.05f) {
+				shooting = checkForSwipe (Time.time - time_of_touch);
+				check_for_swipe = false;
 			}
-			else {
-				// if the player didn't swipe, we don't spawn a projectile
-				end_position = Input.mousePosition;
-				if (end_position == start_position) {
-					pluto_pressed = false;
-					return;
-				}
+		}
 
-				// calculate the normalized projectile trajectory
-				projectile_trajectory = (end_position - start_position).normalized;
+		if (Input.GetMouseButtonUp (0) && shooting) {
+			end_position = Input.mousePosition;
 
-				// transform the trajectory from the x-y plane to the x-z plane
-				projectile_trajectory.z = projectile_trajectory.y;
-				projectile_trajectory.y = 0.0f;
-
-				// get the speed (*note speed_scale is a fudge factor, may need to refactor)
-				speed = (float)((end_position - start_position).magnitude/speed_scale) / delta_time;
-				spawnProjectile (projectile_trajectory, speed, true);
+			if (shooting) {
+				shootProjectile ();
 			}
 
-			pluto_pressed = false;
+			shooting = false;
 		}
 	}
 
 	// getters
 	public bool plutoPressed() {
-		return pluto_pressed;
+		return shooting;
 	}
 }
