@@ -29,7 +29,7 @@ public class eatOnContact : MonoBehaviour {
 		int otherHealth = toBeEatenHealth.getHealth ();
 
 		float healthDifference = (float)(selfHealth) / (float)(otherHealth);
-		if (healthDifference <= 0.35f) {
+		if (healthDifference <= 0.35f || otherHealth <= 10) {
 			audioSource.PlayOneShot (eatSound, 1f);
 			Destroy (gameObject);
 			toBeEatenHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
@@ -122,7 +122,18 @@ public class eatOnContact : MonoBehaviour {
 		} 
 
 		if (other.gameObject.tag == "Player" || other.gameObject.tag == "Boss") {
-			playerOrBossEat (contacteeHealth, other.gameObject);
+			if (other.gameObject.tag == "Player") {
+				maximumSize maxSize = other.gameObject.GetComponent<maximumSize> ();
+				objectHealth plutoHealth = other.gameObject.GetComponent<objectHealth>();
+				int currentMax = maxSize.getMaxHealth ();
+				int currentHealth = plutoHealth.getHealth ();
+//				Debug.Log ("pluto size: " + currentHealth);
+				if (currentHealth < currentMax) {
+					playerOrBossEat (contacteeHealth, other.gameObject);
+				}
+			} else {
+				playerOrBossEat (contacteeHealth, other.gameObject);
+			}
 		}
 		if (other.gameObject.tag == "projectile" && gameObject.tag != "Player"){
 			projectileDoesDamage (contacteeHealth, other.gameObject, other.contacts [0].point, other.contacts [0].normal, other.relativeVelocity);
