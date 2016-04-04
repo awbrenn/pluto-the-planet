@@ -9,6 +9,7 @@ public class plutoBasicAttack : MonoBehaviour {
 	public int minDamage = 10;
 	public AudioClip shootSound;
 	public bool shooting = false;
+	public float sensitivity = 500.0f;
 
 	private AudioSource source;
 	private float speed;
@@ -109,7 +110,7 @@ public class plutoBasicAttack : MonoBehaviour {
 	bool checkForSwipe (float delta_time) {
 		bool check = false;
 
-		check = (Input.mousePosition - start_position).magnitude / delta_time > 500.0f;
+		check = (Input.mousePosition - start_position).magnitude / delta_time > sensitivity;
 
 		return check;
 	}
