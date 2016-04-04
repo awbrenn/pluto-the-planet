@@ -34,7 +34,7 @@ public class returnToGameArea : MonoBehaviour {
 			Vector3 velocity = rigidBody.velocity.normalized;
 			float accellerationInfluence = 1.0f - Vector3.Dot(directionToCenter, velocity);
 			if (accellerationInfluence <= 1.0f) {
-				accellerationInfluence = 0.0f;
+				accellerationInfluence = 0.1f;
 			}
 
 			rigidBody.velocity += directionToCenter * acceleration * accellerationInfluence;
@@ -45,7 +45,7 @@ public class returnToGameArea : MonoBehaviour {
 			Vector3 velocity = rigidBody.velocity.normalized;
 			float accellerationInfluence = 1.0f - Vector3.Dot(directionToCenter, velocity);
 			if (accellerationInfluence <= 1.0f) {
-				accellerationInfluence = 0.0f;
+				accellerationInfluence = 0.1f;
 			}
 
 			rigidBody.velocity += directionToCenter * acceleration * accellerationInfluence;

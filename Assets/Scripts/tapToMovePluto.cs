@@ -9,7 +9,7 @@ public class tapToMovePluto : MonoBehaviour {
 	public float reverse_acceleration = 4.0f;
 	public float start_max_speed = 20.0f;
 	public float speed_increase_decay_rate = -15.0f;
-	public float sensitivity = 200.0f;
+	public float sensitivity = 100.0f;
 
 
 	// private member variables
@@ -75,30 +75,58 @@ public class tapToMovePluto : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (canMove && Input.GetMouseButton (0)) {
+		if (canMove) {
 			Vector3 current_mouse_position;
+			foreach (Touch touch in Input.touches) {
+				if (touch.position.x < Screen.width / 2) {
+					Debug.Log(touch.position.x + Screen.width / 2);
 
-			// on tap
-			if (Input.GetMouseButtonDown (0)) {
-				start_mouse_position = Input.mousePosition;
+					switch (touch.phase) {
+					case TouchPhase.Began:
+						start_mouse_position = touch.position;
+						break;
+					case TouchPhase.Moved:
+						current_mouse_position = touch.position;
+
+						Vector3 trajectory = (current_mouse_position - start_mouse_position) / sensitivity;
+
+						trajectory.z = trajectory.y;
+						trajectory.y = 0.0f;
+
+						//Debug.Log (start_mouse_position + "    " + current_mouse_position + "     " + trajectory);
+
+						if (!pluto_basic_attack.shooting && transform.position.magnitude <= safe_volume_radius)
+							acceleratePlutoInTrajectoryDirection (trajectory);
+						break;
+					}
+				}
 			}
-
-			// on holding down
-			if (Input.GetMouseButton (0)) {
-				current_mouse_position = Input.mousePosition;
-
-				Vector3 trajectory = (current_mouse_position - start_mouse_position) / sensitivity;
-
-				trajectory.z = trajectory.y;
-				trajectory.y = 0.0f;
-
-				Debug.Log (start_mouse_position + "    " + current_mouse_position + "     " + trajectory);
-
-				if (!pluto_basic_attack.shooting && transform.position.magnitude <= safe_volume_radius)
-					acceleratePlutoInTrajectoryDirection (trajectory);
-			}
-
 		}
+
+//		if (canMove && Input.GetMouseButton (0)) {
+//			Vector3 current_mouse_position;
+//
+//			// on tap
+//			if (Input.GetMouseButtonDown (0)) {
+//				start_mouse_position = Input.mousePosition;
+//			}
+//
+//			// on holding down
+//			if (Input.GetMouseButton (0)) {
+//				current_mouse_position = Input.mousePosition;
+//
+//				Vector3 trajectory = (current_mouse_position - start_mouse_position) / sensitivity;
+//
+//				trajectory.z = trajectory.y;
+//				trajectory.y = 0.0f;
+//
+//				//Debug.Log (start_mouse_position + "    " + current_mouse_position + "     " + trajectory);
+//
+//				if (!pluto_basic_attack.shooting && transform.position.magnitude <= safe_volume_radius)
+//					acceleratePlutoInTrajectoryDirection (trajectory);
+//			}
+//
+//		}
 		else if (!canMove) {
 			if (pluto_rigid_body.velocity.magnitude > 0) {
 				pluto_rigid_body.velocity = Vector3.zero;

@@ -118,32 +118,50 @@ public class plutoBasicAttack : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (Input.GetMouseButtonDown (0)) {
-			// is shooting
-			if (!shooting) {
-				start_position = Input.mousePosition;
-				shooting = true;
-				time_of_touch = Time.time;
-				check_for_swipe = true;
+		Vector3 current_mouse_position;
+
+		foreach (Touch touch in Input.touches) {
+			if (touch.position.x > Screen.width / 2) {
+				Debug.Log("shoot " + touch.position.x + " " + Screen.width / 2);
+
+				switch (touch.phase) {
+				case TouchPhase.Began:
+					start_position = touch.position;
+					break;
+				case TouchPhase.Ended:
+					end_position = touch.position;
+					shootProjectile ();
+					break;
+				}
 			}
 		}
 
-		if (shooting == true && check_for_swipe) {
-			if (Time.time - time_of_touch > 0.05f) {
-				shooting = checkForSwipe (Time.time - time_of_touch);
-				check_for_swipe = false;
-			}
-		}
-
-		if (Input.GetMouseButtonUp (0) && shooting) {
-			end_position = Input.mousePosition;
-
-			if (shooting) {
-				shootProjectile ();
-			}
-
-			shooting = false;
-		}
+//		if (Input.GetMouseButtonDown (0)) {
+//			// is shooting
+//			if (!shooting) {
+//				start_position = Input.mousePosition;
+//				shooting = true;
+//				time_of_touch = Time.time;
+//				check_for_swipe = true;
+//			}
+//		}
+//
+//		if (shooting == true && check_for_swipe) {
+//			if (Time.time - time_of_touch > 0.05f) {
+//				shooting = checkForSwipe (Time.time - time_of_touch);
+//				check_for_swipe = false;
+//			}
+//		}
+//
+//		if (Input.GetMouseButtonUp (0) && shooting) {
+//			end_position = Input.mousePosition;
+//
+//			if (shooting) {
+//				shootProjectile ();
+//			}
+//
+//			shooting = false;
+//		}
 	}
 
 	// getters
