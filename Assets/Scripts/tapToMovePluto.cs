@@ -102,35 +102,43 @@ public class tapToMovePluto : MonoBehaviour {
 				}
 			}
 		}
-
-//		if (canMove && Input.GetMouseButton (0)) {
-//			Vector3 current_mouse_position;
-//
-//			// on tap
-//			if (Input.GetMouseButtonDown (0)) {
-//				start_mouse_position = Input.mousePosition;
-//			}
-//
-//			// on holding down
-//			if (Input.GetMouseButton (0)) {
-//				current_mouse_position = Input.mousePosition;
-//
-//				Vector3 trajectory = (current_mouse_position - start_mouse_position) / sensitivity;
-//
-//				trajectory.z = trajectory.y;
-//				trajectory.y = 0.0f;
-//
-//				//Debug.Log (start_mouse_position + "    " + current_mouse_position + "     " + trajectory);
-//
-//				if (!pluto_basic_attack.shooting && transform.position.magnitude <= safe_volume_radius)
-//					acceleratePlutoInTrajectoryDirection (trajectory);
-//			}
-//
-//		}
 		else if (!canMove) {
 			if (pluto_rigid_body.velocity.magnitude > 0) {
 				pluto_rigid_body.velocity = Vector3.zero;
 			}
 		}
+
+
+		//################### controls for PC ######################
+		if (canMove && Input.GetMouseButton (0) && Input.touches.Length == 0) {
+			Vector3 current_mouse_position;
+
+			// on tap
+			if (Input.GetMouseButtonDown (0)) {
+				start_mouse_position = Input.mousePosition;
+			}
+
+			// on holding down
+			if (Input.GetMouseButton (0)) {
+				current_mouse_position = Input.mousePosition;
+
+				Vector3 trajectory = (current_mouse_position - start_mouse_position) / sensitivity;
+
+				trajectory.z = trajectory.y;
+				trajectory.y = 0.0f;
+
+				//Debug.Log (start_mouse_position + "    " + current_mouse_position + "     " + trajectory);
+
+				if (!pluto_basic_attack.shooting && transform.position.magnitude <= safe_volume_radius)
+					acceleratePlutoInTrajectoryDirection (trajectory);
+			}
+
+		}
+		else if (!canMove) {
+			if (pluto_rigid_body.velocity.magnitude > 0) {
+				pluto_rigid_body.velocity = Vector3.zero;
+			}
+		}
+		//########################################################## 
 	}
 }
