@@ -35,6 +35,7 @@ public class cameraController : MonoBehaviour {
 	private bool introSceneLook = false;
 	private bool mainGamePlay = false;
 	private bool inTransitionVolume = false;
+	private bool inBossVolume = false;
 
 	private Quaternion outerLookDir;
 
@@ -83,7 +84,7 @@ public class cameraController : MonoBehaviour {
 			cameraHeight = ((playerHealth/100) + camHeight);
 //			inTransitionVolume = transitionVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
 
-			if (inTransitionVolume) {
+			if (inBossVolume) {
 //				Debug.Log ("inBossVolume");
 //				float newCameraHeight = cameraHeight + bossCamHeight;
 				float step = bossSpeed * Time.deltaTime;
@@ -141,7 +142,13 @@ public class cameraController : MonoBehaviour {
 				Vector3 lookDirection = new Vector3 (player.transform.position.x, player.transform.position.y + 1000.0f, player.transform.position.z);
 				Vector3 upDirection = new Vector3 (0.0f, 0.0f, 1.0f);
 
-				player.transform.LookAt (lookDirection, upDirection);
+				if (inTransitionVolume) {
+					Vector3 upChange = new Vector3 (0.0f,1.0f,0.0f);
+					player.transform.LookAt (boss.transform.localPosition, upChange);
+				} 
+				else {
+					player.transform.LookAt (lookDirection, upDirection);
+				}
 				Quaternion newBossRot = Quaternion.LookRotation(player.transform.position);
 				float bossRotStep = bossRotSpeed * Time.deltaTime;
 				boss.transform.rotation = Quaternion.Lerp (boss.transform.rotation, newBossRot, bossRotStep);
@@ -151,6 +158,10 @@ public class cameraController : MonoBehaviour {
 
 	public void setTransitionCamera (bool inOrOut){
 		inTransitionVolume = inOrOut;
+	}
+
+	public void setBossLook (bool inOrOut){
+		inBossVolume = inOrOut;
 	}
 
 	IEnumerator introLookTimer (float lookTime){
