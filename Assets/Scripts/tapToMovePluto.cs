@@ -19,7 +19,9 @@ public class tapToMovePluto : MonoBehaviour {
 	private float max_speed_scaled;
 	private float acceleration_scaled;
 	private Vector3 start_mouse_position;
+	private Vector3 current_mouse_position;
 	private float safe_volume_radius;
+	private float boss_volume_radius;
 	private bool canMove = true;
 
 	// Use this for initialization
@@ -31,19 +33,33 @@ public class tapToMovePluto : MonoBehaviour {
 		pluto_rigid_body = GetComponent<Rigidbody> ();
 		pluto_rigid_body.freezeRotation = true;
 		safe_volume_radius = GameObject.FindGameObjectWithTag ("Safe Volume").transform.localScale.x / 2.0f;
+		boss_volume_radius = GameObject.FindGameObjectWithTag ("Boss Volume").transform.localScale.x / 2.0f;
 	}
 
 
-	Vector3 getNormalizedTrajectory() {
-		float distanceFromCamera = Mathf.Abs((transform.position - main_camera.transform.position).magnitude);
-		Vector3 tap_location_screen_coord = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distanceFromCamera);
+	Vector3 getTrajectory() {
+//		float distanceFromCamera = Mathf.Abs((transform.position - main_camera.transform.position).magnitude);
+//		Vector3 tap_location_screen_coord = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distanceFromCamera);
+//
+//		Vector3 tap_location_world_coord = main_camera.ScreenToWorldPoint(tap_location_screen_coord);
+//		tap_location_world_coord.y = 0.0f;
+//
+//		Vector3 pluto_location = transform.position;
+//
+//		Vector3 trajectory = (tap_location_world_coord - pluto_location).normalized;
+//
+//		return trajectory;
+		Vector3 trajectory = (current_mouse_position - start_mouse_position) / sensitivity;
+		Vector3 direction_towards_boss = -1.0f * transform.position.normalized;
+		//Vector3 up_direction = new Vector3 (0.0f, 0.0f, 1.0f);
 
-		Vector3 tap_location_world_coord = main_camera.ScreenToWorldPoint(tap_location_screen_coord);
-		tap_location_world_coord.y = 0.0f;
+		trajectory.z = trajectory.y;
+		trajectory.y = 0.0f;
 
-		Vector3 pluto_location = transform.position;
-
-		Vector3 trajectory = (tap_location_world_coord - pluto_location).normalized;
+		if (transform.position.magnitude <= boss_volume_radius) {
+			//trajectory = Vector3.RotateTowards (trajectory, direction_towards_boss, Vector3.Angle(direction_towards_boss, up_direction), 0.0f);
+			trajectory = Quaternion.Euler(0.0f, main_camera.transform.localRotation.eulerAngles.y, 0.0f) * trajectory;
+		}
 
 		return trajectory;
 	}
@@ -76,7 +92,6 @@ public class tapToMovePluto : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (canMove) {
-			Vector3 current_mouse_position;
 			foreach (Touch touch in Input.touches) {
 				if (touch.position.x < Screen.width / 2) {
 					Debug.Log(touch.position.x + Screen.width / 2);
@@ -88,10 +103,7 @@ public class tapToMovePluto : MonoBehaviour {
 					case TouchPhase.Moved:
 						current_mouse_position = touch.position;
 
-						Vector3 trajectory = (current_mouse_position - start_mouse_position) / sensitivity;
-
-						trajectory.z = trajectory.y;
-						trajectory.y = 0.0f;
+						Vector3 trajectory = getTrajectory ();
 
 						//Debug.Log (start_mouse_position + "    " + current_mouse_position + "     " + trajectory);
 
@@ -111,7 +123,6 @@ public class tapToMovePluto : MonoBehaviour {
 
 		//################### controls for PC ######################
 		if (canMove && Input.GetMouseButton (0) && Input.touches.Length == 0) {
-			Vector3 current_mouse_position;
 
 			// on tap
 			if (Input.GetMouseButtonDown (0)) {
@@ -122,10 +133,7 @@ public class tapToMovePluto : MonoBehaviour {
 			if (Input.GetMouseButton (0)) {
 				current_mouse_position = Input.mousePosition;
 
-				Vector3 trajectory = (current_mouse_position - start_mouse_position) / sensitivity;
-
-				trajectory.z = trajectory.y;
-				trajectory.y = 0.0f;
+				Vector3 trajectory = getTrajectory ();
 
 				//Debug.Log (start_mouse_position + "    " + current_mouse_position + "     " + trajectory);
 
