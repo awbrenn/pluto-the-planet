@@ -16,7 +16,7 @@ public class cameraController : MonoBehaviour {
 	public float sizeChangeStep= 30f;
 	public float bossCamHeight = 10f;
 	public float eatingRotationMultiplyier = 100f;
-	public float bossCamBasePosDivisor = 6f;
+	public float bossCamBasePosDivisor = 20f;
 	public float bossCamLookPosDivisor = 1f;
 	public float bossRotSpeed = 1f;
 
@@ -96,11 +96,12 @@ public class cameraController : MonoBehaviour {
 				float distance = max - current.magnitude;
 				float distancePercent = distance / max;
 				float newCameraHeight = bossCamHeight * (1f - distancePercent) + (playerHealth/200);
+				float bCDistanceScale =.9f + (playerHealth/1000);
 //				float newCameraPos = bossCamBasePosDivisor * (1f - distancePercent);
 
 				Vector3 bLoc = boss.transform.position;
-				Vector3 lookPos = ((bLoc - pLoc / bossCamLookPosDivisor) + pLoc);
-				Vector3 camBasePos = (-(bLoc - pLoc / bossCamBasePosDivisor) + pLoc);
+				Vector3 lookPos = ((bLoc - pLoc / (bossCamLookPosDivisor/bCDistanceScale)) + pLoc);
+				Vector3 camBasePos = (-(bLoc - pLoc / (bossCamBasePosDivisor/bCDistanceScale)) + pLoc);
 
 				camLoc = new Vector3((camBasePos.x + 1), newCameraHeight, (camBasePos.z + 1));
 //				print (lookPos);

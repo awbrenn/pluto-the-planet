@@ -33,6 +33,7 @@ public class eatOnContact : MonoBehaviour {
 			audioSource.PlayOneShot (eatSound, 1f);
 			Destroy (gameObject);
 			toBeEatenHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
+			toBeEaten.GetComponent<Animator> ().SetTrigger ("triggerChomp");
 		}
 		else {
 			audioSource.PlayOneShot (hitSound, 1f);
@@ -130,9 +131,16 @@ public class eatOnContact : MonoBehaviour {
 //				Debug.Log ("pluto size: " + currentHealth);
 				if (currentHealth < currentMax) {
 					playerOrBossEat (contacteeHealth, other.gameObject);
+					//other.gameObject.GetComponent<Animator> ().SetTrigger ("triggerHungry");
+					other.gameObject.GetComponent<Animator> ().SetBool ("isHungry", true);
+				} 
+				else {
+					other.gameObject.GetComponent<Animator> ().SetBool ("isHungry", false);
 				}
-			} else {
+			} 
+			else {
 				playerOrBossEat (contacteeHealth, other.gameObject);
+				//other.gameObject.GetComponent<Animator> ().SetTrigger ("triggerFull");
 			}
 		}
 		if (other.gameObject.tag == "projectile" && gameObject.tag != "Player"){
