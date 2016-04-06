@@ -49,7 +49,12 @@ public class moveGrowDie : MonoBehaviour {
 		if (isDoingDamage == true && (timeNow >= (timeSinceEnter + damageRepeatTime))) {
 			GameObject player = GameObject.FindGameObjectWithTag ("Player");
 			objectHealth playerHealth = player.gameObject.GetComponent<objectHealth> ();
-			playerHealth.adjustHealth ((int)-maxDamage);
+			if (playerHealth.getHealth() - ((int)maxDamage) <= 0) { 
+				UnityEngine.SceneManagement.SceneManager.LoadScene ("youLost");
+			}
+			else {
+				playerHealth.adjustHealth ((int) - maxDamage);
+			}
 			timeSinceEnter = timeNow;
 		}
 	}

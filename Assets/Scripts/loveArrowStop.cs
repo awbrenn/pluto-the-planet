@@ -38,11 +38,12 @@ public class loveArrowStop : MonoBehaviour {
 		if (other.gameObject.tag != "Boss" && other.gameObject.tag != "BossScarf") {
 			Destroy (gameObject);
 			other.attachedRigidbody.velocity = new Vector3 (0,0,0);
-			if (other.gameObject.tag == "projectile"){
+			if (other.gameObject.tag == "projectile") {
 				Destroy (other.gameObject);
+			} else if (other.gameObject.tag == "Player") {
+				badEffects stop = other.gameObject.GetComponent<badEffects> () as badEffects;
+				stop.loveArrowActivate (stopTime, Time.time);
 			}
-			badEffects stop = other.gameObject.GetComponent<badEffects> () as badEffects;
-			stop.loveArrowActivate (stopTime, Time.time);
 		}
 	}
 }
