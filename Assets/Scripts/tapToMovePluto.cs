@@ -57,7 +57,6 @@ public class tapToMovePluto : MonoBehaviour {
 		trajectory.y = 0.0f;
 
 		if (transform.position.magnitude <= boss_volume_radius) {
-			//trajectory = Vector3.RotateTowards (trajectory, direction_towards_boss, Vector3.Angle(direction_towards_boss, up_direction), 0.0f);
 			trajectory = Quaternion.Euler(0.0f, main_camera.transform.localRotation.eulerAngles.y, 0.0f) * trajectory;
 		}
 

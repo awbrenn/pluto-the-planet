@@ -20,6 +20,7 @@ public class plutoBasicAttack : MonoBehaviour {
 	private float bossVolumeRadius;
 	private float start_time;
 	private bool check_for_swipe = true;
+	private bool canShoot = true;
 
 	// Use this for initialization
 	void Start () {
@@ -163,10 +164,5 @@ public class plutoBasicAttack : MonoBehaviour {
 			shooting = false;
 		}
 		//###########################################################
-	}
-
-	// getters
-	public bool plutoPressed() {
-		return shooting;
 	}
 }
