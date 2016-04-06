@@ -10,6 +10,7 @@ public class plutoBasicAttack : MonoBehaviour {
 	public AudioClip shootSound;
 	public bool shooting = false;
 	public float sensitivity = 500.0f;
+	public float timeBetweenShots = 0.5f;
 
 	private AudioSource source;
 	private float speed;
@@ -20,11 +21,14 @@ public class plutoBasicAttack : MonoBehaviour {
 	private float bossVolumeRadius;
 	private float start_time;
 	private bool check_for_swipe = true;
+	private bool canShoot = true;
+	private float timeOfLastShot;
 
 	// Use this for initialization
 	void Start () {
 		projectile_prefab = Resources.Load ("Prefabs/defaultProjectile") as GameObject;
 		bossVolumeRadius = GameObject.Find ("BossVolume").transform.localScale.x/2.0f;
+		timeOfLastShot = Time.time;
 
 		source = GetComponent<AudioSource> ();
 	}
@@ -121,15 +125,16 @@ public class plutoBasicAttack : MonoBehaviour {
 
 		foreach (Touch touch in Input.touches) {
 			if (touch.position.x > Screen.width / 2) {
-				Debug.Log("shoot " + touch.position.x + " " + Screen.width / 2);
-
 				switch (touch.phase) {
 				case TouchPhase.Began:
 					start_position = touch.position;
 					break;
 				case TouchPhase.Ended:
-					end_position = touch.position;
-					shootProjectile ();
+					if (Time.time - timeOfLastShot > timeBetweenShots) {
+						end_position = touch.position;
+						shootProjectile ();
+						timeOfLastShot = Time.time;
+					}
 					break;
 				}
 			}
@@ -156,17 +161,13 @@ public class plutoBasicAttack : MonoBehaviour {
 		if (Input.GetMouseButtonUp (0) && shooting && Input.touches.Length == 0) {
 			end_position = Input.mousePosition;
 
-			if (shooting) {
+			if (shooting && Time.time - timeOfLastShot > timeBetweenShots) {
 				shootProjectile ();
+				timeOfLastShot = Time.time;
 			}
 
 			shooting = false;
 		}
 		//###########################################################
-	}
-
-	// getters
-	public bool plutoPressed() {
-		return shooting;
 	}
 }
