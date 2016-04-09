@@ -9,6 +9,7 @@ public class menuScript : MonoBehaviour {
 	public Button replay;
 	public Button goToMainMenu;
 	public Button start;
+	public GameObject loadingText;
 
 	// Use this for initialization
 	void Start () {
@@ -19,14 +20,39 @@ public class menuScript : MonoBehaviour {
 	}
 
 	public void replayPressed () {
+		GameObject[] hideObjects = GameObject.FindGameObjectsWithTag ("hideButton");
+		foreach (GameObject hideObject in hideObjects) {
+			hideObject.SetActive (false);
+		}
+
+		loadingText.SetActive (true);
+
 		UnityEngine.SceneManagement.SceneManager.LoadScene (1);
 	}
 
 	public void startPressed () {
+		
+		GameObject[] hideObjects = GameObject.FindGameObjectsWithTag ("hideButton");
+		foreach (GameObject hideObject in hideObjects) {
+			hideObject.SetActive (false);
+		}
+
+		loadingText.SetActive (true);
+
+//		GameObject hideObject = GameObject.FindGameObjectWithTag ("hideButton");
+//		hideObject.GetComponent<Text> ().text = "Loading...";
+
 		UnityEngine.SceneManagement.SceneManager.LoadScene (1);
 	}
 
 	public void goToMenuPressed () {
+		GameObject[] hideObjects = GameObject.FindGameObjectsWithTag ("hideButton");
+		foreach (GameObject hideObject in hideObjects) {
+			hideObject.SetActive (false);
+		}
+
+		loadingText.SetActive (true);
+
 		UnityEngine.SceneManagement.SceneManager.LoadScene (0);
 	}
 }
