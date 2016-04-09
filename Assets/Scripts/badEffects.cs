@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class badEffects : MonoBehaviour {
+	private GameObject player;
+
 	private bool loveArrowIsStopping = false;
 	private float loveArrowStopLength;
 	private float loveArrowStartTime;
@@ -9,7 +11,7 @@ public class badEffects : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 	
 	// Update is called once per frame
@@ -19,12 +21,15 @@ public class badEffects : MonoBehaviour {
 
 	void FixedUpdate(){
 		if (loveArrowIsStopping) {
+			tapToMovePluto tapCtrl = player.GetComponent<tapToMovePluto>();
+			tapCtrl.setCanMove(false);
 			Vector3 currentVelocity = gameObject.GetComponent<Rigidbody> ().velocity;
 			if ((currentVelocity.x > 0) || (currentVelocity.z > 0)) {
 				gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 0);
 			}
 			if ((Time.time) > (loveArrowStopLength + loveArrowStartTime)) {
 				loveArrowIsStopping = false;
+				tapCtrl.setCanMove(true);
 			}
 		}
 	}
