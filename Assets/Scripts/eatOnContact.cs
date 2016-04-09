@@ -29,7 +29,7 @@ public class eatOnContact : MonoBehaviour {
 		int otherHealth = toBeEatenHealth.getHealth ();
 
 		float healthDifference = (float)(selfHealth) / (float)(otherHealth);
-		if (healthDifference <= 0.35f || otherHealth <= 10) {
+		if (healthDifference <= 0.35f || ((float)(selfHealth)) <= 10f) {
 			audioSource.PlayOneShot (eatSound, 1f);
 			Destroy (gameObject);
 			toBeEatenHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));

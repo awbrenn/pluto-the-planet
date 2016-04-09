@@ -25,8 +25,11 @@ public class moveGrowDie : MonoBehaviour {
 	void Start () {
 		GameObject pluto = GameObject.FindGameObjectWithTag ("Player");
 		Vector3 plutoLoc = pluto.transform.position;
+		GameObject smokeStart = GameObject.FindGameObjectWithTag ("BossMouthLoc");
+
 
 		transform.localScale = new Vector3 (startScale, startScale, startScale);
+		transform.position = smokeStart.transform.position;
 
 		Vector2 randGen = Random.insideUnitCircle * 2f;
 		Vector3 randomVec = new Vector3 (randGen.x, 0, randGen.y);
