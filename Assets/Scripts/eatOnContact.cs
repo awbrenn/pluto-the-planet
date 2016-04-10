@@ -29,11 +29,23 @@ public class eatOnContact : MonoBehaviour {
 		int otherHealth = toBeEatenHealth.getHealth ();
 
 		float healthDifference = (float)(selfHealth) / (float)(otherHealth);
+
 		if (healthDifference <= 0.35f || ((float)(selfHealth)) <= 10f) {
+			if (toBeEaten.tag == "Boss"){
+				Debug.Log ("boss is toBeEaten");
+				Debug.Log ("boss's health: " + otherHealth);
+				Debug.Log ("other object is " + gameObject.tag);
+				Debug.Log (gameObject.tag + "'s health is: " + selfHealth);
+				Debug.Log ("the health difference is " + healthDifference);
+			}
+
+
 			audioSource.PlayOneShot (eatSound, 1f);
 			Destroy (gameObject);
 			toBeEatenHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
-			toBeEaten.GetComponent<Animator> ().SetTrigger ("triggerChomp");
+			if (toBeEaten.tag == "Pluto") {
+				toBeEaten.GetComponent<Animator> ().SetTrigger ("triggerChomp");
+			}
 		}
 		else {
 			audioSource.PlayOneShot (hitSound, 1f);
@@ -71,8 +83,8 @@ public class eatOnContact : MonoBehaviour {
 			Destroy (projectile);
 			int chunks = (int)(hitDamage / 5);
 			// temporary making boss not emit any food
-			if (name == "Boss")
-				chunks = 0;
+/*			if (name == "Boss")
+				chunks = 0;*/
 			for (int i = 0; i < chunks; i++) {
 				foodHealth = (int)(hitDamage / chunks) + 5; // adding fudge 5 points to spawn foods health
 
@@ -139,6 +151,7 @@ public class eatOnContact : MonoBehaviour {
 				}
 			} 
 			else {
+				Debug.Log ("boss is trying to eat");
 				playerOrBossEat (contacteeHealth, other.gameObject);
 				//other.gameObject.GetComponent<Animator> ().SetTrigger ("triggerFull");
 			}
