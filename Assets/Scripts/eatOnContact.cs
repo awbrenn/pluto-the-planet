@@ -36,13 +36,17 @@ public class eatOnContact : MonoBehaviour {
 				Debug.Log ("boss's health: " + otherHealth);
 				Debug.Log ("other object is " + gameObject.tag);
 				Debug.Log (gameObject.tag + "'s health is: " + selfHealth);
-				Debug.Log ("the health difference is " + healthDifference);
+				Debug.Log ("the health change should be " + ((int)((float)selfHealth * healthTransferMultiplier)));
 			}
 
-
-			audioSource.PlayOneShot (eatSound, 1f);
+			if (audioSource != null){
+				audioSource.PlayOneShot (eatSound, 1f);
+			}
 			Destroy (gameObject);
 			toBeEatenHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
+
+			Debug.Log ("boss's new health " + toBeEatenHealth.getHealth ());
+
 			if (toBeEaten.tag == "Pluto") {
 				toBeEaten.GetComponent<Animator> ().SetTrigger ("triggerChomp");
 			}
