@@ -56,6 +56,7 @@ public class Healthbar : MonoBehaviour {
 
 	//used to choose between left or right alignment
 	public Positioning positioning;
+	private GameObject canvasObject;
 
 	//On Start, assign SpriteDatabse class to 'sd'. (Note: That class can never be missing due to the dependency system)
 	//It then runs Debugger() (find it below.) It checks whether the required sprites are assigned in the inspector, etc.
@@ -73,13 +74,21 @@ public class Healthbar : MonoBehaviour {
 	//Keeps the GUI bar (image) fill amount value synchronized with the health value.
 	//Note: healthNormalized cuts the number so that it's on a 100 scale like in every game (it's basically the percentage)
 	void FixedUpdate(){
+		float pluto_distance_from_center = GameObject.FindGameObjectWithTag("Player").transform.position.magnitude;
+		float transition_volume_radius = GameObject.FindGameObjectWithTag ("Transition Volume").transform.localScale.x/2.0f;
+		canvasObject.SetActive ((pluto_distance_from_center < transition_volume_radius && myTheme == 11) || (myTheme == 10));
 
 		if (player) {
-			int plutoHealth = player.GetComponent<objectHealth> ().getHealth ();
+			int myHealth = 0;
+			if (myTheme == 10) {
+				myHealth = player.GetComponent<objectHealth> ().getHealth ();
+			} else if (myTheme == 11) {
+				myHealth = player.GetComponent<objectHealth> ().getHealth () / 2;
+			}
 
-			healthNormalized = plutoHealth/10;
+			healthNormalized = myHealth/10;
 			//Converts health value to a float (range 0-1) so it can be used for image.fillamount
-			float healthValue = plutoHealth * 0.001f;
+			float healthValue = myHealth * 0.001f;
 			healthValue = Mathf.Clamp(healthValue, 0, 1);
 
 			//Checks if it's time to turn the bar color to red or yellow (replace the sprite basically)
@@ -148,10 +157,16 @@ public class Healthbar : MonoBehaviour {
 		}
 		//Create a canvas
 		//---------------------------------------------------------------------------------------
-		GameObject canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler));
+
+		canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler));
 		Canvas c = canvasObject.GetComponent<Canvas>();
+
+
+		CanvasScaler cs = canvasObject.GetComponent<CanvasScaler> ();
 		c.pixelPerfect = true;
 		c.renderMode = RenderMode.ScreenSpaceOverlay;
+		cs.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+		cs.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
 		//---------------------------------------------------------------------------------------
 		//Create textpanel
 		//---------------------------------------------------------------------------------------
@@ -299,9 +314,16 @@ public class Healthbar : MonoBehaviour {
 	void PositionLeft(GameObject mainPanel) {
 		RectTransform r = mainPanel.GetComponent<RectTransform>();
 		if (mainPanel.name == "barPanel") {
+			int myOffset = 0;
+			if (myTheme == 10) {
+				myOffset = 30;
+			} else if (myTheme == 11) {
+				myOffset = 0;
+			}
+
 			float y = Screen.height - r.sizeDelta.y;
 			float x = Screen.width - (Screen.width - r.sizeDelta.x/1.5f);
-			mainPanel.transform.position = new Vector3(x, y, 0);
+			mainPanel.transform.position = new Vector3(x, y + myOffset, 0);
 		}
 		else if (mainPanel.name == "textPanel") {
 			float y = Screen.height - r.sizeDelta.y/2;

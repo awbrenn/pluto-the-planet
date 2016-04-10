@@ -24,7 +24,8 @@ public enum Theme {
 		Heart,
 		Cyber,
 		Fantasy,
-		PlutoBar
+		PlutoBar,
+		VenusBar
 }
 
 [System.Serializable]
