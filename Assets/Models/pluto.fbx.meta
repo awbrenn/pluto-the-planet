@@ -309,6 +309,7 @@ ModelImporter:
     7400008: Laugh
     7400010: idle1
     7400012: idle 2
+    7400014: attack
     9500000: //RootNode
     13700000: pluto_Mesh
   materials:
@@ -336,7 +337,7 @@ ModelImporter:
       name: Take 001
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 260
+      lastFrame: 290
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1956,7 +1957,7 @@ ModelImporter:
       name: idle1
       takeName: Take 001
       firstFrame: 126
-      lastFrame: 188
+      lastFrame: 195
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -2279,8 +2280,332 @@ ModelImporter:
     - serializedVersion: 16
       name: idle 2
       takeName: Take 001
-      firstFrame: 189
-      lastFrame: 260
+      firstFrame: 196
+      lastFrame: 270
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: meshGroup
+        weight: 1
+      - path: meshGroup/pluto_Mesh
+        weight: 1
+      - path: skeleGroup
+        weight: 1
+      - path: skeleGroup/root
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_01/L_brow_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_01/L_brow_offSet_01/L_brow_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_02/L_brow_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_02/L_brow_offSet_02/L_brow_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_03/L_brow_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_eyeBrow_line/L_browLoc_03/L_brow_offSet_03/L_brow_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_01/L_innerCheek_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_01/L_innerCheek_offSet_01/L_innerCheek_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_02/L_innerCheek_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_02/L_innerCheek_offSet_02/L_innerCheek_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_03/L_innerCheek_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_innerCheek_line/L_innerCheek_03/L_innerCheek_offSet_03/L_innerCheek_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_01/L_lowerLid_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_01/L_lowerLid_offSet_01/L_lowerLid_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_02/L_lowerLid_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_02/L_lowerLid_offSet_02/L_lowerLid_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_03/L_lowerLid_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_lowerLid_line/L_lowerLid_03/L_lowerLid_offSet_03/L_lowerLid_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_01/L_outerCheek_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_01/L_outerCheek_offSet_01/L_outerCheek_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_02/L_outerCheek_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_02/L_outerCheek_offSet_02/L_outerCheek_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_03/L_outerCheek_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_outerCheek_line/L_outerCheek_03/L_outerCheek_offSet_03/L_outerCheek_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_01/L_upperLid_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_01/L_upperLid_offSet_01/L_upperLid_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_02/L_upperLid_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_02/L_upperLid_offSet_02/L_upperLid_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_03/L_upperLid_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/L_upperLid_line/L_upperLid_03/L_upperLid_offSet_03/L_upperLid_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_01/lowerLip_offset_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_01/lowerLip_offset_01/lowerLip_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_02/lowerLip_offset_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_02/lowerLip_offset_02/lowerLip_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_03/lowerLip_offset_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_03/lowerLip_offset_03/lowerLip_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_04
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_04/lowerLip_offset_04
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_04/lowerLip_offset_04/lowerLip_ctrl_04
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_05
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_05/lowerLip_offset_05
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/lowerLip_line/L_lowerLip_05/lowerLip_offset_05/lowerLip_ctrl_05
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_01/R_brow_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_01/R_brow_offSet_01/R_brow_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_02/R_brow_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_02/R_brow_offSet_02/R_brow_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_03/R_brow_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_eyeBrow_line/R_browLoc_03/R_brow_offSet_03/R_brow_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_innerCheek_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_innerCheek_line/R_innerCheek_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_innerCheek_line/R_innerCheek_01/R_innerCheek_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_innerCheek_line/R_innerCheek_01/R_innerCheek_offSet_01/R_innerCheek_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_innerCheek_line/R_innerCheek_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_innerCheek_line/R_innerCheek_03/R_innerCheek_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_innerCheek_line/R_innerCheek_03/R_innerCheek_offSet_03/R_innerCheek_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_01/R_lowerLid_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_01/R_lowerLid_offSet_01/R_lowerLid_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_02/R_lowerLid_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_02/R_lowerLid_offSet_02/R_lowerLid_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_03/R_lowerLid_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_lowerLid_line/R_lowerLid_03/R_lowerLid_offSet_03/R_lowerLid_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_01/R_outerCheek_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_01/R_outerCheek_offSet_01/R_outerCheek_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_02/R_outerCheek_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_02/R_outerCheek_offSet_02/R_outerCheek_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_03/R_outerCheek_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_outerCheek_line/R_outerCheek_03/R_outerCheek_offSet_03/R_outerCheek_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_01/R_upperLid_offSet_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_01/R_upperLid_offSet_01/R_upperLid_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_02/R_upperLid_offSet_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_02/R_upperLid_offSet_02/R_upperLid_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_03/R_upperLid_offSet_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/R_upperLid_line/R_upperLid_03/R_upperLid_offSet_03/R_upperLid_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_01/upperLip_offset_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_01/upperLip_offset_01/upperLip_ctrl_01
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_02/upperLip_offset_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_02/upperLip_offset_02/upperLip_ctrl_02
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_03/upperLip_offset_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_03/upperLip_offset_03/upperLip_ctrl_03
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_04
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_04/upperLip_offset_04
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_04/upperLip_offset_04/upperLip_ctrl_04
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_05
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_05/upperLip_offset_05
+        weight: 1
+      - path: skeleGroup/root/faceControlGrp/upperLip_line/L_upperLip_05/upperLip_offset_05/upperLip_ctrl_05
+        weight: 1
+      - path: skeleGroup/root/headBandGrp
+        weight: 1
+      - path: skeleGroup/root/headBandGrp/headBandBase
+        weight: 1
+      - path: skeleGroup/root/headBandGrp/headBandBase/L_headBandBack
+        weight: 1
+      - path: skeleGroup/root/headBandGrp/headBandBase/L_headBandBack/L_headBand_bend
+        weight: 1
+      - path: skeleGroup/root/headBandGrp/headBandBase/L_headBandFront
+        weight: 1
+      - path: skeleGroup/root/headBandGrp/headBandBase/R_headBandBack
+        weight: 1
+      - path: skeleGroup/root/headBandGrp/headBandBase/R_headBandBack/R_headBand_bend
+        weight: 1
+      - path: skeleGroup/root/headBandGrp/headBandBase/R_headBandFront
+        weight: 1
+      - path: skeleGroup/root/jaw_jnt
+        weight: 1
+      - path: skeleGroup/root/L_eyeGrp
+        weight: 1
+      - path: skeleGroup/root/L_eyeGrp/L_eye
+        weight: 1
+      - path: skeleGroup/root/R_eyeGrp
+        weight: 1
+      - path: skeleGroup/root/R_eyeGrp/R_eye
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: attack
+      takeName: Take 001
+      firstFrame: 271
+      lastFrame: 287
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

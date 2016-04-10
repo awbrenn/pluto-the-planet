@@ -100,10 +100,11 @@ public class cameraController : MonoBehaviour {
 //				float newCameraPos = bossCamBasePosDivisor * (1f - distancePercent);
 
 				Vector3 bLoc = boss.transform.position;
-				Vector3 lookPos = ((bLoc - pLoc / (bossCamLookPosDivisor/bCDistanceScale)) + pLoc);
+				Vector3 lookPos = ((bLoc - pLoc / (bossCamLookPosDivisor/bCDistanceScale)) - pLoc);
+				lookPos.y -= (newCameraHeight * 4) - (distance/8);
 				Vector3 camBasePos = (-(bLoc - pLoc / (bossCamBasePosDivisor/bCDistanceScale)) + pLoc);
 
-				camLoc = new Vector3((camBasePos.x + 1), newCameraHeight, (camBasePos.z + 1));
+				camLoc = new Vector3((camBasePos.x + 0), (newCameraHeight), (camBasePos.z + 0));
 //				print (lookPos);
 
 				transform.position = Vector3.MoveTowards (transform.position, camLoc, step);

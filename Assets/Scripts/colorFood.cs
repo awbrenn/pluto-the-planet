@@ -23,7 +23,7 @@ public class colorFood : MonoBehaviour {
 	void Update () {
 		float plutoHealthValue = plutosHealth.getHealth ();
 
-		if (((float) (foodsHealth.getHealth ()) / (float) (plutoHealthValue)) <= percentageOfPlutosHealthForEating) {
+		if (((float) (foodsHealth.getHealth ()) / (float) (plutoHealthValue)) <= percentageOfPlutosHealthForEating || ((float)foodsHealth.getHealth ()) <= 10f) {
 			foodRenderer.materials[eyeColorIndex].SetTexture("_MainTex", blueTexture);
 //			Debug.Log ("Pluto's health:  " + plutoHealthValue + "  Food's Health:  " + foodsHealth.getHealth());
 		} else {

@@ -12,9 +12,10 @@ public class loveArrowStop : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameObject kissStart = GameObject.FindGameObjectWithTag ("BossMouthLoc");
 		target = GameObject.FindGameObjectWithTag ("Player");
 		targetLoc = target.transform.position;
-		initialLoc = new Vector3 (0,0,0);
+		initialLoc = kissStart.transform.position;
 
 		gameObject.transform.position = initialLoc; // for when we want this to be spawning at the mouths loc
 	
