@@ -40,6 +40,10 @@ public class objectHealth : MonoBehaviour {
 		return health;
 	}
 
+	public int getStartingHealth(){
+		return startingHealth;
+	}
+
 
 	// updating health core
 	void updateHealth (float timeDelta, int healthDifference) {
@@ -81,6 +85,7 @@ public class objectHealth : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+//		Debug.Log (health);
 
 		// if health changes update it
 		if (health != newHealth) {
