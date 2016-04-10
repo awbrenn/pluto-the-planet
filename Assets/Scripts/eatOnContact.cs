@@ -89,7 +89,7 @@ public class eatOnContact : MonoBehaviour {
 				GameObject food = foodTypes [Random.Range (0, foodTypes.Length)];
 
 				while (impactPoint == spawnPosition) {
-					Vector2 randGen = Random.insideUnitCircle * 1f;
+					Vector2 randGen = Random.insideUnitCircle * 2f;
 					Vector3 randPoint = new Vector3 (randGen.x, 0, randGen.y);
 					testPoint += randPoint;
 //					Debug.Log (testPoint);
