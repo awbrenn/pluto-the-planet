@@ -31,23 +31,13 @@ public class eatOnContact : MonoBehaviour {
 		float healthDifference = (float)(selfHealth) / (float)(otherHealth);
 
 		if (healthDifference <= 0.35f || ((float)(selfHealth)) <= 10f) {
-			if (toBeEaten.tag == "Boss"){
-				Debug.Log ("boss is toBeEaten");
-				Debug.Log ("boss's health: " + otherHealth);
-				Debug.Log ("other object is " + gameObject.tag);
-				Debug.Log (gameObject.tag + "'s health is: " + selfHealth);
-				Debug.Log ("the health change should be " + ((int)((float)selfHealth * healthTransferMultiplier)));
-			}
-
 			if (audioSource != null){
 				audioSource.PlayOneShot (eatSound, 1f);
 			}
 			Destroy (gameObject);
 			toBeEatenHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
 
-			Debug.Log ("boss's new health " + toBeEatenHealth.getHealth ());
-
-			if (toBeEaten.tag == "Pluto") {
+			if (toBeEaten.tag == "Player") {
 				toBeEaten.GetComponent<Animator> ().SetTrigger ("triggerChomp");
 			}
 		}
@@ -99,9 +89,10 @@ public class eatOnContact : MonoBehaviour {
 				GameObject food = foodTypes [Random.Range (0, foodTypes.Length)];
 
 				while (impactPoint == spawnPosition) {
-					Vector2 randGen = Random.insideUnitCircle * .5f;
+					Vector2 randGen = Random.insideUnitCircle * 1f;
 					Vector3 randPoint = new Vector3 (randGen.x, 0, randGen.y);
 					testPoint += randPoint;
+//					Debug.Log (testPoint);
 					bool test = testNewObjectPosition (food, testPoint, (food.transform.localScale.x / 2f));  //assuming base size is 100 here
 
 					if (test) {
