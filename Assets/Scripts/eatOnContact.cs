@@ -77,8 +77,8 @@ public class eatOnContact : MonoBehaviour {
 			Destroy (projectile);
 			int chunks = (int)(hitDamage / 5);
 			// temporary making boss not emit any food
-/*			if (name == "Boss")
-				chunks = 0;*/
+			if (name == "Boss")
+				chunks = 0;
 			for (int i = 0; i < chunks; i++) {
 				foodHealth = (int)(hitDamage / chunks) + 5; // adding fudge 5 points to spawn foods health
 
