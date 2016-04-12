@@ -31,10 +31,17 @@ public class moveGrowDie : MonoBehaviour {
 		transform.localScale = new Vector3 (startScale, startScale, startScale);
 		transform.position = smokeStart.transform.position;
 
+		float bossVolumeSize = ((GameObject.FindGameObjectWithTag ("Boss Volume").transform.localScale.x) / 2f) - 1f;
+/*
+ 		//for targets near pluto
 		Vector2 randGen = Random.insideUnitCircle * 2f;
 		Vector3 randomVec = new Vector3 (randGen.x, 0, randGen.y);
-
 		targetPoint = plutoLoc + randomVec;
+*/
+		//for targets all over the boss volume
+		Vector2 randGen = Random.insideUnitCircle * bossVolumeSize;
+		targetPoint = new Vector3 (randGen.x, 0, randGen.y);
+
 		targetScale = new Vector3 (maxScale, maxScale, maxScale);
 	}
 	

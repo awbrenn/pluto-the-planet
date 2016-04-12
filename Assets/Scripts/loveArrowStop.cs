@@ -5,10 +5,13 @@ public class loveArrowStop : MonoBehaviour {
 	public float stopTime = 1f;
 	public float lifeLength = 8f;
 	public float speed = 15f;
+	public float scaleSpeed = 1f;
+	public float maxScale = 2f;
 
 	private GameObject target;
 	private Vector3 targetLoc;
 	private Vector3 initialLoc;
+	private Vector3 targetScale;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +21,8 @@ public class loveArrowStop : MonoBehaviour {
 		initialLoc = kissStart.transform.position;
 
 		gameObject.transform.position = initialLoc; // for when we want this to be spawning at the mouths loc
+		targetScale = new Vector3 (maxScale, maxScale, maxScale);
+
 	
 	}
 	
@@ -25,9 +30,12 @@ public class loveArrowStop : MonoBehaviour {
 	void FixedUpdate () {
 		targetLoc = target.transform.position;
 		float step = speed * Time.deltaTime;
+		float scaleStep = scaleSpeed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards(transform.position, targetLoc, step);
 		transform.LookAt (targetLoc);
 		StartCoroutine (lifeLengthTimer());
+		transform.localScale = Vector3.MoveTowards (transform.localScale, targetScale, scaleStep);
+
 	}
 
 	IEnumerator lifeLengthTimer(){

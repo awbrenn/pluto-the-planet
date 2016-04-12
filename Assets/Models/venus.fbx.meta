@@ -1261,8 +1261,8 @@ ModelImporter:
     - serializedVersion: 16
       name: blow attack
       takeName: Take 001
-      firstFrame: 54
-      lastFrame: 121
+      firstFrame: 81
+      lastFrame: 101
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
