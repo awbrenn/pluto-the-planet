@@ -45,13 +45,16 @@ public class loveArrowStop : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag != "Boss" && other.gameObject.tag != "BossScarf") {
+			Vector3 dir = (transform.position - other.transform.position) * 250f;
+
 			Destroy (gameObject);
-			other.attachedRigidbody.velocity = new Vector3 (0,0,0);
+//			other.attachedRigidbody.velocity = new Vector3 (0,0,0);
 			if (other.gameObject.tag == "projectile") {
 				Destroy (other.gameObject);
 			} else if (other.gameObject.tag == "Player") {
 				badEffects stop = other.gameObject.GetComponent<badEffects> () as badEffects;
 				stop.loveArrowActivate (stopTime, Time.time);
+				other.attachedRigidbody.AddRelativeForce (dir, ForceMode.Impulse);
 			}
 		}
 	}
