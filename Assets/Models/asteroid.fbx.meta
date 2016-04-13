@@ -71,6 +71,9 @@ ModelImporter:
     400062: upperLip_05
     4300000: asteroid01_mesh
     7400000: Take 001
+    7400002: asteroid_idle
+    7400004: asteroid_blink
+    7400006: asteroid_shock
     9500000: //RootNode
     13700000: asteroid01_mesh
   materials:
@@ -93,7 +96,375 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 78
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: geomGrp
+        weight: 1
+      - path: geomGrp/asteroid01_mesh
+        weight: 1
+      - path: skeleGrp
+        weight: 1
+      - path: skeleGrp/L_eyeLid
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_01
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_02
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_03
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_01
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_02
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_03
+        weight: 1
+      - path: skeleGrp/lips
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_01
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_02
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_03
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_04
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_05
+        weight: 1
+      - path: skeleGrp/lips/upperLip_01
+        weight: 1
+      - path: skeleGrp/lips/upperLip_02
+        weight: 1
+      - path: skeleGrp/lips/upperLip_03
+        weight: 1
+      - path: skeleGrp/lips/upperLip_04
+        weight: 1
+      - path: skeleGrp/lips/upperLip_05
+        weight: 1
+      - path: skeleGrp/R_eyeLid
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_01
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_02
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_03
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_01
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_02
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_03
+        weight: 1
+      - path: skeleGrp/root
+        weight: 1
+      - path: skeleGrp/root/L_eye
+        weight: 1
+      - path: skeleGrp/root/R_eye
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: asteroid_idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 42
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: geomGrp
+        weight: 1
+      - path: geomGrp/asteroid01_mesh
+        weight: 1
+      - path: skeleGrp
+        weight: 1
+      - path: skeleGrp/L_eyeLid
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_01
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_02
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_03
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_01
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_02
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_03
+        weight: 1
+      - path: skeleGrp/lips
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_01
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_02
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_03
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_04
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_05
+        weight: 1
+      - path: skeleGrp/lips/upperLip_01
+        weight: 1
+      - path: skeleGrp/lips/upperLip_02
+        weight: 1
+      - path: skeleGrp/lips/upperLip_03
+        weight: 1
+      - path: skeleGrp/lips/upperLip_04
+        weight: 1
+      - path: skeleGrp/lips/upperLip_05
+        weight: 1
+      - path: skeleGrp/R_eyeLid
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_01
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_02
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_03
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_01
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_02
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_03
+        weight: 1
+      - path: skeleGrp/root
+        weight: 1
+      - path: skeleGrp/root/L_eye
+        weight: 1
+      - path: skeleGrp/root/R_eye
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: asteroid_blink
+      takeName: Take 001
+      firstFrame: 42
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: geomGrp
+        weight: 1
+      - path: geomGrp/asteroid01_mesh
+        weight: 1
+      - path: skeleGrp
+        weight: 1
+      - path: skeleGrp/L_eyeLid
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_01
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_02
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_03
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_01
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_02
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_03
+        weight: 1
+      - path: skeleGrp/lips
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_01
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_02
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_03
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_04
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_05
+        weight: 1
+      - path: skeleGrp/lips/upperLip_01
+        weight: 1
+      - path: skeleGrp/lips/upperLip_02
+        weight: 1
+      - path: skeleGrp/lips/upperLip_03
+        weight: 1
+      - path: skeleGrp/lips/upperLip_04
+        weight: 1
+      - path: skeleGrp/lips/upperLip_05
+        weight: 1
+      - path: skeleGrp/R_eyeLid
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_01
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_02
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_03
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_01
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_02
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_03
+        weight: 1
+      - path: skeleGrp/root
+        weight: 1
+      - path: skeleGrp/root/L_eye
+        weight: 1
+      - path: skeleGrp/root/R_eye
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: asteroid_shock
+      takeName: Take 001
+      firstFrame: 60
+      lastFrame: 78
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: geomGrp
+        weight: 1
+      - path: geomGrp/asteroid01_mesh
+        weight: 1
+      - path: skeleGrp
+        weight: 1
+      - path: skeleGrp/L_eyeLid
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_01
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_02
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_lowerLid_03
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_01
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_02
+        weight: 1
+      - path: skeleGrp/L_eyeLid/L_upperLid_03
+        weight: 1
+      - path: skeleGrp/lips
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_01
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_02
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_03
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_04
+        weight: 1
+      - path: skeleGrp/lips/lowerLip_05
+        weight: 1
+      - path: skeleGrp/lips/upperLip_01
+        weight: 1
+      - path: skeleGrp/lips/upperLip_02
+        weight: 1
+      - path: skeleGrp/lips/upperLip_03
+        weight: 1
+      - path: skeleGrp/lips/upperLip_04
+        weight: 1
+      - path: skeleGrp/lips/upperLip_05
+        weight: 1
+      - path: skeleGrp/R_eyeLid
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_01
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_02
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_lowerLid_03
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_01
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_02
+        weight: 1
+      - path: skeleGrp/R_eyeLid/R_upperLid_03
+        weight: 1
+      - path: skeleGrp/root
+        weight: 1
+      - path: skeleGrp/root/L_eye
+        weight: 1
+      - path: skeleGrp/root/R_eye
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
     isReadable: 1
   meshes:
     lODScreenPercentages: []
