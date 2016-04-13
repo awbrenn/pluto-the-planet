@@ -24,9 +24,11 @@ public class badEffects : MonoBehaviour {
 			tapToMovePluto tapCtrl = player.GetComponent<tapToMovePluto>();
 			tapCtrl.setCanMove(false);
 			Vector3 currentVelocity = gameObject.GetComponent<Rigidbody> ().velocity;
-/*			if ((currentVelocity.x > 0) || (currentVelocity.z > 0)) {
+
+			/*			if ((currentVelocity.x > 0) || (currentVelocity.z > 0)) {
 				gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 0);
 			}*/
+
 			if ((Time.time) > (loveArrowStopLength + loveArrowStartTime)) {
 				loveArrowIsStopping = false;
 				tapCtrl.setCanMove(true);
