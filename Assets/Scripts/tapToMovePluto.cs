@@ -113,11 +113,11 @@ public class tapToMovePluto : MonoBehaviour {
 				}
 			}
 		}
-		else if (!canMove) {
+/*		else if (!canMove) {
 			if (pluto_rigid_body.velocity.magnitude > 0) {
 				pluto_rigid_body.velocity = Vector3.zero;
 			}
-		}
+		}*/
 
 
 		//################### controls for PC ######################
