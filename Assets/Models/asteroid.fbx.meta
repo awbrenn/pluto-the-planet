@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: e6c3b61f305c04f60986141eac7ec00f
+timeCreated: 1460506028
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: asteroid01_mesh
+    100004: geomGrp
+    100006: L_eye
+    100008: L_eyeLid
+    100010: L_lowerLid_01
+    100012: L_lowerLid_02
+    100014: L_lowerLid_03
+    100016: L_upperLid_01
+    100018: L_upperLid_02
+    100020: L_upperLid_03
+    100022: lips
+    100024: lowerLip_01
+    100026: lowerLip_02
+    100028: lowerLip_03
+    100030: lowerLip_04
+    100032: lowerLip_05
+    100034: R_eye
+    100036: R_eyeLid
+    100038: R_lowerLid_01
+    100040: R_lowerLid_02
+    100042: R_lowerLid_03
+    100044: R_upperLid_01
+    100046: R_upperLid_02
+    100048: R_upperLid_03
+    100050: root
+    100052: skeleGrp
+    100054: upperLip_01
+    100056: upperLip_02
+    100058: upperLip_03
+    100060: upperLip_04
+    100062: upperLip_05
+    400000: //RootNode
+    400002: asteroid01_mesh
+    400004: geomGrp
+    400006: L_eye
+    400008: L_eyeLid
+    400010: L_lowerLid_01
+    400012: L_lowerLid_02
+    400014: L_lowerLid_03
+    400016: L_upperLid_01
+    400018: L_upperLid_02
+    400020: L_upperLid_03
+    400022: lips
+    400024: lowerLip_01
+    400026: lowerLip_02
+    400028: lowerLip_03
+    400030: lowerLip_04
+    400032: lowerLip_05
+    400034: R_eye
+    400036: R_eyeLid
+    400038: R_lowerLid_01
+    400040: R_lowerLid_02
+    400042: R_lowerLid_03
+    400044: R_upperLid_01
+    400046: R_upperLid_02
+    400048: R_upperLid_03
+    400050: root
+    400052: skeleGrp
+    400054: upperLip_01
+    400056: upperLip_02
+    400058: upperLip_03
+    400060: upperLip_04
+    400062: upperLip_05
+    4300000: asteroid01_mesh
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: asteroid01_mesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
