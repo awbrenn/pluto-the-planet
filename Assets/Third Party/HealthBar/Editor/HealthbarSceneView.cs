@@ -2,7 +2,6 @@
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(Transform)), CanEditMultipleObjects]
 public class HealthbarSceneView : Editor {
 
 	UnityEditor.SceneView sceneView;
