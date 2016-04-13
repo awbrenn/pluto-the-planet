@@ -7,6 +7,7 @@ public class loveArrowStop : MonoBehaviour {
 	public float speed = 15f;
 	public float scaleSpeed = 1f;
 	public float maxScale = 2f;
+	public float impulseMultiplier = 150f;
 
 	private GameObject target;
 	private Vector3 targetLoc;
@@ -45,7 +46,7 @@ public class loveArrowStop : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag != "Boss" && other.gameObject.tag != "BossScarf") {
-			Vector3 dir = (transform.position - other.transform.position) * 250f;
+			Vector3 dir = (transform.position - other.transform.position) * impulseMultiplier;
 
 			Destroy (gameObject);
 //			other.attachedRigidbody.velocity = new Vector3 (0,0,0);
