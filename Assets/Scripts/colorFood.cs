@@ -24,7 +24,7 @@ public class colorFood : MonoBehaviour {
 		float plutoHealthValue = plutosHealth.getHealth ();
 //		Debug.Log ("Pluto's health:  " + plutoHealthValue + "  Food's Health:  " + foodsHealth.getHealth() + "  Fraction of Size:  " + ((float) (foodsHealth.getHealth ()) / (float) (plutoHealthValue)));
 
-		if (((float) (foodsHealth.getHealth ()) / (float) (plutoHealthValue)) <= percentageOfPlutosHealthForEating) { // || ((float)foodsHealth.getHealth ()) <= 10f) {
+		if (((float) (foodsHealth.getHealth ()) / (float) (plutoHealthValue)) <= percentageOfPlutosHealthForEating || ((float)foodsHealth.getHealth ()) <= 10f) {
 			Debug.Log("Blue Eyes");
 			foodRenderer.materials[eyeColorIndex].SetTexture("_MainTex", blueTexture);
 //			Debug.Log ("Pluto's health:  " + plutoHealthValue + "  Food's Health:  " + foodsHealth.getHealth());
