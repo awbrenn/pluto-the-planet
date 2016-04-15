@@ -7,14 +7,10 @@ public class bossBehavior : MonoBehaviour {
 
 	private Animator bossAnimator;
 
-	// Use this for initialization
-	void Start () {
-		GameObject bossAnimHolder = GameObject.FindGameObjectWithTag ("BossAnimatorGroup");
-		bossAnimator = bossAnimHolder.GetComponent<Animator>();
-
-	}
 
 	public Animator findBossAnimator() {
+		GameObject bossAnimHolder = GameObject.FindGameObjectWithTag ("BossAnimatorGroup");
+		bossAnimator = bossAnimHolder.GetComponent<Animator>();
 		return bossAnimator;
 	}
 	
