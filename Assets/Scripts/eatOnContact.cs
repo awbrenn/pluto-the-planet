@@ -77,11 +77,18 @@ public class eatOnContact : MonoBehaviour {
 
 			Destroy (projectile);
 			int chunks = (int)(hitDamage / 5);
-			// temporary making boss not emit any food
-			if (name == "Boss")
+			// making boss not emit any food
+			// making boss ANIMATE taking hit!!
+			if (name == "Boss") {
 				chunks = 0;
+				Animator [] animArray = target.GetComponentsInChildren<Animator> ();
+				Animator animActivator = animArray [0];
+				animActivator.SetTrigger ("takeDamage"); 
+			}
+
+
 			if (target.CompareTag ("food")) {
-				Debug.Log ("Projectile is trying to look shocked");
+//				Debug.Log ("Projectile is trying to look shocked");
 				Animator [] animArray = target.GetComponentsInChildren<Animator> ();
 				Animator animActivator = animArray [0];
 				animActivator.SetTrigger ("takeDamage"); 

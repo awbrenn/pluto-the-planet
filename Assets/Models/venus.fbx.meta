@@ -2197,7 +2197,7 @@ ModelImporter:
     - serializedVersion: 16
       name: hit right
       takeName: Take 001
-      firstFrame: 206
+      firstFrame: 212
       lastFrame: 242
       wrapMode: 0
       orientationOffsetY: 0
