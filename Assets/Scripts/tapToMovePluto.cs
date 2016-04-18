@@ -23,6 +23,8 @@ public class tapToMovePluto : MonoBehaviour {
 	private float safe_volume_radius;
 	private float boss_volume_radius;
 	private bool canMove = true;
+	public bool pauseControl = false;
+	public bool rotateTrajectory = false;
 
 	// Use this for initialization
 	void Start () {
@@ -56,8 +58,8 @@ public class tapToMovePluto : MonoBehaviour {
 		trajectory.z = trajectory.y;
 		trajectory.y = 0.0f;
 
-		if (transform.position.magnitude <= boss_volume_radius) {
-			trajectory = Quaternion.Euler(0.0f, main_camera.transform.localRotation.eulerAngles.y, 0.0f) * trajectory;
+		if (rotateTrajectory) {
+			trajectory = Quaternion.Euler (0.0f, transform.localRotation.eulerAngles.y, 0.0f) * trajectory;
 		}
 
 		return trajectory;
@@ -121,7 +123,7 @@ public class tapToMovePluto : MonoBehaviour {
 
 
 		//################### controls for PC ######################
-		if (canMove && Input.GetMouseButton (0) && Input.touches.Length == 0) {
+		if (canMove && Input.GetMouseButton (0) && Input.touches.Length == 0 && !pauseControl) {
 
 			// on tap
 			if (Input.GetMouseButtonDown (0)) {
@@ -139,12 +141,13 @@ public class tapToMovePluto : MonoBehaviour {
 				if (!pluto_basic_attack.shooting && transform.position.magnitude <= safe_volume_radius)
 					acceleratePlutoInTrajectoryDirection (trajectory);
 			}
-
-		}
-		else if (!canMove) {
+		} else if (!canMove) {
 			if (pluto_rigid_body.velocity.magnitude > 0) {
 				pluto_rigid_body.velocity = Vector3.zero;
 			}
+		}
+		else if (pauseControl && Input.GetMouseButton (0)) { 
+			start_mouse_position = Input.mousePosition;
 		}
 		//########################################################## 
 	}
