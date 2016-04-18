@@ -376,7 +376,7 @@ ModelImporter:
     - serializedVersion: 16
       name: asteroid_shock
       takeName: Take 001
-      firstFrame: 60
+      firstFrame: 59
       lastFrame: 78
       wrapMode: 0
       orientationOffsetY: 0

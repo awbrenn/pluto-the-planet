@@ -9,6 +9,7 @@ public class eatOnContact : MonoBehaviour {
 
 	public AudioClip hitSound;
 	public AudioClip eatSound;
+	public AudioClip takeDamageSound;
 
 	private AudioSource audioSource;
 
@@ -79,6 +80,16 @@ public class eatOnContact : MonoBehaviour {
 			// temporary making boss not emit any food
 			if (name == "Boss")
 				chunks = 0;
+			if (target.CompareTag ("food")) {
+				Debug.Log ("Projectile is trying to look shocked");
+				Animator [] animArray = target.GetComponentsInChildren<Animator> ();
+				Animator animActivator = animArray [0];
+				animActivator.SetTrigger ("takeDamage"); 
+
+				audioSource = target.GetComponent<AudioSource> ();
+				audioSource.PlayOneShot (takeDamageSound, 1f);
+			}  //make food animate
+
 			for (int i = 0; i < chunks; i++) {
 				foodHealth = (int)(hitDamage / chunks) + 5; // adding fudge 5 points to spawn foods health
 
@@ -146,7 +157,7 @@ public class eatOnContact : MonoBehaviour {
 				}
 			} 
 			else {
-				Debug.Log ("boss is trying to eat");
+//				Debug.Log ("boss is trying to eat");
 				playerOrBossEat (contacteeHealth, other.gameObject);
 				//other.gameObject.GetComponent<Animator> ().SetTrigger ("triggerFull");
 			}
