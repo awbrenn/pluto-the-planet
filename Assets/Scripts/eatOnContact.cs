@@ -84,6 +84,9 @@ public class eatOnContact : MonoBehaviour {
 				Animator [] animArray = target.GetComponentsInChildren<Animator> ();
 				Animator animActivator = animArray [0];
 				animActivator.SetTrigger ("takeDamage"); 
+
+				audioSource = target.GetComponent<AudioSource> ();
+				audioSource.PlayOneShot (hitSound, 1f);
 			}
 
 
@@ -94,7 +97,7 @@ public class eatOnContact : MonoBehaviour {
 				animActivator.SetTrigger ("takeDamage"); 
 
 				audioSource = target.GetComponent<AudioSource> ();
-				audioSource.PlayOneShot (takeDamageSound, 1f);
+				audioSource.PlayOneShot (takeDamageSound, .7f);
 			}  //make food animate
 
 			for (int i = 0; i < chunks; i++) {

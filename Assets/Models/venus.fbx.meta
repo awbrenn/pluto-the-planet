@@ -3134,7 +3134,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Being hit
       takeName: Take 001
-      firstFrame: 312
+      firstFrame: 315
       lastFrame: 337
       wrapMode: 0
       orientationOffsetY: 0
@@ -3463,7 +3463,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
