@@ -8,11 +8,13 @@ public class loveArrowStop : MonoBehaviour {
 	public float scaleSpeed = 1f;
 	public float maxScale = 2f;
 	public float impulseMultiplier = 150f;
+	public AudioClip plutoReaction;
 
 	private GameObject target;
 	private Vector3 targetLoc;
 	private Vector3 initialLoc;
 	private Vector3 targetScale;
+	private AudioSource pASource;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +26,8 @@ public class loveArrowStop : MonoBehaviour {
 		gameObject.transform.position = initialLoc; // for when we want this to be spawning at the mouths loc
 		targetScale = new Vector3 (maxScale, maxScale, maxScale);
 
-	
+		pASource = target.GetComponent<AudioSource>();
+
 	}
 	
 	// Update is called once per frame
@@ -52,10 +55,14 @@ public class loveArrowStop : MonoBehaviour {
 //			other.attachedRigidbody.velocity = new Vector3 (0,0,0);
 			if (other.gameObject.tag == "projectile") {
 				Destroy (other.gameObject);
-			} else if (other.gameObject.tag == "Player") {
+			}
+
+			else if (other.gameObject.tag == "Player") {
 				badEffects stop = other.gameObject.GetComponent<badEffects> () as badEffects;
 				stop.loveArrowActivate (stopTime, Time.time);
 				other.attachedRigidbody.AddRelativeForce (dir, ForceMode.Impulse);
+
+				pASource.PlayOneShot (plutoReaction, .5f);
 			}
 		}
 	}
