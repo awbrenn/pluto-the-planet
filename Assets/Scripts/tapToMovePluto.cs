@@ -92,10 +92,16 @@ public class tapToMovePluto : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		Touch currentTouch;
 		if (canMove) {
 			foreach (Touch touch in Input.touches) {
 				if (touch.position.x < Screen.width / 2) {
-					Debug.Log(touch.position.x + Screen.width / 2);
+					currentTouch = touch;
+
+					if (pauseControl && currentTouch.phase == TouchPhase.Moved ) { 
+						start_mouse_position = currentTouch.position;
+						break;
+					}
 
 					switch (touch.phase) {
 					case TouchPhase.Began:
@@ -115,6 +121,7 @@ public class tapToMovePluto : MonoBehaviour {
 				}
 			}
 		}
+
 /*		else if (!canMove) {
 			if (pluto_rigid_body.velocity.magnitude > 0) {
 				pluto_rigid_body.velocity = Vector3.zero;
