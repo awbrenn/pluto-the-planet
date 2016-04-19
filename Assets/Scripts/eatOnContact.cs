@@ -34,6 +34,7 @@ public class eatOnContact : MonoBehaviour {
 		if (healthDifference <= 0.35f || ((float)(selfHealth)) <= 10f) {
 			if (audioSource != null){
 				audioSource.PlayOneShot (eatSound, 1f);
+				toBeEaten.GetComponent<ParticleSystem> ().Play ();
 			}
 			Destroy (gameObject);
 			toBeEatenHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
