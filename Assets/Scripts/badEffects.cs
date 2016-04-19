@@ -38,9 +38,9 @@ public class badEffects : MonoBehaviour {
 
 	public void loveArrowActivate (float lifeLength, float startTime){
 		loveArrowStopLength = lifeLength;
-		Debug.Log ("stop length:  " + loveArrowStopLength);
+//		Debug.Log ("stop length:  " + loveArrowStopLength);
 
 		loveArrowStartTime = startTime;
 		loveArrowIsStopping = true;
 	}
-}
+	}
