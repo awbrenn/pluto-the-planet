@@ -98,17 +98,17 @@ public class tapToMovePluto : MonoBehaviour {
 				if (touch.position.x < Screen.width / 2) {
 					currentTouch = touch;
 
-					if (pauseControl && currentTouch.phase == TouchPhase.Moved ) { 
+					if (pauseControl && currentTouch.phase == TouchPhase.Moved ) {
 						start_mouse_position = currentTouch.position;
 						break;
 					}
 
 					switch (touch.phase) {
 					case TouchPhase.Began:
-						start_mouse_position = touch.position;
+						start_mouse_position = currentTouch.position;
 						break;
 					case TouchPhase.Moved:
-						current_mouse_position = touch.position;
+						current_mouse_position = currentTouch.position;
 
 						Vector3 trajectory = getTrajectory ();
 
