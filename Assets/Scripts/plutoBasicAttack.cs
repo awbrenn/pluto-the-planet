@@ -8,24 +8,27 @@ public class plutoBasicAttack : MonoBehaviour {
 	public float percentageOfPlutosHealthForDamage = .1f;
 	public int minDamage = 10;
 	public AudioClip shootSound;
+	public bool shooting = false;
+	public float sensitivity = 500.0f;
+	public float timeBetweenShots = 0.5f;
 
 	private AudioSource source;
-	private float volLowRange = 0.5f;
-	private float volHighRange = 1.0f;
-	private bool pluto_pressed = false;
 	private float speed;
 	private Vector3 start_position;
 	private Vector3 end_position;
 	private GameObject projectile_prefab;
-	private float time_pluto_was_pressed;
-	private Camera main_camera;
+	private float time_of_touch;
 	private float bossVolumeRadius;
+	private float start_time;
+	private bool check_for_swipe = true;
+	private bool canShoot = true;
+	private float timeOfLastShot;
 
 	// Use this for initialization
 	void Start () {
-		main_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>() as Camera;
 		projectile_prefab = Resources.Load ("Prefabs/defaultProjectile") as GameObject;
 		bossVolumeRadius = GameObject.Find ("BossVolume").transform.localScale.x/2.0f;
+		timeOfLastShot = Time.time;
 
 		source = GetComponent<AudioSource> ();
 	}
@@ -61,7 +64,7 @@ public class plutoBasicAttack : MonoBehaviour {
 //		Debug.Log ("projectile damage in pba:  " + projectile.GetComponent<projectileDamage> ().getDamage());
 
 		// using scale of Pluto to determine the initial position of projectile 
-		projectile_initial_position = projectile_trajectory * ((transform.localScale.x/2.0f + projectile.transform.localScale.x/2.0f) * 1.25f) + transform.position;
+		projectile_initial_position = projectile_trajectory * ((transform.localScale.x/2.0f + projectile.transform.localScale.x/2.0f) * 2.0f) + transform.position;
 		projectile.transform.position = projectile_initial_position;
 
 
@@ -74,67 +77,97 @@ public class plutoBasicAttack : MonoBehaviour {
 		}
 			
 		gameObject.GetComponent<objectHealth> ().adjustHealth ((int)((-1.0f) * plutosHealth * percentageOfPlutosHealthForDamage));
-		Debug.Log ("pluto health loss on projectile spawn: " + (int)((-1.0f) * plutosHealth * percentageOfPlutosHealthForDamage));
 
 		source.PlayOneShot (shootSound, 1f);
 	}
 
+	void shootProjectile() {
+		Vector3 bossPosition = GameObject.FindWithTag ("Boss").transform.position;
+		Vector3 projectile_trajectory;
+		Vector3 plutoVelocity = GetComponent<Rigidbody> ().velocity;
 
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetMouseButtonDown (0)) {
-			Ray camera_ray = main_camera.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			//Debug.DrawRay (camera_ray.origin, camera_ray.direction * 10, Color.yellow);
-
-			// Check to see of the user pressed pluto
-			if (Physics.Raycast (camera_ray, out hit, Mathf.Infinity, 7) && !pluto_pressed) {
-				if (hit.transform.name == "Pluto") {
-					start_position = Input.mousePosition;
-					pluto_pressed = true;
-					time_pluto_was_pressed = Time.time;
-				}
-			}
+		if ((transform.position - bossPosition).magnitude < bossVolumeRadius) {
+			projectile_trajectory = (bossPosition - transform.position).normalized;
+			speed = projectile_max_speed;
+			spawnProjectile (projectile_trajectory, speed, false);
 		}
-
-		if (Input.GetMouseButtonUp (0) && pluto_pressed) {
-			float delta_time = Time.time - time_pluto_was_pressed;
-			float speed_scale = 100.0f;
-			Vector3 bossPosition = GameObject.FindWithTag ("Boss").transform.position;
-			Vector3 projectile_trajectory;
-			Vector3 plutoVelocity = GetComponent<Rigidbody> ().velocity;
-
-			if ((transform.position - bossPosition).magnitude < bossVolumeRadius) {
-				projectile_trajectory = (bossPosition - transform.position).normalized;
-				speed = projectile_max_speed;
-				spawnProjectile (projectile_trajectory, speed, false);
-			}
-			else {
-				// if the player didn't swipe, we don't spawn a projectile
-				end_position = Input.mousePosition;
-				if (end_position == start_position) {
-					pluto_pressed = false;
-					return;
-				}
-
-				// calculate the normalized projectile trajectory
-				projectile_trajectory = (end_position - start_position).normalized;
-
-				// transform the trajectory from the x-y plane to the x-z plane
-				projectile_trajectory.z = projectile_trajectory.y;
-				projectile_trajectory.y = 0.0f;
-
-				// get the speed (*note speed_scale is a fudge factor, may need to refactor)
-				speed = (float)((end_position - start_position).magnitude/speed_scale) / delta_time;
-				spawnProjectile (projectile_trajectory, speed, true);
+		else {
+			// if the player didn't swipe, we don't spawn a projectile
+			if (end_position == start_position) {
+				shooting = false;
+				return;
 			}
 
-			pluto_pressed = false;
+			// calculate the normalized projectile trajectory
+			projectile_trajectory = (end_position - start_position).normalized;
+
+			// transform the trajectory from the x-y plane to the x-z plane
+			projectile_trajectory.z = projectile_trajectory.y;
+			projectile_trajectory.y = 0.0f;
+
+			speed = projectile_max_speed;
+			spawnProjectile (projectile_trajectory, speed, true);
 		}
 	}
 
-	// getters
-	public bool plutoPressed() {
-		return pluto_pressed;
+
+	bool checkForSwipe (float delta_time) {
+		bool check = false;
+
+		check = (Input.mousePosition - start_position).magnitude / delta_time > sensitivity;
+
+		return check;
+	}
+
+
+	// Update is called once per frame
+	void FixedUpdate () {
+
+		foreach (Touch touch in Input.touches) {
+			if (touch.position.x > Screen.width / 2) {
+				switch (touch.phase) {
+				case TouchPhase.Began:
+					start_position = touch.position;
+					break;
+				case TouchPhase.Ended:
+					if (Time.time - timeOfLastShot > timeBetweenShots) {
+						end_position = touch.position;
+						shootProjectile ();
+						timeOfLastShot = Time.time;
+					}
+					break;
+				}
+			}
+		}
+
+		//################### controls for PC ######################
+		if (Input.GetMouseButtonDown (0) && Input.touches.Length == 0) {
+			// is shooting
+			if (!shooting) {
+				start_position = Input.mousePosition;
+				shooting = true;
+				time_of_touch = Time.time;
+				check_for_swipe = true;
+			}
+		}
+
+		if (shooting == true && check_for_swipe && Input.touches.Length == 0) {
+			if (Time.time - time_of_touch > 0.05f) {
+				shooting = checkForSwipe (Time.time - time_of_touch);
+				check_for_swipe = false;
+			}
+		}
+
+		if (Input.GetMouseButtonUp (0) && shooting && Input.touches.Length == 0) {
+			end_position = Input.mousePosition;
+
+			if (shooting && Time.time - timeOfLastShot > timeBetweenShots) {
+				shootProjectile ();
+				timeOfLastShot = Time.time;
+			}
+
+			shooting = false;
+		}
+		//###########################################################
 	}
 }

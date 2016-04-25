@@ -16,8 +16,9 @@ public class cameraController : MonoBehaviour {
 	public float sizeChangeStep= 30f;
 	public float bossCamHeight = 10f;
 	public float eatingRotationMultiplyier = 100f;
-	public float bossCamBasePosDivisor = 6f;
+	public float bossCamBasePosDivisor = 20f;
 	public float bossCamLookPosDivisor = 1f;
+	public float bossRotSpeed = 1f;
 
 	private Vector3 velocity = Vector3.zero;
 
@@ -34,6 +35,7 @@ public class cameraController : MonoBehaviour {
 	private bool introSceneLook = false;
 	private bool mainGamePlay = false;
 	private bool inTransitionVolume = false;
+	private bool inBossVolume = false;
 
 	private Quaternion outerLookDir;
 
@@ -52,6 +54,9 @@ public class cameraController : MonoBehaviour {
 		introSceneHeight = safeVolume.transform.localScale.y / 2 + extraIntroHeight;
 		sceneCamLoc = camLoc;
 		sceneCamLoc.y = introSceneHeight;
+
+		player.transform.Rotate (90,0,0);
+		boss.transform.LookAt (transform.localPosition, new Vector3 (0,0,1));
 	}
 	
 	// Update is called once per frame
@@ -79,7 +84,7 @@ public class cameraController : MonoBehaviour {
 			cameraHeight = ((playerHealth/100) + camHeight);
 //			inTransitionVolume = transitionVolume.GetComponent<SphereCollider> ().bounds.Contains (player.transform.position);
 
-			if (inTransitionVolume) {
+			if (inBossVolume) {
 //				Debug.Log ("inBossVolume");
 //				float newCameraHeight = cameraHeight + bossCamHeight;
 				float step = bossSpeed * Time.deltaTime;
@@ -90,19 +95,28 @@ public class cameraController : MonoBehaviour {
 				float max = transitionVolume.transform.localScale.x / 2f;
 				float distance = max - current.magnitude;
 				float distancePercent = distance / max;
-				float newCameraHeight = bossCamHeight * (1f - distancePercent);
-				float newCameraPos = bossCamBasePosDivisor * (1f - distancePercent);
+				float newCameraHeight = bossCamHeight * (1f - distancePercent) + (playerHealth/200);
+				float bCDistanceScale =.9f + (playerHealth/1000);
+//				float newCameraPos = bossCamBasePosDivisor * (1f - distancePercent);
 
 				Vector3 bLoc = boss.transform.position;
-				Vector3 lookPos = ((bLoc - pLoc / bossCamLookPosDivisor) + pLoc);
-				Vector3 camBasePos = (-(bLoc - pLoc / bossCamBasePosDivisor) + pLoc);
+				Vector3 lookPos = ((bLoc - pLoc / (bossCamLookPosDivisor/bCDistanceScale)) - pLoc);
+				lookPos.y -= (newCameraHeight * 4) - (distance/8);
+				Vector3 camBasePos = (-(bLoc - pLoc / (bossCamBasePosDivisor/bCDistanceScale)) + pLoc);
 
-				camLoc = new Vector3((camBasePos.x + 1), newCameraHeight, (camBasePos.z + 1));
+				camLoc = new Vector3((camBasePos.x + 0), (newCameraHeight), (camBasePos.z + 0));
 //				print (lookPos);
 
 				transform.position = Vector3.MoveTowards (transform.position, camLoc, step);
 				transform.LookAt (lookPos);
 				spd = speed;
+				Vector3 upChange = new Vector3 (0.0f,1.0f,0.0f);
+				player.transform.LookAt (boss.transform.localPosition, upChange);
+//				boss.transform.LookAt (player.transform.localPosition, upChange);
+				Quaternion newBossRot = Quaternion.LookRotation(player.transform.position);
+				float bossRotStep = bossRotSpeed * Time.deltaTime;
+				boss.transform.rotation = Quaternion.Lerp (boss.transform.rotation, newBossRot, bossRotStep);
+
 			}
 			else {
 				float currentPSize = transform.localScale.x / 2;
@@ -126,12 +140,30 @@ public class cameraController : MonoBehaviour {
 //				camLoc = new Vector3 (player.transform.position.x, cameraHeight, player.transform.position.z);
 				transform.position = Vector3.SmoothDamp (transform.position, destination, ref velocity, smoothTime);
 				transform.rotation = Quaternion.RotateTowards (transform.rotation, outerLookDir, rotStep);
+
+				Vector3 lookDirection = new Vector3 (player.transform.position.x, player.transform.position.y + 1000.0f, player.transform.position.z);
+				Vector3 upDirection = new Vector3 (0.0f, 0.0f, 1.0f);
+
+				if (inTransitionVolume) {
+					Vector3 upChange = new Vector3 (0.0f,1.0f,0.0f);
+					player.transform.LookAt (boss.transform.localPosition, upChange);
+				} 
+				else {
+					player.transform.LookAt (lookDirection, upDirection);
+				}
+				Quaternion newBossRot = Quaternion.LookRotation(player.transform.position);
+				float bossRotStep = bossRotSpeed * Time.deltaTime;
+				boss.transform.rotation = Quaternion.Lerp (boss.transform.rotation, newBossRot, bossRotStep);
 			}
 		}
 	}
 
 	public void setTransitionCamera (bool inOrOut){
 		inTransitionVolume = inOrOut;
+	}
+
+	public void setBossLook (bool inOrOut){
+		inBossVolume = inOrOut;
 	}
 
 	IEnumerator introLookTimer (float lookTime){

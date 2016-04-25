@@ -8,6 +8,7 @@ public class moveGrowDie : MonoBehaviour {
 	public float speed = 2f;
 	public float scaleSpeed = 3f;
 	public float lifeLength = 2f;
+	public AudioClip cough;
 
 	public float maxDamage = 10f;
 	public float damageRepeatTime = 1f;
@@ -20,20 +21,34 @@ public class moveGrowDie : MonoBehaviour {
 
 	private bool isDoingDamage = false;
 	private float timeSinceEnter;
+	private AudioSource pASource;
+	private Animator pAnimator;
+	private float randLL;
 
 	// Use this for initialization
 	void Start () {
 		GameObject pluto = GameObject.FindGameObjectWithTag ("Player");
 		Vector3 plutoLoc = pluto.transform.position;
+		GameObject smokeStart = GameObject.FindGameObjectWithTag ("BossMouthLoc");
+		pASource = pluto.GetComponent <AudioSource>();
+		pAnimator = pluto.GetComponent<Animator> ();
 
 		transform.localScale = new Vector3 (startScale, startScale, startScale);
+		transform.position = smokeStart.transform.position;
 
-		Vector2 randGen = Random.insideUnitCircle * 2f;
-		Vector3 randomVec = new Vector3 (randGen.x, 0, randGen.y);
+		float bossVolumeSize = ((GameObject.FindGameObjectWithTag ("Boss Volume").transform.localScale.x) / 2f) - 1f;
 
-		targetPoint = plutoLoc + randomVec;
+		Vector2 randGen = Random.insideUnitCircle * bossVolumeSize;
+		targetPoint = new Vector3 (randGen.x, 0, randGen.y);
+
+		int randScale = Random.Range (((int)(maxScale - 4)),((int)(maxScale + 4)));
+		maxScale = (float)randScale;
+
+		int randLength = Random.Range (((int)(lifeLength - 5)),((int)(lifeLength + 5)));
+		randLL = (float)randLength;
+
 		targetScale = new Vector3 (maxScale, maxScale, maxScale);
-	}
+		}
 	
 	// Update is called once per frame
 	void Update () {
@@ -49,13 +64,18 @@ public class moveGrowDie : MonoBehaviour {
 		if (isDoingDamage == true && (timeNow >= (timeSinceEnter + damageRepeatTime))) {
 			GameObject player = GameObject.FindGameObjectWithTag ("Player");
 			objectHealth playerHealth = player.gameObject.GetComponent<objectHealth> ();
-			playerHealth.adjustHealth ((int)-maxDamage);
+			if (playerHealth.getHealth() - ((int)maxDamage) <= 0) { 
+				UnityEngine.SceneManagement.SceneManager.LoadScene ("youLost");
+			}
+			else {
+				playerHealth.adjustHealth ((int) - maxDamage);
+			}
 			timeSinceEnter = timeNow;
 		}
 	}
 
 	IEnumerator pauseAndKill (){
-		yield return new WaitForSeconds (lifeLength);
+		yield return new WaitForSeconds (randLL);
 		Destroy (gameObject);
 	}
 
@@ -63,12 +83,15 @@ public class moveGrowDie : MonoBehaviour {
 		if (other.gameObject.tag == "Player") {
 			timeSinceEnter = Time.time;
 			isDoingDamage = true;
+			pASource.PlayOneShot (cough, .5f);
+			pAnimator.SetTrigger ("takeDamage");
 		}
 	}
 
 	void OnTriggerExit(Collider other){
 		if (other.gameObject.tag == "Player") {
 			isDoingDamage = false;
+			pAnimator.SetTrigger ("leaveGas");
 		}
 	}
 }

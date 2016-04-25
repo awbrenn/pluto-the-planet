@@ -3,11 +3,15 @@ using System.Collections;
 
 public class bossAttackFlip : MonoBehaviour {
 	private gameController gameCont;
+	private cameraController camControl;
+
 
 	// Use this for initialization
 	void Start () {
 		GameObject gCHolder = GameObject.FindGameObjectWithTag("GameController");
 		gameCont = gCHolder.GetComponent<gameController> () as gameController;
+		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+		camControl = camera.GetComponent<cameraController> () as cameraController;
 	}
 	
 	// Update is called once per frame
@@ -19,6 +23,7 @@ public class bossAttackFlip : MonoBehaviour {
 //		Debug.Log (player.gameObject.tag + " entered Boss V");
 		if (player.gameObject.tag == "Player"){
 			gameCont.activateBoss (true);
+			camControl.setBossLook (true);
 		}
 	}
 
@@ -26,6 +31,7 @@ public class bossAttackFlip : MonoBehaviour {
 //		Debug.Log (player.gameObject.tag + " exited Boss V");
 		if (player.gameObject.tag == "Player"){
 			gameCont.activateBoss (false);
+			camControl.setBossLook (false);
 		}
 	}
 }

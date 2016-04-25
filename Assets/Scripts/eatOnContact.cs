@@ -9,6 +9,7 @@ public class eatOnContact : MonoBehaviour {
 
 	public AudioClip hitSound;
 	public AudioClip eatSound;
+	public AudioClip takeDamageSound;
 
 	private AudioSource audioSource;
 
@@ -27,16 +28,29 @@ public class eatOnContact : MonoBehaviour {
 		objectHealth toBeEatenHealth = toBeEaten.GetComponent<objectHealth> ();
 		int selfHealth = eaterHealth.getHealth ();
 		int otherHealth = toBeEatenHealth.getHealth ();
+
 		float healthDifference = (float)(selfHealth) / (float)(otherHealth);
-		if (healthDifference <= 0.35f) {
-			audioSource.PlayOneShot (eatSound, 1f);
+
+		if (healthDifference <= 0.35f || ((float)(selfHealth)) <= 10f) {
+			if (audioSource != null){
+				audioSource.PlayOneShot (eatSound, 1f);
+				toBeEaten.GetComponent<ParticleSystem> ().Play ();
+			}
 			Destroy (gameObject);
 			toBeEatenHealth.adjustHealth ((int)((float)selfHealth * healthTransferMultiplier));
+
+			if (toBeEaten.tag == "Player") {
+				toBeEaten.GetComponent<Animator> ().SetTrigger ("triggerChomp");
+			}
 		}
 		else {
 			audioSource.PlayOneShot (hitSound, 1f);
 			float impactDamage = (otherHealth + selfHealth) * impactDamageMultiplier;
-//			print ("impact damage:  " + impactDamage);
+
+			if (toBeEaten.name == "Pluto" && otherHealth - impactDamage <= 0) { 
+				UnityEngine.SceneManagement.SceneManager.LoadScene ("youLost");
+			}
+
 			eaterHealth.adjustHealth ((int)- (impactDamage/2));
 			toBeEatenHealth.adjustHealth ((int)- (impactDamage/2));
 
@@ -64,9 +78,29 @@ public class eatOnContact : MonoBehaviour {
 
 			Destroy (projectile);
 			int chunks = (int)(hitDamage / 5);
-			// temporary making boss not emit any food
-			if (name == "Boss")
+			// making boss not emit any food
+			// making boss ANIMATE taking hit!!
+			if (name == "Boss") {
 				chunks = 0;
+				Animator [] animArray = target.GetComponentsInChildren<Animator> ();
+				Animator animActivator = animArray [0];
+				animActivator.SetTrigger ("takeDamage"); 
+
+				audioSource = target.GetComponent<AudioSource> ();
+				audioSource.PlayOneShot (hitSound, 1f);
+			}
+
+
+			if (target.CompareTag ("food")) {
+//				Debug.Log ("Projectile is trying to look shocked");
+				Animator [] animArray = target.GetComponentsInChildren<Animator> ();
+				Animator animActivator = animArray [0];
+				animActivator.SetTrigger ("takeDamage"); 
+
+				audioSource = target.GetComponent<AudioSource> ();
+				audioSource.PlayOneShot (takeDamageSound, .7f);
+			}  //make food animate
+
 			for (int i = 0; i < chunks; i++) {
 				foodHealth = (int)(hitDamage / chunks) + 5; // adding fudge 5 points to spawn foods health
 
@@ -77,9 +111,10 @@ public class eatOnContact : MonoBehaviour {
 				GameObject food = foodTypes [Random.Range (0, foodTypes.Length)];
 
 				while (impactPoint == spawnPosition) {
-					Vector2 randGen = Random.insideUnitCircle * .5f;
+					Vector2 randGen = Random.insideUnitCircle * 2f;
 					Vector3 randPoint = new Vector3 (randGen.x, 0, randGen.y);
 					testPoint += randPoint;
+//					Debug.Log (testPoint);
 					bool test = testNewObjectPosition (food, testPoint, (food.transform.localScale.x / 2f));  //assuming base size is 100 here
 
 					if (test) {
@@ -117,7 +152,26 @@ public class eatOnContact : MonoBehaviour {
 		} 
 
 		if (other.gameObject.tag == "Player" || other.gameObject.tag == "Boss") {
-			playerOrBossEat (contacteeHealth, other.gameObject);
+			if (other.gameObject.tag == "Player") {
+				maximumSize maxSize = other.gameObject.GetComponent<maximumSize> ();
+				objectHealth plutoHealth = other.gameObject.GetComponent<objectHealth>();
+				int currentMax = maxSize.getMaxHealth ();
+				int currentHealth = plutoHealth.getHealth ();
+//				Debug.Log ("pluto size: " + currentHealth);
+				if (currentHealth < currentMax) {
+					playerOrBossEat (contacteeHealth, other.gameObject);
+					//other.gameObject.GetComponent<Animator> ().SetTrigger ("triggerHungry");
+					other.gameObject.GetComponent<Animator> ().SetBool ("isHungry", true);
+				} 
+				else {
+					other.gameObject.GetComponent<Animator> ().SetBool ("isHungry", false);
+				}
+			} 
+			else {
+//				Debug.Log ("boss is trying to eat");
+				playerOrBossEat (contacteeHealth, other.gameObject);
+				//other.gameObject.GetComponent<Animator> ().SetTrigger ("triggerFull");
+			}
 		}
 		if (other.gameObject.tag == "projectile" && gameObject.tag != "Player"){
 			projectileDoesDamage (contacteeHealth, other.gameObject, other.contacts [0].point, other.contacts [0].normal, other.relativeVelocity);
