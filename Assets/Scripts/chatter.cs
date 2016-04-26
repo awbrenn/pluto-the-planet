@@ -15,7 +15,7 @@ public class chatter : MonoBehaviour {
 	public float timeUntilClearTextMessages = 4.0f;
 
 	private int spacing;
-	private Queue<GameObject> queuedTextMessages;
+	public Queue<GameObject> queuedTextMessages;
 	private Queue<GameObject> currentTextMessages;
 	private Vector2 GroupPos;
 	public Vector2 thumbSize;
@@ -100,8 +100,9 @@ public class chatter : MonoBehaviour {
 
 		for (int i = currentTextMessages.Count-1; i >= 0; --i) {
 			GameObject textMessage = currentTextMessages.ToArray()[i];
-			int y = (int)(((currentTextMessages.Count-1) - i)*textBoxSize.y);
-			Rect Group = new Rect(GroupPos.x, GroupPos.y - y, textBoxSize.x, textBoxSize.y);
+			int x_offset = (int)(Screen.width * spacingPercentage);
+			int y_offset = (int)(((currentTextMessages.Count - 1) - i) * (textBoxSize.y) + (currentTextMessages.Count - i) * Screen.height * spacingPercentage);
+			Rect Group = new Rect(GroupPos.x - x_offset, GroupPos.y - y_offset, textBoxSize.x, textBoxSize.y);
 			GUI.BeginGroup (Group);
 			GUI.Box (new Rect (0, 0, textBoxSize.x, textBoxSize.y), textMessage.GetComponent<message> ().text + " ");
 			GUI.Box (new Rect (0, 0, thumbSize.x, thumbSize.y), "");
