@@ -10,6 +10,7 @@ public class menuScript : MonoBehaviour {
 	public Button goToMainMenu;
 	public Button start;
 	public GameObject loadingText;
+	public GameObject levelSelect;
 
 	// Use this for initialization
 	void Start () {
@@ -37,12 +38,7 @@ public class menuScript : MonoBehaviour {
 			hideObject.SetActive (false);
 		}
 
-		loadingText.SetActive (true);
-
-//		GameObject hideObject = GameObject.FindGameObjectWithTag ("hideButton");
-//		hideObject.GetComponent<Text> ().text = "Loading...";
-
-		UnityEngine.SceneManagement.SceneManager.LoadScene (1);
+		levelSelect.SetActive (true);
 	}
 
 	public void goToMenuPressed () {
@@ -54,5 +50,17 @@ public class menuScript : MonoBehaviour {
 		loadingText.SetActive (true);
 
 		UnityEngine.SceneManagement.SceneManager.LoadScene (0);
+	}
+
+	public void loadLevel(int levelIndex) {
+		GameObject[] hideObjects = GameObject.FindGameObjectsWithTag ("hideUI");
+		foreach (GameObject hideObject in hideObjects) {
+			hideObject.SetActive (false);
+		}
+
+		levelSelect.SetActive (false);
+		loadingText.SetActive (true);
+
+		UnityEngine.SceneManagement.SceneManager.LoadScene (levelIndex);
 	}
 }
