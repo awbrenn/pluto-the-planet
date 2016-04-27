@@ -73,7 +73,7 @@ public class chatter : MonoBehaviour {
 
 		// clear text messages after a certain amount of time
 		if (Time.time - timeOfLastTextMessage > timeUntilClearTextMessages) {
-			currentTextMessages.Dequeue ();
+			if (currentTextMessages.Count > 0) currentTextMessages.Dequeue ();
 			timeOfLastTextMessage = Time.time;
 		}
 	}
