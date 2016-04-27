@@ -35,7 +35,9 @@ public class tapToMovePluto : MonoBehaviour {
 		pluto_rigid_body = GetComponent<Rigidbody> ();
 		pluto_rigid_body.freezeRotation = true;
 		safe_volume_radius = GameObject.FindGameObjectWithTag ("Safe Volume").transform.localScale.x / 2.0f;
-		boss_volume_radius = GameObject.FindGameObjectWithTag ("Boss Volume").transform.localScale.x / 2.0f;
+
+		GameObject bV = GameObject.FindGameObjectWithTag ("Boss Volume");
+		if (bV != null) boss_volume_radius = bV.transform.localScale.x / 2.0f;
 	}
 
 

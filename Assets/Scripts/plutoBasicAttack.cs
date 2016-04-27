@@ -27,7 +27,8 @@ public class plutoBasicAttack : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		projectile_prefab = Resources.Load ("Prefabs/defaultProjectile") as GameObject;
-		bossVolumeRadius = GameObject.Find ("BossVolume").transform.localScale.x/2.0f;
+		GameObject bV = GameObject.Find ("BossVolume");
+		if (bV != null) bossVolumeRadius = bV.transform.localScale.x/2.0f;
 		timeOfLastShot = Time.time;
 
 		source = GetComponent<AudioSource> ();
@@ -82,7 +83,10 @@ public class plutoBasicAttack : MonoBehaviour {
 	}
 
 	void shootProjectile() {
-		Vector3 bossPosition = GameObject.FindWithTag ("Boss").transform.position;
+		Vector3 bossPosition = new Vector3 (0, 0, 0);
+		GameObject boss = GameObject.FindWithTag ("Boss");
+		if (boss != null) bossPosition = boss.transform.position;
+
 		Vector3 projectile_trajectory;
 		Vector3 plutoVelocity = GetComponent<Rigidbody> ().velocity;
 
