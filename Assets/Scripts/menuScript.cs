@@ -38,6 +38,8 @@ public class menuScript : MonoBehaviour {
 			hideObject.SetActive (false);
 		}
 
+		Handheld.PlayFullScreenMovie("introCutScene.mp4", Color.black, FullScreenMovieControlMode.Full, FullScreenMovieScalingMode.AspectFit);
+
 		levelSelect.SetActive (true);
 	}
 
