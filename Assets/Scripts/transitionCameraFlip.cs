@@ -14,14 +14,14 @@ public class transitionCameraFlip : MonoBehaviour {
 	void OnTriggerEnter(Collider player){
 //		Debug.Log (player.gameObject.tag + " entered Transition");
 		if (player.gameObject.tag == "Player"){
-			camControl.setTransitionCamera (true);
+			if (camControl != null) camControl.setTransitionCamera (true);
 		}
 	}
 
 	void OnTriggerExit(Collider player){
 //		Debug.Log (player.gameObject.tag + " exited Transition");
 		if (player.gameObject.tag == "Player"){
-			camControl.setTransitionCamera (false);
+			if (camControl != null) camControl.setTransitionCamera (false);
 		}
 	}
 }

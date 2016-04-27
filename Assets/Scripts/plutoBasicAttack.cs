@@ -28,7 +28,10 @@ public class plutoBasicAttack : MonoBehaviour {
 	void Start () {
 		projectile_prefab = Resources.Load ("Prefabs/defaultProjectile") as GameObject;
 		GameObject bV = GameObject.Find ("BossVolume");
-		if (bV != null) bossVolumeRadius = bV.transform.localScale.x/2.0f;
+		if (bV != null)
+			bossVolumeRadius = bV.transform.localScale.x / 2.0f;
+		else
+			bossVolumeRadius = -1.0f;
 		timeOfLastShot = Time.time;
 
 		source = GetComponent<AudioSource> ();

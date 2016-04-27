@@ -12,9 +12,11 @@ public class tutorialTexts : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		foreach (GameObject message in messages) {
-			chatterBox.queueTextMessage (message);
-		}	
+		if (messages != null) {
+			foreach (GameObject message in messages) {
+				chatterBox.queueTextMessage (message);
+			}
+		}
 
 		messages = null;
 	}
