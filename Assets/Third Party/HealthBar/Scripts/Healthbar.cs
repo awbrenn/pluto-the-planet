@@ -75,7 +75,10 @@ public class Healthbar : MonoBehaviour {
 	//Note: healthNormalized cuts the number so that it's on a 100 scale like in every game (it's basically the percentage)
 	void FixedUpdate(){
 		float pluto_distance_from_center = GameObject.FindGameObjectWithTag("Player").transform.position.magnitude;
-		float transition_volume_radius = GameObject.FindGameObjectWithTag ("Transition Volume").transform.localScale.x/2.0f;
+
+		GameObject tV = GameObject.FindGameObjectWithTag ("Transition Volume");
+		float transition_volume_radius = 0f;
+		if (tV != null) transition_volume_radius = tV.transform.localScale.x/2.0f;
 		canvasObject.SetActive ((pluto_distance_from_center < transition_volume_radius && myTheme == 11) || (myTheme == 10));
 
 		if (player) {
