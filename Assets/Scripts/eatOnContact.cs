@@ -73,6 +73,10 @@ public class eatOnContact : MonoBehaviour {
 //			Debug.Log ("hit object health1:  " + contacteeHealth.getHealth() + " hit damage: " + hitDamage);
 			int newHealth = target.getHealth () - hitDamage;
 
+			if (name == "Boss") {
+				newHealth = target.getHealth () - (int)(hitDamage * impactDamageMultiplier);
+			}
+
 			target.instantiateHealth (newHealth);
 //			Debug.Log ("hit object health2:  " + contacteeHealth.getHealth() + "new Health var:  " + newHealth);
 

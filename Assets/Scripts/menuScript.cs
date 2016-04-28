@@ -63,6 +63,10 @@ public class menuScript : MonoBehaviour {
 		levelSelect.SetActive (false);
 		loadingText.SetActive (true);
 
+		if (levelIndex == 4) {
+			Handheld.PlayFullScreenMovie("dwarfPlanetIntro.mp4", Color.black, FullScreenMovieControlMode.Full, FullScreenMovieScalingMode.AspectFit);
+		}
+
 		UnityEngine.SceneManagement.SceneManager.LoadScene (levelIndex);
 	}
 }
